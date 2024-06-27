@@ -8,7 +8,6 @@ import android.view.Surface;
 
 import com.alivc.auiplayer.videoepisode.data.AUIEpisodeVideoInfo;
 import com.alivc.player.videolist.auivideolistcommon.listener.PlayerListener;
-import com.aliyun.dns.DomainProcessor;
 import com.aliyun.player.AliListPlayer;
 import com.aliyun.player.AliPlayerFactory;
 import com.aliyun.player.AliPlayerGlobalSettings;
@@ -16,8 +15,6 @@ import com.aliyun.player.IListPlayer;
 import com.aliyun.player.IPlayer;
 import com.aliyun.player.bean.ErrorInfo;
 import com.aliyun.player.nativeclass.PlayerConfig;
-import com.aliyun.private_service.PrivateService;
-import com.cicada.player.utils.Logger;
 
 import java.io.File;
 import java.util.List;
@@ -73,8 +70,7 @@ public class AUIVideoEpisodeController {
         enableLocalCache(true, cacheDir);
         setCacheFileClearConfig(30 * 24 * 60, 20 * 1024, 0);
 
-        //开启增强型HTTPDNS，需要增强型HTTPDNS的高级License，否则将会失效
-        enableEnhancedHTTPDNS(context, true);
+        // 音视频终端SDK和播放器SDK从6.12.0版本开始无需手动开启HTTPDNS。
 
         //配置网络超时重试时间与次数
         setNetworkRetryTimes(5000, 2);
@@ -317,36 +313,6 @@ public class AUIVideoEpisodeController {
      */
     public void clearCache() {
         AliPlayerGlobalSettings.clearCaches();
-    }
-
-    /**
-     * 开启HTTPDNS
-     */
-    public void enableHTTPDNS(boolean enable) {
-        AliPlayerGlobalSettings.enableHttpDns(enable);
-        PlayerConfig config = aliListPlayer.getConfig();
-        config.mEnableHttpDns = -1;
-        aliListPlayer.setConfig(config);
-    }
-
-    /**
-     * 开启增强型HTTPDNS
-     * <p>
-     * 与enableHTTPDNS互斥
-     * 如果开启增强型HTTPDNS，需要增强型HTTPDNS的高级License，否则将会失效
-     * 如果该功能开启失效，会打印错误日志“enhanced dns license is invalid, open enhanced dns failed”
-     * 播放器SDK版本要求：> 6.10.0
-     */
-    public void enableEnhancedHTTPDNS(Context context, boolean enable) {
-        PrivateService.preInitService(context);
-        //打开增强型HTTPDNS
-        AliPlayerGlobalSettings.enableEnhancedHttpDns(enable);
-        //必选，添加增强型HTTPDNS域名，请确保该域名为阿里云CDN域名并完成域名配置可以正常可提供线上服务。
-        DomainProcessor.getInstance().addEnhancedHttpDnsDomain("player.***alicdn.com");
-        //可选，增加HTTPDNS预解析域名
-        DomainProcessor.getInstance().addPreResolveDomain("player.***alicdn.com");
-        // AliPlayerGlobalSettings.SET_DNS_PRIORITY_LOCAL_FIRST表示设置HTTPDNS的优先级
-        AliPlayerGlobalSettings.setOption(AliPlayerGlobalSettings.SET_DNS_PRIORITY_LOCAL_FIRST, enable ? 1 : 0);
     }
 
     /**

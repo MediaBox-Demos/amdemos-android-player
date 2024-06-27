@@ -10,10 +10,57 @@
 
 ## **三、编译运行**
 
-参见AUIVideoList/README.md。
-                                                           
+1. 接入已授权播放器的音视频终端SDK License。
+
+   具体操作请参见[Android端接入License](https://help.aliyun.com/zh/apsara-video-sdk/user-guide/access-to-license#58bdccc0537vx)。
+   
+2. 将 AUIVideoList 目录下的 AUIVideoEpisode 和 AUIVideoListCommon 两个模块拷贝到您项目工程中。
+
+   请注意修改两个模块 build.gradle 文件中的编译版本（与您项目工程中设置保持一致）以及播放器SDK版本。
+   
+   播放器SDK版本配置在 AUIVideoListCommon/build.gradle 中修改（参考 AndroidThirdParty/config.gradle 中的 externalPlayerFull ）。
+
+3. 在项目 gradle 文件的 repositories 配置中，引入阿里云SDK的 Maven 源：
+
+   ```groovy
+   maven { url "https://maven.aliyun.com/repository/releases" }
+   ```
+   
+4. 增加模块引用方式和依赖方式。
+
+   在项目的 setting.gradle 中增加:
+   ```groovy
+   // 项目根目录下有一个 AUIVideoList 文件夹，其中包含 AUIVideoListCommon 和AUIVideoEpisode两个模块，其引用方式如下。
+   include ':AUIVideoList:AUIVideoListCommon'
+   include ':AUIVideoList:AUIVideoEpisode' 
+   // 如果此模块直接放在根目录下，则应 include ':AUIVideoListCommon' 及 ':AUIVideoEpisode'
+   ```
+   
+   在 app 模块的 build.gradle 中增加:
+   ```groovy
+   implementation project(':AUIVideoList:AUIVideoEpisode')
+   // 同上，如果此模块被放置在根目录下，直接写':AUIVideoEpisode'即可
+   ```
+
+5. 配置页面跳转，在当前页面中打开对应模块的主界面。
+
+   ```java
+   Intent videoListEpisodeIntent = new Intent(this, AUIEpisodePlayerActivity.class);
+   startActivity(videoListEpisodeIntent);
+   ```
+
 注：请确认您的视频源地址，如果视频源地址为模块提供的 MP4 私有加密地址，由于加密特性，集成到您项目工程中将会播放失效。请注意修改 AUIEpisodeConstants 文件下的 EPISODE_JSON_URL 的变量值，手动切换剧集地址。
 
+### **集成FAQ**
+
+1. 错误“Namespace not specified”
+
+   请检查您的 AGP 版本。如果为较新版本（如8.3.2），需要手动在各模块 build.gradle 中添加 namespace 设置。旧版本 AGP 此配置位于模块 /src/main/res/AndroidManifest.xml 中的 package 属性。
+   
+2. Gradle 在处理 repository 的优先级时出现冲突
+   
+     请优先在 setting.gradle 中添加 repository。
+                                                           
 ## **四、模块说明**
 
 ### **文件说明**
@@ -86,116 +133,35 @@ AUIEpisodeVideoInfo
 
 ## **五、核心能力介绍**
 
+本组件功能通过阿里云播放器SDK的AliListPlayer进行实现，使用了本地缓存、智能预加载、智能预渲染、HTTPDNS、加密播放等核心能力，在播放延迟、播放稳定性及安全性方面大幅度提升观看体验。具体介绍参考[进阶功能](https://help.aliyun.com/zh/vod/developer-reference/advanced-features)。
+
 ### **本地缓存**
 
-```java
-// 开启本地缓存
-public void enableLocalCache(boolean enable, String path) {
-    AliPlayerGlobalSettings.enableLocalCache(enable, 10 * 1024, path);
-    PlayerConfig config = aliListPlayer.getConfig();
-    config.mEnableLocalCache = enable;
-    aliListPlayer.setConfig(config);
-}
-
-// 设置缓存清除策略
-public void setCacheFileClearConfig(long expireMin, long maxCapacityMB, long freeStorageMB) {
-  AliPlayerGlobalSettings.setCacheFileClearConfig(expireMin, maxCapacityMB, freeStorageMB);
-}
-
-// 清除缓存
-public void clearCache() {
-  AliPlayerGlobalSettings.clearCaches();
-}
-```
+本地缓存可以提高短视频播放的加载速度和稳定性，使用户在网络不稳定或者断网的情况下依然能够流畅观看视频，提升用户的观看体验。
 
 ### **智能预加载**
 
-```java
-// 设置预加载数量
-public void setPreloadCount(int preloadCount) {
-  aliListPlayer.setPreloadCount(preloadCount);
-}
-
-// 设置智能预加载策略
-public void setPreloadStrategy(boolean enable, String params) {
-  aliListPlayer.setPreloadScene(IListPlayer.SceneType.SCENE_SHORT);
-  aliListPlayer.enablePreloadStrategy(IListPlayer.StrategyType.STRATEGY_DYNAMIC_PRELOAD_DURATION, enable);
-  if (enable) {
-    aliListPlayer.setPreloadStrategy(IListPlayer.StrategyType.STRATEGY_DYNAMIC_PRELOAD_DURATION, params);
-  }
-}
-```
+智能预加载可以提前加载视频数据，使视频播放更加流畅，减少加载等待时间，提升用户的观看体验。
 
 ### **智能预渲染**
 
-```java
-// 设置智能预渲染
-// 备注：当前版本，PreRender Player仅支持预渲染列表下一个视频的画面；指定预渲染上一个视频的画面，有待后续版本支持。
-public void setSurfaceToPreRenderPlayer(Surface surface) {
-  preRenderPlayer = aliListPlayer.getPreRenderPlayer();
-  if (preRenderPlayer != null) {
-    preRenderPlayer.setOnRenderingStartListener(() -> {
-      mCurrentPreRenderPlayerState = PreRenderPlayerState.FIRST_FRAME_RENDERED;
-    });
-    preRenderPlayer.setSurface(surface);
-    if (mNeedPreRender && surface != null) {
-
-      //RenderingStart前一直尝试刷新
-      preRenderPlayer.seekTo(0);
-      if (mCurrentPreRenderPlayerState == PreRenderPlayerState.FIRST_FRAME_RENDERED) {
-        mNeedPreRender = false;
-      }
-    }
-  } else {
-    aliListPlayer.clearScreen();
-    aliListPlayer.setSurface(surface);
-  }
-}
-```
+智能预渲染可以减少视频播放的启动延迟，让用户更快地看到画面，提升视频播放的加载速度和观看体验。
 
 ### **HTTPDNS**
 
-```java
-/**
- * 开启HTTPDNS
- */
-public void enableHTTPDNS(boolean enable) {
-    AliPlayerGlobalSettings.enableHttpDns(enable);
-    PlayerConfig config = aliListPlayer.getConfig();
-    config.mEnableHttpDns = -1;
-    aliListPlayer.setConfig(config);
-}
+HTTPDNS可以提供更快速和稳定的DNS解析服务，通过替换传统DNS解析，可以减少DNS解析时间，提高视频播放的加载速度和稳定性，从而提升用户的观看体验。
 
-/**
- * 开启增强型HTTPDNS
- * <p>
- * 与enableHTTPDNS互斥
- * 如果开启增强型HTTPDNS，需要增强型HTTPDNS的高级License，否则将会失效
- * 如果该功能开启失效，会打印错误日志“enhanced dns license is invalid, open enhanced dns failed”
- * 播放器SDK版本要求：> 6.10.0
- */
-public void enableEnhancedHTTPDNS(Context context, boolean enable) {
-    PrivateService.preInitService(context);
-    //打开增强型HTTPDNS
-    AliPlayerGlobalSettings.enableEnhancedHttpDns(enable);
-    //必选，添加增强型HTTPDNS域名，请确保该域名为阿里云CDN域名并完成域名配置可以正常可提供线上服务。
-    DomainProcessor.getInstance().addEnhancedHttpDnsDomain("player.***alicdn.com");
-    //可选，增加HTTPDNS预解析域名
-    DomainProcessor.getInstance().addPreResolveDomain("player.***alicdn.com");
-    // AliPlayerGlobalSettings.SET_DNS_PRIORITY_LOCAL_FIRST表示设置HTTPDNS的优先级
-    AliPlayerGlobalSettings.setOption(AliPlayerGlobalSettings.SET_DNS_PRIORITY_LOCAL_FIRST, enable ? 1 : 0);
-}
-```
+音视频终端SDK和播放器SDK从6.12.0版本开始无需手动开启HTTPDNS。
 
-### **MP4私有加密**
+### **视频加密**
 
-从v6.8.0版本开始（一体化SDK or 播放器SDK），播放器支持MP4加密播放能力。
+音视频终端SDK和播放器SDK从6.8.0版本开始支持MP4私有加密播放能力。
 
-* 加密视频可播放，需满足以下条件：
+* 经私有加密的MP4格式视频，需满足以下条件，才可正常播放：
 
-  * 1.私有加密的mp4，业务侧（app侧）需要给 URL 追加`etavirp_nuyila=1`
+  * 经私有加密的MP4视频传给播放器播放时，业务侧（App侧）需要为视频URL追加```etavirp_nuyila=1```
 
-  * 2.app的license对应的uid 与 产生私有加密mp4的uid 是一致的
+  * App的License对应的uid与产生私有加密MP4的uid是一致的
 
 * 校验加密视频是否正确，以私有加密的视频URL为例：
 
@@ -206,10 +172,7 @@ public void enableEnhancedHTTPDNS(Context context, boolean enable) {
 
 * **防录屏**
 
-  ```java
-  // Android特有功能，禁止app录屏和截屏
-  getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-  ```
+  防录屏通过监听录屏和截屏行为及时阻断播放进程，有效保护视频内容的版权，防止未经授权的盗录和传播。
 
 
 ## 六、用户指引
@@ -229,5 +192,4 @@ public void enableEnhancedHTTPDNS(Context context, boolean enable) {
 
 ### **FAQ**
 
-如果您在使用播放器SDK有任何问题或建议，欢迎通过钉钉搜索群号31882553加入阿里云播放器SDK开发者群。
-
+[播放异常自主排查](https://help.aliyun.com/zh/vod/developer-reference/troubleshoot-playback-errors)

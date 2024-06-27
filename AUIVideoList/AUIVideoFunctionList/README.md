@@ -10,7 +10,54 @@
 
 ## **三、编译运行**
 
-参见AUIVideoList/README.md。
+1. 接入已授权播放器的音视频终端SDK License。
+
+   具体操作请参见[Android端接入License](https://help.aliyun.com/zh/apsara-video-sdk/user-guide/access-to-license#58bdccc0537vx)。
+   
+2. 将 AUIVideoList 目录下的 AUIVideoFunctionList 和 AUIVideoListCommon 两个模块拷贝到您项目工程中。
+
+   请注意修改两个模块 build.gradle 文件中的编译版本（与您项目工程中设置保持一致）以及播放器SDK版本。
+   
+   播放器SDK版本配置在 AUIVideoListCommon/build.gradle 中修改（参考 AndroidThirdParty/config.gradle 中的 externalPlayerFull ）。
+
+3. 在项目 gradle 文件的 repositories 配置中，引入阿里云SDK的 Maven 源：
+
+   ```groovy
+   maven { url "https://maven.aliyun.com/repository/releases" }
+   ```
+   
+4. 增加模块引用方式和依赖方式。
+
+   在项目的 setting.gradle 中增加:
+   ```groovy
+   // 项目根目录下有一个 AUIVideoList 文件夹，其中包含 AUIVideoListCommon 和AUIVideoFunctionList两个模块，其引用方式如下。
+   include ':AUIVideoList:AUIVideoListCommon'
+   include ':AUIVideoList:AUIVideoFunctionList' 
+   // 如果此模块直接放在根目录下，则应 include ':AUIVideoListCommon' 及 ':AUIVideoFunctionList'
+   ```
+   
+   在 app 模块的 build.gradle 中增加:
+   ```groovy
+   implementation project(':AUIVideoList:AUIVideoFunctionList')
+   // 同上，如果此模块被放置在根目录下，直接写':AUIVideoFunctionList'即可
+   ```
+   
+5. 配置页面跳转，在当前页面中打开对应模块的主界面。
+
+   ```java
+   Intent videoListFunctionIntent = new Intent(this, AUIVideoFunctionListActivity.class);
+   startActivity(videoListFunctionIntent);
+   ```
+   
+### **集成FAQ**
+
+1. 错误“Namespace not specified”
+
+   请检查您的 AGP 版本。如果为较新版本（如8.3.2），需要手动在各模块 build.gradle 中添加 namespace 设置。旧版本 AGP 此配置位于模块 /src/main/res/AndroidManifest.xml 中的 package 属性。
+   
+2. Gradle 在处理 repository 的优先级时出现冲突
+   
+     请优先在 setting.gradle 中添加 repository。
 
 ## **四、模块说明**
 ### **文件说明**
@@ -50,6 +97,8 @@
 
 ## **五、核心能力介绍**
 
+本组件功能使用阿里云播放器SDK，通过多个播放器实例（AliPlayer）+ 预加载（MediaLoader）+ 预渲染的方式进行实现，使用了预加载、预渲染、HTTPDNS、加密播放等核心能力，在播放延迟、播放稳定性及安全性方面大幅度提升观看体验。具体介绍参考[进阶功能](https://help.aliyun.com/zh/vod/developer-reference/advanced-features)。
+
 ### **预加载**
 
 ```java
@@ -87,7 +136,6 @@ public void moveToSerial(int position) {
        mOldPosition.set(position + 1);
     });
 }
-
 ```
 
 ### **页面事件响应**
@@ -116,7 +164,6 @@ public void onPageRelease(int position, AUIVideoListViewHolder viewHolder) {
         ((AUIVideoFunctionListAdapter.AUIVideoFunctionListViewHolder) viewHolder).getAliPlayer().pause();
     }
 }
-
 ```
 
 ### **多实例播放器池**
@@ -143,7 +190,6 @@ public static void openLoopPlay(boolean openLoopPlay) {
         aliyunRenderView.openLoopPlay(openLoopPlay);
     }
 }
-
 ```
 
 ### **预渲染**
@@ -156,31 +202,29 @@ private void invokeSeekTo() {
         mHasPrepared = false;
     }
 }
-
 ```
-### **MP4私有加密**
+### **HTTPDNS**
 
-从v6.8.0版本开始（一体化SDK or 播放器SDK），播放器支持MP4加密播放能力。
+HTTPDNS可以提供更快速和稳定的DNS解析服务，通过替换传统DNS解析，可以减少DNS解析时间，提高视频播放的加载速度和稳定性，从而提升用户的观看体验。
 
-* 加密视频可播放，需满足以下条件：
+音视频终端SDK和播放器SDK从6.12.0版本开始无需手动开启HTTPDNS。
 
-  * 1.私有加密的mp4，业务侧（app侧）需要给 URL 追加`etavirp_nuyila=1`
+### **视频加密**
 
-  * 2.app的license对应的uid 与 产生私有加密mp4的uid 是一致的
+音视频终端SDK和播放器SDK从6.8.0版本开始支持MP4私有加密播放能力。
 
-* 校验加密视频是否正确，以私有加密的视频URL为例：
-
-  * meta信息里面带有`AliyunPrivateKeyUri`的tag
-  * ffplay不能直接播放
+- 经私有加密的MP4格式视频，需满足以下条件，才可正常播放：
+  - 经私有加密的MP4视频传给播放器播放时，业务侧（App侧）需要为视频URL追加`etavirp_nuyila=1`
+  - App的License对应的uid与产生私有加密MP4的uid是一致的
+- 校验加密视频是否正确，以私有加密的视频URL为例：
+  - meta信息里面带有`AliyunPrivateKeyUri`的tag
+  - ffplay不能直接播放
 
 ### **其它功能**
 
-* **防录屏**
+- **防录屏**
 
-  ```java
-  // Android特有功能，禁止app录屏和截屏
-  getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-  ```
+  防录屏通过监听录屏和截屏行为及时阻断播放进程，有效保护视频内容的版权，防止未经授权的盗录和传播。
 
 ## 六、用户指引
 
