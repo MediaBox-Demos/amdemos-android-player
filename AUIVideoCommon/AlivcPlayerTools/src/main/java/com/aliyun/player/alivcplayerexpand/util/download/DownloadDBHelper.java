@@ -49,6 +49,11 @@ public class DownloadDBHelper extends SQLiteOpenHelper {
      * @param info 下载的信息
      * @param state 当前下载状态,  0: 下载中或已开始下载, 1:暂停, 2:完成
      */
+    /****
+     * Data insertion
+     * @param info Downloaded information
+     * @param state current download state, 0: download in progress or started, 1: paused, 2: finished
+     */
     public long insert(AliyunDownloadMediaInfo info, int state) {
         if (hasAdded(info)) {
             return -1;
@@ -89,6 +94,10 @@ public class DownloadDBHelper extends SQLiteOpenHelper {
      * 数据删除
      *
      */
+    /****
+     * Data deletion
+     *
+     */
     public int delete(String whereClause, String[] whereArgs) {
         SQLiteDatabase db = getWritableDatabase();
         int delete = db.delete(TABLE_NAME, whereClause, whereArgs);
@@ -98,6 +107,10 @@ public class DownloadDBHelper extends SQLiteOpenHelper {
 
     /**
      * 数据修改
+     *
+     */
+    /****
+     * Data modification
      *
      */
     public int update(AliyunDownloadMediaInfo info, String whereClause, String[] whereArgs, int state) {
@@ -115,6 +128,10 @@ public class DownloadDBHelper extends SQLiteOpenHelper {
      * 数据查询
      *
      */
+    /****
+     * Data query
+     *
+     */
     public Cursor query(String[] columns, String selection,
                         String[] selectionArgs, String groupBy, String having,
                         String orderBy) {
@@ -125,6 +142,12 @@ public class DownloadDBHelper extends SQLiteOpenHelper {
 
     /**
      * 数据查询, 不分组, 不排序
+     * @param colums
+     * @param selection
+     * @param selectionArgs
+     */
+    /****
+     * Data query, no grouping, no sorting
      * @param colums
      * @param selection
      * @param selectionArgs
@@ -144,19 +167,31 @@ public class DownloadDBHelper extends SQLiteOpenHelper {
     /**
      * 下载状态
      */
+    /****
+     * Download state
+     */
     public  interface DownloadState{
         /**
          * 下载中
+         */
+        /****
+         * Download in progress
          */
         int STATE_DOWNLOADING = 0;
 
         /**
          * 暂停
          */
+        /****
+         * Paused
+         */
         int STATE_PAUSE = 1;
 
         /**
          * 完成
+         */
+        /****
+         * Finished
          */
         int STATE_COMPLETE = 2;
     }

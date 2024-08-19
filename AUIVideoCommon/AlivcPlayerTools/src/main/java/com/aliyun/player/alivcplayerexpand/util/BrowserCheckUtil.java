@@ -14,6 +14,9 @@ public class BrowserCheckUtil {
     /**
      * 检测手机安装的浏览器
      */
+    /****
+     * Check the installed browsers on the mobile phone
+     */
     @SuppressLint("WrongConstant")
     public static List<ResolveInfo> checkBrowserList(Context context){
         PackageManager packageManager = context.getPackageManager();

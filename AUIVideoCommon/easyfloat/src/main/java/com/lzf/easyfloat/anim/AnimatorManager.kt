@@ -10,6 +10,11 @@ import com.lzf.easyfloat.data.FloatConfig
  * @function: App浮窗的出入动画管理类，只需传入具体的动画实现类（策略模式）
  * @date: 2019-07-22  16:44
  */
+/****
+ * @author: liuzhenfeng
+ * @function: In and out animation management class for app floats, just pass in the specific animation implementation class (strategy pattern)
+ * @date: 2019-07-22  16:44
+ */
 internal class AnimatorManager(
     private val view: View,
     private val params: WindowManager.LayoutParams,

@@ -34,20 +34,30 @@ import java.util.List;
  * 清晰度列表view。用于显示不同的清晰度列表。
  * 在{@link com.aliyun.player.alivcplayerexpand.widget.AliyunVodPlayerView}中使用。
  */
+/**
+ * Clarity listview. used to display a list of different clarity levels.
+ * Used in {@link com.aliyun.player.alivcplayerexpand.widget.AliyunVodPlayerView}
+ */
 public class QualityView extends FrameLayout implements ITheme {
 
     //显示清晰度的列表
+    //Display the list of clarity
     private ListView mListView;
     private BaseAdapter mAdapter;
     //adapter的数据源
+    //Data source of the adapter
     private List<TrackInfo> mQualityItems;
     //当前播放的清晰度，高亮显示
+    //Current playing clarity, highlighted
     private String currentQuality;
     //清晰度项的点击事件
+    //Click event of the clarity item
     private OnQualityClickListener mOnQualityClickListener;
     //是否是mts源
+    //Is it a MTS source
     private boolean isMtsSource = false;
     //默认的主题色
+    //Default theme color
     private int themeColorResId = R.color.alivc_blue;
 
 
@@ -69,11 +79,13 @@ public class QualityView extends FrameLayout implements ITheme {
 
     private void init() {
         //初始化布局
+        //Initialize layout
         LayoutInflater.from(getContext()).inflate(R.layout.alivc_view_quality, this, true);
         mListView = (ListView) findViewById(R.id.quality_view);
 
         mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         //不显示滚动条，保证全部被显示
+        //Do not show the scroll bar, ensure all are displayed
         mListView.setVerticalScrollBarEnabled(false);
         mListView.setHorizontalScrollBarEnabled(false);
 
@@ -83,8 +95,10 @@ public class QualityView extends FrameLayout implements ITheme {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //点击之后就隐藏
+                //hide after clicking
                 hide();
                 //回调监听
+                //Callback listener
                 if (mOnQualityClickListener != null && mQualityItems != null) {
                     mOnQualityClickListener.onQualityClick(mQualityItems.get(position));
                 }
@@ -97,6 +111,7 @@ public class QualityView extends FrameLayout implements ITheme {
     @Override
     public void setTheme(Theme theme) {
         //更新主题
+        //Update theme
         if (theme == Theme.Blue) {
             themeColorResId = R.color.alivc_blue;
         } else if (theme == Theme.Green) {
@@ -118,6 +133,10 @@ public class QualityView extends FrameLayout implements ITheme {
      * 设置清晰度点击监听
      * @param l 点击监听
      */
+    /****
+     * Set clarity click listener
+     * @param l Click listener
+     */
     public void setOnQualityClickListener(OnQualityClickListener l) {
         mOnQualityClickListener = l;
     }
@@ -127,8 +146,14 @@ public class QualityView extends FrameLayout implements ITheme {
      * @param qualities 所有支持的清晰度
      * @param currentQuality 当前的清晰度
      */
+    /****
+     * Set clarity
+     * @param qualities All supported clarity
+     * @param currentQuality Current clarity
+     */
     public void setQuality(List<TrackInfo> qualities, String currentQuality) {
         //排序之后显示出来
+        //Sort and display
         mQualityItems = sortQuality(qualities);
         this.currentQuality = currentQuality;
         if (mAdapter != null) {
@@ -139,6 +164,10 @@ public class QualityView extends FrameLayout implements ITheme {
     /**
      * 设置是否是MTS的源，因为清晰度的文字显示与其他的不一样
      * @param isMts 是否是MTS的源
+     */
+    /****
+     * Set whether it is a MTS source, because the clarity text display is different from other sources
+     * @param isMts Is it a MTS source
      */
     public void setIsMtsSource(boolean isMts) {
         isMtsSource = isMts;
@@ -151,6 +180,7 @@ public class QualityView extends FrameLayout implements ITheme {
     private List<TrackInfo> sortQuality(List<TrackInfo> qualities) {
 
         //MTS的源不需要排序
+        //MTS source does not need to be sorted
         if (isMtsSource) {
             return qualities;
         }
@@ -186,6 +216,7 @@ public class QualityView extends FrameLayout implements ITheme {
         }
 
         //清晰度按照fd,ld,sd,hd,2k,4k,od排序
+        //Clarity is sorted by fd, ld, sd, hd, 2k, 4k, od
         List<TrackInfo> sortedQuality = new LinkedList<>();
 //        if (!TextUtils.isEmpty(fd)) {
 //            sortedQuality.add(fd);
@@ -250,6 +281,10 @@ public class QualityView extends FrameLayout implements ITheme {
      * 在某个控件的上方显示
      * @param anchor 控件
      */
+    /****
+     * Display above a certain control
+     * @param anchor Control
+     */
     public void showAtTop(View anchor) {
 
         LayoutParams listViewParam = (LayoutParams) mListView.getLayoutParams();
@@ -268,6 +303,9 @@ public class QualityView extends FrameLayout implements ITheme {
     /**
      * 隐藏
      */
+    /****
+     * Hide
+     */
     public void hide() {
         if (mListView != null && mListView.getVisibility() == VISIBLE) {
             mListView.setVisibility(GONE);
@@ -277,6 +315,11 @@ public class QualityView extends FrameLayout implements ITheme {
     /**
      * 触摸之后就隐藏
      * @param event 事件
+     * @return
+     */
+    /****
+     * Hide after touching
+     * @param event Event
      * @return
      */
     @Override
@@ -294,11 +337,18 @@ public class QualityView extends FrameLayout implements ITheme {
          * 清晰度点击事件
          * @param qualityTrackInfo 点中的清晰度
          */
+        /****
+         * Clarity click event
+         * @param qualityTrackInfo Clicked clarity
+         */
         void onQualityClick(TrackInfo qualityTrackInfo);
     }
 
     /**
      * 清晰度列表的适配器
+     */
+    /****
+     * Clarity list adapter
      */
     private class QualityAdapter extends BaseAdapter {
 
@@ -328,6 +378,7 @@ public class QualityView extends FrameLayout implements ITheme {
                 String quality = trackInfo.getVodDefinition();
                 view.setText(QualityItem.getItem(getContext(), quality, isMtsSource).getName());
                 //默认白色，当前清晰度为主题色。
+                //Default white, current clarity is the theme color.
                 if (quality.equals(currentQuality)) {
                     view.setTextColor(ContextCompat.getColor(getContext(), themeColorResId));
                 } else {

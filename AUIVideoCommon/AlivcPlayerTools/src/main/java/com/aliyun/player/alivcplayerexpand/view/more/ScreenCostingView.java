@@ -36,6 +36,9 @@ import java.util.TimerTask;
 /**
  * 投屏中 View
  */
+/****
+ * View in Cast Screen
+ */
 public class ScreenCostingView extends FrameLayout {
 
     private static final String TAG = "ScreenCostingView";
@@ -43,33 +46,57 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 连接设备状态: 播放状态
      */
+    /****
+     * Connected Device Status: Playback Status
+     */
     public static final int PLAY_ACTION = 0xa1;
     /**
      * 连接设备状态: 暂停状态
+     */
+    /****
+     * Connected Device Status: Paused Status
      */
     public static final int PAUSE_ACTION = 0xa2;
     /**
      * 连接设备状态: 停止状态
      */
+    /****
+     * Connected Device Status: Stopped Status
+     */
     public static final int STOP_ACTION = 0xa3;
     /**
      * 连接设备状态: 转菊花状态
+     */
+    /****
+     * Connected Device Status: Transitioning Status
      */
     public static final int TRANSITIONING_ACTION = 0xa4;
     /**
      * 获取进度
      */
+    /****
+     * Get Progress
+     */
     public static final int GET_POSITION_INFO_ACTION = 0xa5;
     /**
      * 获取播放状态
+     */
+    /****
+     * Get Playback Status
      */
     public static final int GET_CURRENT_TRANSPORT_INFO = 0xa6;
     /**
      * 投放失败
      */
+    /****
+     * Cast Failed
+     */
     public static final int ERROR_ACTION = 0xa7;
     /**
      * 投屏获取播放进度定时器
+     */
+    /****
+     * Cast Get Progress Timer
      */
     private GetInfoTimerTask mGetPositionTimerTask;
 
@@ -80,16 +107,25 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 获取播放进度回调监听
      */
+    /****
+     * Get Progress Callback Listener
+     */
     private OnGetPositionInfoListener mOnGetPositionInfoListener;
 
     /**
      * 获取播放状态回调监听
+     */
+    /****
+     * Get Playback Status Callback Listener
      */
     private OnGetTransportInfoListener mOnGetTransportInfoListener;
 
     private Handler mHandler = new InnerHandler(this);
     /**
      * 投屏控制器
+     */
+    /****
+     * Cast Controller
      */
     private static ClingPlayControl mClingPlayControl = new ClingPlayControl();
 
@@ -136,6 +172,7 @@ public class ScreenCostingView extends FrameLayout {
         int currentState = mClingPlayControl.getCurrentState();
 
         //通过判断状态 来决定 是继续播放 还是重新播放
+        //To determine whether to continue playback or replay by determining the status.
         if (currentState == DLANPlayState.STOP) {
             Log.e("AliyunDLNA", "playNew : ");
             mClingPlayControl.playNew(Config.DLNA_URL, new ControlCallback() {
@@ -186,6 +223,9 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 退出投屏
      */
+    /****
+     * Exit Cast Screen
+     */
     public void exit() {
         if (mClingPlayControl == null) {
             return;
@@ -211,6 +251,9 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 开始seek
      */
+    /****
+     * Start Seek
+     */
     public void seek(int position) {
         Log.e("AliyunDLNA", "seek " + position);
         mClingPlayControl.seek(position, new ControlCallback() {
@@ -233,6 +276,9 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 暂停
      */
+    /****
+     * Pause
+     */
     public void pause() {
         Log.e("AliyunDLNA", "pause");
         mClingPlayControl.pause(new ControlCallback() {
@@ -251,6 +297,9 @@ public class ScreenCostingView extends FrameLayout {
 
     /**
      * 调节音量
+     */
+    /****
+     * Adjust Volume
      */
     public void setVolume(float targetVolume) {
         Log.e("AliyunDLNA", "setVolume = " + targetVolume);
@@ -271,6 +320,10 @@ public class ScreenCostingView extends FrameLayout {
      * 开启定时任务
      * 每隔2s获取一次播放进度和播放状态
      */
+    /****
+     * Start Scheduled Task
+     * Every 2s Get One Progress And Playback Status
+     */
     public void startScheduledTask() {
         if (mGetPositionTimerTask != null) {
             mGetPositionTimerTask.cancel();
@@ -281,6 +334,7 @@ public class ScreenCostingView extends FrameLayout {
             @Override
             public void run() {
                 //获取当前播放进度
+                //Get current playback progress
                 mClingPlayControl.getPositionInfo(new ControlReceiveCallback() {
 
                     @Override
@@ -298,7 +352,7 @@ public class ScreenCostingView extends FrameLayout {
                                 msg.arg1 = currentPosition;
                                 msg.arg2 = duration;
                                 mHandler.sendMessage(msg);
-                                Log.e("AliyunDLNA", "获取播放进度 : " + currentPosition);
+                                Log.e("AliyunDLNA", "Get current play position: " + currentPosition);
                             }
                         }
                     }
@@ -323,7 +377,7 @@ public class ScreenCostingView extends FrameLayout {
                                 msg.what = GET_CURRENT_TRANSPORT_INFO;
                                 msg.obj = transportInfo;
                                 mHandler.sendMessage(msg);
-                                Log.e("AliyunDLNA", "获取播放状态 : " + transportInfo.getCurrentTransportState().name());
+                                Log.e("AliyunDLNA", "Get play status: " + transportInfo.getCurrentTransportState().name());
                             }
                         }
                     }
@@ -347,6 +401,9 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 停止定时任务
      */
+    /****
+     * Stop Scheduled Task
+     */
     public void stopScheduledTask() {
         if (mGetPositionTimerTask != null) {
             mGetPositionTimerTask.cancel();
@@ -355,6 +412,9 @@ public class ScreenCostingView extends FrameLayout {
 
     /**
      * 接收状态改变信息
+     */
+    /****
+     * Receive Status Change Information
      */
     private class TransportStateBroadcastReceiver extends BroadcastReceiver {
 
@@ -422,7 +482,7 @@ public class ScreenCostingView extends FrameLayout {
                         break;
                     case GET_POSITION_INFO_ACTION:
                         Log.e(TAG, "Execute GET_POSITION_INFO_ACTION");
-                        Log.e("AliyunDLNA", "获取播放进度handler : " + msg.arg1);
+                        Log.e("AliyunDLNA", "Get play position handler : " + msg.arg1);
                         if (screenCostingView.mOnGetPositionInfoListener != null) {
                             screenCostingView.mOnGetPositionInfoListener.onGetPositionInfo(msg.arg1, msg.arg2);
                         }
@@ -430,7 +490,7 @@ public class ScreenCostingView extends FrameLayout {
                     case GET_CURRENT_TRANSPORT_INFO:
                         Log.e(TAG, "Execute GET_CURRENT_TRANSPORT_INFO");
                         TransportInfo transportInfo = (TransportInfo) msg.obj;
-                        Log.e("AliyunDLNA", "获取播放状态handler : " + transportInfo.getCurrentTransportState().name());
+                        Log.e("AliyunDLNA", "Obtain play status handler : " + transportInfo.getCurrentTransportState().name());
                         if (screenCostingView.mOnGetTransportInfoListener != null) {
                             screenCostingView.mOnGetTransportInfoListener.onGetTransportInfo(transportInfo);
                         }
@@ -448,6 +508,9 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 获取播放进度回调
      */
+    /****
+     * Get Playback Progress Callback
+     */
     public interface OnGetPositionInfoListener {
         void onGetPositionInfo(int currentPositiion, int duration);
     }
@@ -455,12 +518,18 @@ public class ScreenCostingView extends FrameLayout {
     /**
      * 设置播放进度监听
      */
+    /****
+     * Set Playback Progress Listener
+     */
     public void setOnGetPositionInfoListener(OnGetPositionInfoListener listener) {
         this.mOnGetPositionInfoListener = listener;
     }
 
     /**
      * 获取播放状态回调
+     */
+    /****
+     * Get Playback Status Callback
      */
     public interface OnGetTransportInfoListener {
         void onGetTransportInfo(TransportInfo transportInfo);

@@ -44,6 +44,17 @@ import com.lzf.easyfloat.widget.BaseSwitchView
  *
  * 点击悬浮小窗-进入半屏播放 Fragment
  */
+/****
+ *FloatingView display
+ * 1.Remove SurfaceView
+ * 2.Exit Fragment
+ * 3.Show FloatingView window
+ * 4.Add SurfaceView to the FloatingView window
+ *
+ * Click to the close FloatingView window -- Close FloatingView window
+ *
+ * Click on the FloatingView window to go to the half-screen playback Fragment
+ */
 object FloatViewPlayManager {
     const val FROM_FLOAT_PLAY = "from_float_play"
     private const val TAG = "FloatViewPlayManager"
@@ -100,8 +111,8 @@ object FloatViewPlayManager {
         } else {
             val sApplication = activity.application
             AlertDialog.Builder(activity)
-                .setMessage("使用浮窗功能，需要您授权悬浮窗权限。")
-                .setPositiveButton("去开启") { _, _ ->
+                .setMessage(R.string.request_float_window_permission)
+                .setPositiveButton(R.string.open_permission) { _, _ ->
                     FloatViewPermissionUtils.requestPermission(
                         activity,
                         object : OnPermissionResult {
@@ -119,17 +130,17 @@ object FloatViewPlayManager {
                                 } else {
                                     Toast.makeText(
                                         sApplication,
-                                        "开启小窗播放，需要系统权限",
+                                        R.string.request_small_window_permission,
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
                             }
                         })
                 }
-                .setNegativeButton("取消") { _, _ ->
+                .setNegativeButton(R.string.to_cancel) { _, _ ->
                     Toast.makeText(
                         sApplication,
-                        "开启小窗播放，需要系统权限",
+                        R.string.request_small_window_permission,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -224,6 +235,7 @@ object FloatViewPlayManager {
                     fullScreenView.setOnClickListener {
                         if (mApplicationContext != null) {
                             //暂停回到续播
+                            //Pause back to resume
                             if (from != AliyunPlayerSkinFragment.FROM_RECOMMEND_LIST) {
                                 mPlayer?.pause()
                             }
@@ -276,7 +288,7 @@ object FloatViewPlayManager {
                         override fun touchInRange(inRange: Boolean, view: BaseSwitchView) {
                             setVibrator(inRange)
                             view.findViewById<TextView>(com.lzf.easyfloat.R.id.tv_delete).text =
-                                if (inRange) "松手删除" else "删除浮窗"
+                                if (inRange) view.context.getString(R.string.loose_delete) else view.context.getString(R.string.remove_float_window)
 
                             view.findViewById<ImageView>(com.lzf.easyfloat.R.id.iv_delete)
                                 .setImageResource(
@@ -303,6 +315,7 @@ object FloatViewPlayManager {
                 savePlayRecord()
                 pause()
                 //如果 release 调的话，则后面其它场景无法继续播放了
+                //If you release, the rest of the scene will not be played.
 //            getListPlayer().release()
             }
         }

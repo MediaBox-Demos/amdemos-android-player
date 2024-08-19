@@ -65,14 +65,20 @@ public class SoftInputDialogFragment extends BaseDialogFragment {
                 Editable editable = mEditText.getText();
                 String str = editable.toString().trim();
                 //得到最初字段的长度大小，用于光标位置的判断
+                // get the length size of the initial field for cursor position determination
                 int selEndIndex = Selection.getSelectionEnd(editable);
                 // 取出每个字符进行判断，如果是字母数字和标点符号则为一个字符加1，
+                //Take out each character for judgment, if it is alphanumeric and punctuation then add 1 for one character, the
                 //如果是汉字则为两个字符
+                //If it is Chinese characters then it is two characters
                 for (int i = 0; i < str.length(); i++) {
                     char charAt = str.charAt(i);
                     //32-122包含了空格，大小写字母，数字和一些常用的符号，
+                    //32-122 contains space, uppercase letters, numbers and some common symbols
                     //如果在这个范围内则算一个字符，
+                    //If it is in this range then it is one character
                     //如果不在这个范围比如是汉字的话就是两个字符
+                    //If it is not in this range, such as Chinese characters, it is two characters
                     if (charAt >= 32 && charAt <= 122) {
                         mTextMaxlenght++;
                     } else {
@@ -117,9 +123,15 @@ public class SoftInputDialogFragment extends BaseDialogFragment {
     /**
      * 发送弹幕监听
      */
+    /****
+     * Send barrage listener
+     */
     public interface OnBarrageSendClickListener {
         /**
          * 弹幕发送按钮点击
+         */
+        /****
+         * Barrage send button click
          */
         void onBarrageSendClick(String danmu);
     }
@@ -130,6 +142,9 @@ public class SoftInputDialogFragment extends BaseDialogFragment {
 
     /**
      * 显示软键盘
+     */
+    /****
+     * Show soft keyboard
      */
     private void showSoftInput(EditText mEditText) {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

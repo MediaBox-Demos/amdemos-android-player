@@ -17,12 +17,21 @@ import android.view.WindowManager;
 /**
  * 屏幕相关的操作类
  */
+/**
+ * Screen related operation class
+ */
 public class ScreenUtils {
     /**
      * 获取宽度
      *
      * @param mContext 上下文
      * @return 宽度值，px
+     */
+    /****
+     * Get width
+     *
+     * @param mContext Context
+     * @return Width value, px
      */
     public static int getWidth(Context mContext) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -36,6 +45,12 @@ public class ScreenUtils {
      *
      * @param mContext 上下文
      * @return 高度值，px
+     */
+    /****
+     * Get height
+     *
+     * @param mContext Context
+     * @return Height value, px
      */
     public static int getHeight(Context mContext) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -51,6 +66,13 @@ public class ScreenUtils {
      * @param xPos     位置的x坐标值
      * @return true：是。
      */
+    /****
+     * Is it on the right side of the screen
+     *
+     * @param mContext Context
+     * @param xPos     Position x coordinate value
+     * @return true: is.
+     */
     public static boolean isInRight(Context mContext, int xPos) {
         return (xPos > getWidth(mContext) / 2);
     }
@@ -62,6 +84,13 @@ public class ScreenUtils {
      * @param xPos     位置的x坐标值
      * @return true：是。
      */
+    /****
+     * Is it on the left side of the screen
+     *
+     * @param mContext Context
+     * @param xPos     Position x coordinate value
+     * @return true: is.
+     */
     public static boolean isInLeft(Context mContext, int xPos) {
         return (xPos < getWidth(mContext) / 2);
     }
@@ -72,6 +101,12 @@ public class ScreenUtils {
      * @param xPos      位置x坐标
      * @return          true:是 false:不是
      */
+    /****
+     * Is it on the right side of the View
+     * @param view      View to be judged
+     * @param xPos      Position x coordinate
+     * @return          true:is false:is not
+     */
     public static boolean isInRight(View view ,int xPos){
         return (xPos > view.getMeasuredWidth() / 2);
     }
@@ -81,6 +116,12 @@ public class ScreenUtils {
      * @param view      要判断的View
      * @param xPos      位置x坐标
      * @return          true:是 false:不是
+     */
+    /****
+     * Is it on the left side of the View
+     * @param view      View to be judged
+     * @param xPos      Position x coordinate
+     * @return          true:is false:is not
      */
     public static boolean isInLeft(View view ,int xPos){
         return (xPos < view.getMeasuredWidth() / 2);
@@ -108,6 +149,12 @@ public class ScreenUtils {
      * @param context 上下文
      * @return int, 单位px
      */
+    /****
+     * Get the real height of the screen, including the navigation bar and status bar
+     *
+     * @param context Context
+     * @return int, unit px
+     */
     public static int getRealHeight(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
@@ -125,6 +172,12 @@ public class ScreenUtils {
      *
      * @param context 上下文
      * @return int, 单位px
+     */
+    /****
+     * Get the real height of the screen, including the navigation bar and status bar
+     *
+     * @param context Context
+     * @return int, unit px
      */
     public static int getRealWidth(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

@@ -66,7 +66,7 @@ class DefaultAddView @JvmOverloads constructor(
 
     private fun initTouchRange(event: MotionEvent): Boolean {
         val location = IntArray(2)
-        // 获取在整个屏幕内的绝对坐标
+        // 获取在整个屏幕内的绝对坐标  Get the absolute coordinates of the entire screen
         getLocationOnScreen(location)
         val currentInRange = region.contains(
             event.rawX.toInt() - location[0], event.rawY.toInt() - location[1]

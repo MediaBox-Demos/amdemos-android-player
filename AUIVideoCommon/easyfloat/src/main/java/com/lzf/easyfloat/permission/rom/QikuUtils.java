@@ -21,7 +21,7 @@ public class QikuUtils {
     private static final String TAG = "QikuUtils";
 
     /**
-     * 检测 360 悬浮窗权限
+     * 检测 360 悬浮窗权限  Detect 360 floating Window Permissions
      */
     public static boolean checkFloatWindowPermission(Context context) {
         final int version = Build.VERSION.SDK_INT;
@@ -51,7 +51,7 @@ public class QikuUtils {
     }
 
     /**
-     * 去360权限申请页面
+     * 去360权限申请页面  Go to 360 permission apply page
      */
     public static void applyPermission(Fragment fragment) {
         Intent intent = new Intent();

@@ -22,11 +22,16 @@ import jp.wasabeef.blurry.Blurry;
 /**
  * 重播提示对话框。播放结束的时候会显示这个界面
  */
+/****
+ * Replay prompt dialog box. This is displayed at the end of playback
+ */
 public class ReplayView extends RelativeLayout {
     private int count_down = 3;
     //重播按钮
+    //Replay button
     private View mReplayBtn;
     //重播事件监听
+    //Replay event listener
     private OnReplayClickListener mOnReplayClickListener = null;
     private OnTipsViewBackClickListener mOnTipsViewBackClickListener = null;
     private ImageView bg;
@@ -70,6 +75,7 @@ public class ReplayView extends RelativeLayout {
         View view = inflater.inflate(R.layout.aui_video_flow_dialog_replay, this);
 
         //设置监听
+        //Set listener
 //        mReplayBtn = view.findViewById(R.id.replay_layout);
 //        view.setOnClickListener(new OnClickListener() {
 //            @Override
@@ -132,9 +138,15 @@ public class ReplayView extends RelativeLayout {
     /**
      * 重播点击事件
      */
+    /****
+     * Replay click event
+     */
     public interface OnReplayClickListener {
         /**
          * 重播事件
+         */
+        /****
+         * Replay event
          */
         void onReplay();
     }
@@ -144,12 +156,20 @@ public class ReplayView extends RelativeLayout {
      *
      * @param l 重播事件
      */
+    /****
+     * Set the replay event listener
+     *
+     * @param l Replay event
+     */
     public void setOnReplayClickListener(OnReplayClickListener l) {
         mOnReplayClickListener = l;
     }
 
     /**
      * 设置返回按钮监听
+     */
+    /****
+     * Set the back button listener
      */
     public void setOnBackClickListener(OnTipsViewBackClickListener listener) {
         this.mOnTipsViewBackClickListener = listener;

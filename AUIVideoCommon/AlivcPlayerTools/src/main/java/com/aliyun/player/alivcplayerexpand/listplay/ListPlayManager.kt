@@ -88,6 +88,7 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
     }
 
     //prepare 成功，调用 start，开始播放视频
+    //prepare succeeds, call start to start playing the video.
     private val mOnPrepareListener = object : IPlayer.OnPreparedListener {
         override fun onPrepared() {
             mPlayComplete = false
@@ -108,6 +109,7 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
     }
 
     //首帧开始渲染
+    //First frame rendering
     private val mFirstFrameListener = object : IPlayer.OnRenderingStartListener {
         override fun onRenderingStart() {
             mOnRenderingStartListeners.forEach {
@@ -343,16 +345,22 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
 
     private fun setUpListener() {
         //播放完成监听
+        //Listening for the completion of playback
         mListPlayer.setOnCompletionListener(mCompletionListener)
         //播放错误
+        //Listening for playback errors
         mListPlayer.setOnErrorListener(mOnErrorListener)
         //缓冲成功
+        //Buffering success
         mListPlayer.setOnPreparedListener(mOnPrepareListener)
         //首帧播放成功
+        //First frame playback success
         mListPlayer.setOnRenderingStartListener(mFirstFrameListener)
         //分辨率切换
+        //Resolution switch
         mListPlayer.setOnVideoSizeChangedListener(mOnSizeChangeListener)
         //播放器事件变化
+        //Player event change
         mListPlayer.setOnInfoListener(mPlayInfoListener)
         mListPlayer.setOnLoadingStatusListener(mOnLoadingStatusListener)
         mListPlayer.setOnSeiDataListener(mOnSeiDataListener)
@@ -372,7 +380,8 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
             isLoop = false
             val playConfig = config
             playConfig.mClearFrameWhenStop = false
-            //是否清楚最后一帧
+            //是否清除最后一帧
+            //Whether to clear the last frame
             config = playConfig
             setDefinition("HD")
         }
@@ -415,6 +424,7 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
         vidSts.securityToken = mStsInfo!!.securityToken
         vidSts.accessKeySecret = mStsInfo!!.accessKeySecret
         //试看
+        //Preview
         if (GlobalPlayerConfig.mPreviewTime > 0) {
             val configGen = VidPlayerConfigGen()
             configGen.setPreviewTime(GlobalPlayerConfig.mPreviewTime)
@@ -668,6 +678,7 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
         setUpListener()
         if (vid != mCurrentVid) {
             //从头开始播放
+            //To play from the beginning
             play(position)
         } else {
             mListPlayCallback.forEach {
@@ -715,6 +726,9 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
 
     /**
      * 初始化播放界面
+     */
+    /****
+     * Initialize the playback interface
      */
     private fun initListPlayerView() {
         mListPlayerContainer =
@@ -783,14 +797,17 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
         when (infoBean.code) {
             InfoCode.AutoPlayStart -> {
                 //自动播放开始,需要设置播放状态
+                //To play automatically, you need to set the playback status
             }
             InfoCode.BufferedPosition -> {
                 //更新bufferedPosition
+                //Update bufferedPosition
             }
             InfoCode.CurrentPosition -> {
                 if (mListPlayer.mediaInfo == null)
                     return
                 //更新播放进度
+                //Update playback progress
                 mCurrentPlayDuration = infoBean.extraValue.toInt()
                 val videoDuration = mListPlayer.mediaInfo.duration
                 mListPlayCallback.forEach {
@@ -809,6 +826,11 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
      * 记录播放记录，记录时机
      * 1.如果后台之类的，记录当前播放
      * 2.如果用户触发新的播放视频，则记录上一个播放的进度
+     */
+    /****
+     * Record playback records and time
+     * 1. If the background and other situations, record the current playback
+     * 2. If the user triggers a new playback video, then record the progress of the previous playback
      */
     private fun onRecordProgress(playDuration: Int) {
         if (mPlayComplete || !mContrastPlayEnable || mCurrentVid.isEmpty()) return
@@ -1086,6 +1108,9 @@ class ListPlayManager(var lifecycle: Lifecycle?) : IListPlayManager {
 
         /**
          * 保存最后一个场景的 ListPlayManager,用于音频播放场景
+         */
+        /****
+         * Save the ListPlayManager of the last scene , which is used for audio playback scenarios
          */
         fun getCurrentListPlayManager(): ListPlayManager {
             return mCurrentListPlayManager!!

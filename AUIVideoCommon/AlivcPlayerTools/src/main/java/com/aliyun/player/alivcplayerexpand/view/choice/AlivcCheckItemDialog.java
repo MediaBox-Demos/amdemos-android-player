@@ -89,6 +89,9 @@ public class AlivcCheckItemDialog extends Dialog{
     /**
      * ChoiceItemBottomDialog从下往上升起的动画动画
      */
+    /****
+     * ChoiceItemBottomDialog animation from bottom to top
+     */
     private void animateUp(){
         if(mContentView != null){
             return;
@@ -108,6 +111,9 @@ public class AlivcCheckItemDialog extends Dialog{
 
     /**
      * ChoiceItemBottomDialog从下往上升起的动画动画
+     */
+    /****
+     * ChoiceItemBottomDialog animation from bottom to top
      */
     private void animateDown() {
         if (mContentView == null) {
@@ -183,11 +189,17 @@ public class AlivcCheckItemDialog extends Dialog{
         /**
          * 显示
          */
+        /****
+         * show
+         */
         void onShow();
     }
 
     /**
      * 生成底部选择{@link AlivcCheckItemDialog}对话框
+     */
+    /****
+     * generate bottom choice {@link AlivcCheckItemDialog} dialog
      */
     public static class BottomListCheckBuilder {
         private Context mContext;
@@ -209,6 +221,11 @@ public class AlivcCheckItemDialog extends Dialog{
          * @param mCheckedIndex
          * @return
          */
+        /****
+         * set checked item index
+         * @param mCheckedIndex
+         * @return
+         */
         public BottomListCheckBuilder setCheckedIndex(int mCheckedIndex) {
             this.mCheckedIndex = mCheckedIndex;
             return this;
@@ -217,6 +234,9 @@ public class AlivcCheckItemDialog extends Dialog{
         /**
          * @param typeAndTag Item 的文字内容，同时会把内容设置为 tag。
          */
+        /****
+         * @param typeAndTag Item text content, and set the content to tag.
+         */
         public BottomListCheckBuilder addItem(String typeAndTag,String value) {
             mItems.add(new BottomCheckListItemData(typeAndTag, value,typeAndTag));
             return this;
@@ -224,6 +244,11 @@ public class AlivcCheckItemDialog extends Dialog{
 
         /**
          * 设置item点击事件
+         * @param onCheckItemClickListener
+         * @return
+         */
+        /****
+         * set item click event
          * @param onCheckItemClickListener
          * @return
          */
@@ -238,6 +263,11 @@ public class AlivcCheckItemDialog extends Dialog{
          * @param onBottomDialogDismissListener
          * @return
          */
+        /****
+         * dialog dismiss add callback
+         * @param onBottomDialogDismissListener
+         * @return
+         */
         public BottomListCheckBuilder setOnBottomDialogDismissListener(
             OnDismissListener onBottomDialogDismissListener) {
             this.onBottomDialogDismissListener = onBottomDialogDismissListener;
@@ -246,6 +276,10 @@ public class AlivcCheckItemDialog extends Dialog{
 
         /**
          * 构建一个AlivcCheckItemDialog
+         * @return
+         */
+        /****
+         * build a AlivcCheckItemDialog
          * @return
          */
         public AlivcCheckItemDialog build(){
@@ -289,6 +323,9 @@ public class AlivcCheckItemDialog extends Dialog{
 
         /**
          * 注意:这里只考虑List的高度,如果有title或者headerView,不计入考虑中
+         */
+        /****
+         * note: here only consider the height of the list, if there is a title or headerView, it is not considered
          */
         protected int getListMaxHeight() {
             return (int) (ScreenUtils.getHeight(mContext) * 0.5);

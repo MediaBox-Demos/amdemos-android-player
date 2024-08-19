@@ -20,42 +20,57 @@ import kotlin.math.min
  * @function: 根据吸附模式，实现相应的拖拽效果
  * @date: 2019-07-05  14:24
  */
+/****
+ * @author: liuzhenfeng
+ * @function: Touch Event Handling Tool Class
+ * @date: 2019-07-05  14:24
+ */
 internal class TouchUtils(val context: Context, val config: FloatConfig) {
 
     // 窗口所在的矩形
+    // The rectangle where the window is located
     private var parentRect: Rect = Rect()
 
     // 悬浮的父布局高度、宽度
+    // The height and width of the parent layout
     private var parentHeight = 0
     private var parentWidth = 0
 
     // 四周坐标边界值
+    // The coordinate boundary of the four sides
     private var leftBorder = 0
     private var topBorder = 0
     private var rightBorder = 0
     private var bottomBorder = 0
 
     // 起点坐标
+    // The starting coordinate
     private var lastX = 0f
     private var lastY = 0f
 
     // 浮窗各边距离父布局的距离
+    // The distance of each side from the parent layout
     private var leftDistance = 0
     private var rightDistance = 0
     private var topDistance = 0
     private var bottomDistance = 0
 
     // x轴、y轴的最小距离值
+    // The minimum distance in the x and y axes
     private var minX = 0
     private var minY = 0
     private val location = IntArray(2)
     private var statusBarHeight = 0
 
     // 屏幕可用高度 - 浮窗自身高度 的剩余高度
+    // The remaining height of the screen available height - the height of the floating window
     private var emptyHeight = 0
 
     /**
      * 根据吸附模式，实现相应的拖拽效果
+     */
+    /****
+     *Realize drag-and-drop effects according to the adsorption mode.
      */
     fun updateFloat(
         view: View,
@@ -66,6 +81,7 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
         config.callbacks?.touchEvent(view, event)
         config.floatCallbacks?.builder?.touchEvent?.invoke(view, event)
         // 不可拖拽、或者正在执行动画，不做处理
+        // Cannot be dragged and dropped, or is executing an animation, not handled
         if (!config.dragEnable || config.isAnim) {
             config.isDrag = false
             return
@@ -75,28 +91,34 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
             MotionEvent.ACTION_DOWN -> {
                 config.isDrag = false
                 // 记录触摸点的位置
+                // Record the position of the touch
                 lastX = event.rawX
                 lastY = event.rawY
                 // 初始化一些边界数据
+                // Initialize some boundary data
                 initBoarderValue(view, params)
             }
 
             MotionEvent.ACTION_MOVE -> {
                 // 过滤边界值之外的拖拽
+                // Filter drag out of the boundary
                 if (event.rawX < leftBorder || event.rawX > rightBorder + view.width
                     || event.rawY < topBorder || event.rawY > bottomBorder + view.height
                 ) return
 
                 // 移动值 = 本次触摸值 - 上次触摸值
+                // Move value = This touch value - Last touch value
                 val dx = event.rawX - lastX
                 val dy = event.rawY - lastY
                 // 忽略过小的移动，防止点击无效
+                // Ignore small moves, to prevent click invalid
                 if (!config.isDrag && dx * dx + dy * dy < 81) return
                 config.isDrag = true
 
                 var x = params.x + dx.toInt()
                 var y = params.y + dy.toInt()
                 // 检测浮窗是否到达边缘
+                // Detect whether the floating window reaches the edge
                 x = when {
                     x < leftBorder -> leftBorder
                     x > rightBorder -> rightBorder
@@ -105,6 +127,7 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
 
                 if (config.showPattern == ShowPattern.CURRENT_ACTIVITY) {
                     // 单页面浮窗，设置状态栏不沉浸时，最小高度为状态栏高度
+                    // Single-page floating window, set the minimum height of the status bar when it is not immersed
                     if (y < statusBarHeight(view) && !config.immersionStatusBar) y =
                         statusBarHeight(view)
                 }
@@ -112,6 +135,7 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
                 y = when {
                     y < topBorder -> topBorder
                     // 状态栏沉浸时，最小高度为-statusBarHeight，反之最小高度为0
+                    // When the status bar is immersed, the minimum height is -statusBarHeight, and vice versa the minimum height is 0
                     y < 0 -> if (config.immersionStatusBar) {
                         if (y < -statusBarHeight) -statusBarHeight else y
                     } else 0
@@ -151,12 +175,14 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
                 }
 
                 // 重新设置坐标信息
+                // Re-set the coordinate information
                 params.x = x
                 params.y = y
                 windowManager.updateViewLayout(view, params)
                 config.callbacks?.drag(view, event)
                 config.floatCallbacks?.builder?.drag?.invoke(view, event)
                 // 更新上次触摸点的数据
+                // Update the last touch point data
                 lastX = event.rawX
                 lastY = event.rawY
             }
@@ -164,6 +190,7 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 if (!config.isDrag) return
                 // 回调拖拽事件的ACTION_UP
+                // Callback the drag event ACTION_UP
                 config.callbacks?.drag(view, event)
                 config.floatCallbacks?.builder?.drag?.invoke(view, event)
                 when (config.sidePattern) {
@@ -188,6 +215,9 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
     /**
      * 根据吸附类别，更新浮窗位置
      */
+    /****
+     * According to the adsorption category, update the position of the floating window.
+     */
     fun updateFloat(
         view: View,
         params: LayoutParams,
@@ -200,13 +230,19 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
     /**
      * 初始化边界值等数据
      */
+    /****
+     * Initialize the boundary value and other data.
+     */
     private fun initBoarderValue(view: View, params: LayoutParams) {
         // 屏幕宽高需要每次获取，可能会有屏幕旋转、虚拟导航栏的状态变化
+        // Screen width and height need to be obtained every time, and the status of the screen rotation and the status of the virtual navigation bar may change
         parentWidth = DisplayUtils.getScreenWidth(context)
         parentHeight = config.displayHeight.getDisplayRealHeight(context)
         // 获取在整个屏幕内的绝对坐标
+        // Get the absolute coordinates in the entire screen
         view.getLocationOnScreen(location)
         // 通过绝对高度和相对高度比较，判断包含顶部状态栏
+        // Determine the inclusion of the top status bar by comparing the absolute and relative heights.
         statusBarHeight = if (location[1] > params.y) statusBarHeight(view) else 0
         emptyHeight = parentHeight - view.height - statusBarHeight
 
@@ -214,20 +250,24 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
         rightBorder = min(parentWidth, config.rightBorder) - view.width
         topBorder = if (config.showPattern == ShowPattern.CURRENT_ACTIVITY) {
             // 单页面浮窗，坐标屏幕顶部计算
+            // Single-page floating window, calculated by coordinate from the top of the screen
             if (config.immersionStatusBar) config.topBorder
             else config.topBorder + statusBarHeight(view)
         } else {
             // 系统浮窗，坐标从状态栏底部开始，沉浸时坐标为负
+            // System floating window, coordinate from the bottom of the status bar, immersed coordinate is negative
             if (config.immersionStatusBar) config.topBorder - statusBarHeight(view) else config.topBorder
         }
         bottomBorder = if (config.showPattern == ShowPattern.CURRENT_ACTIVITY) {
             // 单页面浮窗，坐标屏幕顶部计算
+            // Single-page floating window, calculated by coordinate from the top of the screen
             if (config.immersionStatusBar)
                 min(emptyHeight, config.bottomBorder - view.height)
             else
                 min(emptyHeight, config.bottomBorder + statusBarHeight(view) - view.height)
         } else {
             // 系统浮窗，坐标从状态栏底部开始，沉浸时坐标为负
+            // System floating window, coordinate from the bottom of the status bar, immersed coordinate is negative
             if (config.immersionStatusBar)
                 min(emptyHeight, config.bottomBorder - statusBarHeight(view) - view.height)
             else
@@ -263,6 +303,7 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
             SidePattern.RESULT_BOTTOM -> {
                 isX = false
                 // 不要轻易使用此相关模式，需要考虑虚拟导航栏的情况
+                // Do not use this related mode lightly, and consider the situation of the virtual navigation bar
                 bottomBorder
             }
             SidePattern.RESULT_VERTICAL -> {
@@ -287,6 +328,7 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
             try {
                 if (isX) params.x = it.animatedValue as Int else params.y = it.animatedValue as Int
                 // 极端情况，还没吸附就调用了关闭浮窗，会导致吸附闪退
+                // The extreme case, just before adsorption, called the close window, will cause the adsorption to crash
                 windowManager.updateViewLayout(view, params)
             } catch (e: Exception) {
                 animator.cancel()
@@ -318,6 +360,9 @@ internal class TouchUtils(val context: Context, val config: FloatConfig) {
 
     /**
      * 计算一些边界距离数据
+     */
+    /****
+     * Calculate some boundary distance data.
      */
     private fun initDistanceValue(params: LayoutParams) {
         leftDistance = params.x - leftBorder

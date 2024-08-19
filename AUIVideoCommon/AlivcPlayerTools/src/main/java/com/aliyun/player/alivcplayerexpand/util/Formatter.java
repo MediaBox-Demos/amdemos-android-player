@@ -70,6 +70,12 @@ public class Formatter {
      * @param time
      * @return
      */
+    /****
+     * Conversion of double type to date mm:ss
+     *
+     * @param time
+     * @return
+     */
     public static String double2Date(double time) {
         long lTime = new Double(time).longValue();
         lTime = lTime - 28800;
@@ -84,6 +90,12 @@ public class Formatter {
      *
      * @param formatTime 00:00:00 时间格式
      * @return 时间戳(毫秒)
+     */
+    /****
+     * Convert 00:00:00 format time to timestamp
+     *
+     * @param formatTime 00:00:00 time format
+     * @return timestamp(millisecond)
      */
     public static int getIntTime(String formatTime) {
         if (TextUtils.isEmpty(formatTime)) {
@@ -105,6 +117,12 @@ public class Formatter {
      * @param timeMs 时间戳
      * @return 00:00:00 时间格式
      */
+    /****
+     * Convert timestamp to 00:00:00 format time
+     *
+     * @param timeMs timestamp
+     * @return 00:00:00 time format
+     */
     public static String getStringTime(int timeMs) {
         StringBuilder formatBuilder = new StringBuilder();
         java.util.Formatter formatter = new java.util.Formatter(formatBuilder, Locale.getDefault());
@@ -120,6 +138,12 @@ public class Formatter {
 
     /**
      * 视频大小格式化,这里由于要和IOS同步,所以先四舍五入保留两位小数,再四舍五入保留一位小数
+     */
+    /****
+     * Video size formatting, here since to be synchronized with IOS, first round to two decimal places, then round to one decimal place
+     *
+     * @param size
+     * @return
      */
     public static String formatSizeDecimal(long size) {
         double kb = (size / 1024.00 * 1.0f);
@@ -165,10 +189,17 @@ public class Formatter {
      * @param timeMs 时间戳
      * @return 00-00 时间格式
      */
+    /****
+     * Convert timestamp to 00-00 format time
+     *
+     * @param timeMs timestamp
+     * @return 00-00 time format
+     */
     public static String stampToDate(long timeMs){
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
         //如果它本来就是long类型的,则不用写这一步
+        //If it is originally a long type, you don't need to write this step.
         Date date = new Date(timeMs);
         res = simpleDateFormat.format(date);
         return res;

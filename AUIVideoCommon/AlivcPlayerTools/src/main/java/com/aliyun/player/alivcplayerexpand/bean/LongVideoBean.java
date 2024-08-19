@@ -8,29 +8,29 @@ import java.util.List;
 public class LongVideoBean implements Serializable {
 
     /*
-        title	        string		视频标题
-        videoId	        string		视频id
-        description	    string		视频描述
-        duration	    string		视频时长（秒）
-        coverUrl	    string		视频封面URL
-        status	        string		视频状态
-        firstFrameUrl	string		首帧地址
-        size	        string		视频源文件大小（字节）。
-        tags	        string		视频标签.多个用逗号分隔。
-        tvId	        string		电视剧id。
-        tvName	        string		电视剧名称。
-        dot	            string		打点信息。
-        sort	        string		序号。
-        creationTime	string		创建时间
-        transcodeStatus	string		转码状态。
-        snapshotStatus	string		截图状态
-        censorStatus	string		审核状态
-        isRecommend	    string		是否推荐（是：true，否：false）
-        isHomePage	    string		是否首页（是：true，否：false）
-        isVip	        string		是否vip（是：true，否：false）
-        watchDuration   String      观看时长 (毫秒)
-        watchPercent    int         观看历史百分比
-        saveUrl    String         本地视频地址
+        title	        string		视频标题 Video Title
+        videoId	        string		视频id Video Id
+        description	    string		视频描述 Video Description
+        duration	    string		视频时长（秒） Video Duration(s)
+        coverUrl	    string		视频封面URL Video Cover URL
+        status	        string		视频状态 Video Status
+        firstFrameUrl	string		首帧地址 First frame url
+        size	        string		视频源文件大小（字节） Video source file size (bytes)
+        tags	        string		视频标签.多个用逗号分隔 Video Tags.Separate by commas
+        tvId	        string		电视剧id TV Id
+        tvName	        string		电视剧名称 TV Name
+        dot	            string		打点信息 Dot
+        sort	        string		序号 Sort
+        creationTime	string		创建时间 Creation Time
+        transcodeStatus	string		转码状态 Transcode Status
+        snapshotStatus	string		截图状态 Snapshot Status
+        censorStatus	string		审核状态 Censor Status
+        isRecommend	    string		是否推荐（是：true，否：false） Is or not Recommend
+        isHomePage	    string		是否首页（是：true，否：false） Is or not Home
+        isVip	        string		是否vip（是：true，否：false） Is or not Vip
+        watchDuration   String      观看时长 (毫秒) Watch Duration (ms)
+        watchPercent    int         观看历史百分比 Watch History Percent
+        saveUrl    String         本地视频地址 Local Video Address
 
      */
     private String title;

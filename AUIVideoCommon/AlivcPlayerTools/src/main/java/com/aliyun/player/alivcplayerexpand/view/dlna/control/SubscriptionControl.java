@@ -16,7 +16,9 @@ import org.fourthline.cling.model.meta.Device;
 /**
  * 控制点
  */
-
+/****
+ * Control points
+ */
 public class SubscriptionControl implements ISubscriptionControl<Device> {
 
     private AVTransportSubscriptionCallback mAVTransportSubscriptionCallback;

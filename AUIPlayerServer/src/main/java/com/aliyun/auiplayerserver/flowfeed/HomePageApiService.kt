@@ -8,6 +8,9 @@ import retrofit2.http.Query
 /**
  * 首页接口 api
  */
+/****
+ * Home interface api
+ */
 interface HomePageApiService {
 
     @GET("/api/vod/getVodRecommendVideoList")

@@ -64,6 +64,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
     /**
      * 设置数据
      */
+    /****
+     * Set data
+     */
     public void setTrackInfoLists(List<TrackInfo> trackInfoLists) {
         if (mTrackInfoRadioGroup != null && trackInfoLists != null) {
             for(int i = 0;i < trackInfoLists.size();i++){
@@ -88,7 +91,8 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
                 } else {
                     if(i == 0){
                         //自动码率
-                        radioButton.setText("自动码率");
+                        //auto_bitrate
+                        radioButton.setText(R.string.alivc_player_setting_auto_bitrate);
                         radioButton.setId(R.id.auto_bitrate);
                     }else{
                         radioButton.setText(String.format(Locale.getDefault(), "%d", trackInfo.getVideoBitrate()));
@@ -103,6 +107,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
     /**
      * 创建RadioButton
      */
+    /****
+     * Create RadioButton
+     */
     private RadioButton createRadioButton() {
         final RadioButton radioButton = new RadioButton(mContext);
         int bottomMargin = DensityUtil.dip2px(getContext(),24);
@@ -116,6 +123,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
     /**
      * 设置当前选中的TrackInfo
      */
+    /****
+     * Set current selected TrackInfo
+     */
     public void setCurrentTrackInfo(TrackInfo trackInfo) {
         if (mTrackInfoRadioGroup != null && mTrackInfoRadioGroup.getChildCount() > 0) {
             int childCount = mTrackInfoRadioGroup.getChildCount();
@@ -126,6 +136,7 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
                     if (trackInfo != null && radioButtonTag != null && trackInfo.getIndex() == radioButtonTag.getIndex()) {
                         if(trackInfo.getType() == TrackInfo.Type.TYPE_VIDEO && i == 0){
                             //排除自动码率选项
+                            //Exclude automatic code rate options
                             continue;
                         }else{
                             mTrackInfoRadioGroup.check(radioButtaon.getId());
@@ -179,6 +190,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
         /**
          * 音轨切换
          */
+        /****
+         * Audio track switch
+         */
         void onAudioChanged(TrackInfo selectTrackInfo);
     }
 
@@ -190,6 +204,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
         /**
          * 码率切换
          */
+        /****
+         * Bitrate switch
+         */
         void onBitrateChanged(TrackInfo selectTrackInfo,int checkedId);
     }
 
@@ -200,6 +217,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
     public interface OnSubtitleChangedListener {
         /**
          * 字幕切换
+         */
+        /****
+         * Subtitle switch
          */
         void onSubtitleChanged(TrackInfo selectTrackInfo);
 
@@ -214,6 +234,9 @@ public class TrackInfoView extends LinearLayout implements RadioGroup.OnCheckedC
 
         /**
          * 清晰度切换
+         */
+        /****
+         * Definition switch
          */
         void onDefinitionChanged(TrackInfo selectTrackInfo);
     }

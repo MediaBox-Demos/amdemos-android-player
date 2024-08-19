@@ -21,6 +21,11 @@ import com.alivc.auiplayer.videoepisode.listener.OnInteractiveEventListener;
  * @date 2023/8/29
  * @brief Feed流页面交互组件（点赞、评论、分享）
  */
+/****
+ * @author keria
+ * @date 2023/8/29
+ * @brief Feed stream page interaction components (likes, comments, shares)
+ */
 public class AUIVideoInteractiveComponent extends FrameLayout {
 
     private LinearLayout mLikeLayout;

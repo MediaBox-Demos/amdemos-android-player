@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * assets目录文件拷贝工具类
  */
+/****
+ * assets directory file copy utility class
+ */
 public class Common {
     private static Common instance;
     private static final int SUCCESS = 1;
@@ -151,6 +154,10 @@ public class Common {
         /**
          * copy fail
          * @param error 错误信息
+         */
+        /****
+         * copy fail
+         * @param error error information
          */
         void onFailed(String error);
     }

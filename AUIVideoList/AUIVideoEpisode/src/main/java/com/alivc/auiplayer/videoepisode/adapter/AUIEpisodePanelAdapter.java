@@ -24,6 +24,11 @@ import java.util.List;
  * @date 2023/8/29
  * @brief 短剧选集列表适配器
  */
+/****
+ * @author keria
+ * @date 2023/8/29
+ * @brief episode anthology list adapter
+ */
 public class AUIEpisodePanelAdapter extends RecyclerView.Adapter<AUIEpisodePanelAdapter.PanelViewHolder> {
 
     private List<AUIEpisodeVideoInfo> mEpisodeVideoInfos = null;

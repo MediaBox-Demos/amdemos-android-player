@@ -76,6 +76,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@null</item>
         <!-- 为了避免在有 NavigationBar 的手机上 Dialog 从 NavigationBar 底部上来。去掉 Dialog 的动画，使用 View 的动画。-->
+        <!-- To avoid Dialog coming up from the bottom of NavigationBar on phones with NavigationBar. Remove the animation of Dialog and use the animation of View.-->
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">0dp</item>
     </style>
@@ -85,10 +86,12 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@null
         </item><!-- 为了避免在有 NavigationBar 的手机上 Dialog 从 NavigationBar 底部上来。去掉 Dialog 的动画，使用 View 的动画。-->
+        <!-- To avoid Dialog coming up from the bottom of NavigationBar on phones with NavigationBar. Remove the animation of Dialog and use the animation of View.-->
         <item name="android:layout_width">match_parent</item>
     </style>
 
     <!--对话框从下向上弹出动画-->
+    <!--Dialog box pop-up animation from bottom to top-->
     <style name="Dialog.Animation">
         <item name="android:windowEnterAnimation">@anim/alivc_slide_in_from_bottom</item>
         <item name="android:windowExitAnimation">@anim/alivc_slide_out_to_bottom</item>

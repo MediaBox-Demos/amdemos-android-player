@@ -8,5 +8,10 @@ public interface OnDetailEventListener {
      *
      * @param episodeVideoInfo 短剧数据
      */
+    /****
+     * Click username
+     *
+     * @param episodeVideoInfo episode data
+     */
     void onClickAuthor(AUIEpisodeVideoInfo episodeVideoInfo);
 }

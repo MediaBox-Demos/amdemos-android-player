@@ -32,8 +32,7 @@ public abstract class AUIVideoListViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(VideoInfo videoInfo) {
         mVideoTitleTextView.setText(videoInfo.getTitle());
-        mAuthorTextView.setText("@阿里云视频云 MediaBox");
-
+        mAuthorTextView.setText(R.string.Alibaba_clound_video_cloud_MediaBox);
         mVideoTitleTextView.setVisibility(mEnableTitle ? View.VISIBLE : View.GONE);
         mAuthorTextView.setVisibility(mEnableAuth ? View.VISIBLE : View.GONE);
         mSeekBar.setVisibility(mEnableSeekbar ? View.VISIBLE : View.GONE);

@@ -23,6 +23,9 @@ import java.lang.ref.WeakReference;
 /**
  * 跑马灯
  */
+/****
+ * MarqueeView
+ */
 public class MarqueeView extends FrameLayout {
 
     private static final int START = 1;
@@ -34,33 +37,54 @@ public class MarqueeView extends FrameLayout {
     /**
      * 跑马灯默认时长
      */
+    /****
+     * Marquee default duration
+     */
     private int mInterval = 5000;
     /**
      * 跑马灯默认字体大小
+     */
+    /****
+     * Marquee default text size
      */
     private int mTextSize = 14;
 
     /**
      * 跑马灯默认字体颜色
      */
+    /****
+     * Marquee default text color
+     */
     private int mTextColor = getResources().getColor(R.color.alivc_common_font_white_light);
 
     /**
      * 跑马灯默认内容
      */
+    /****
+     * Marquee default text
+     */
     private String mFlipText = getResources().getString(R.string.alivc_marquee_test);
     /**
      * 跑马灯的动画
+     */
+    /****
+     * Marquee animation
      */
     private ObjectAnimator objectAnimator;
 
     /**
      * 跑马灯是否开启
      */
+    /****
+     * Marquee is or not start
+     */
     private boolean isStart = false;
 
     /**
      * 动画是否在执行
+     */
+    /****
+     * Animation is or not start
      */
     private boolean isAnimStart = false;
 
@@ -72,9 +96,15 @@ public class MarqueeView extends FrameLayout {
     /**
      * 根View
      */
+    /****
+     * RootView
+     */
     private View view;
     /**
      * 内容TextView
+     */
+    /****
+     * ContentTextView
      */
     private TextView mContentTextView;
     /**
@@ -83,6 +113,9 @@ public class MarqueeView extends FrameLayout {
     private RelativeLayout mMarqueeRootRelativeLayout;
     /**
      * 当前屏幕模式
+     */
+    /****
+     * Current screen mode
      */
     private AliyunScreenMode mScreenMode = AliyunScreenMode.Small;
 
@@ -149,6 +182,11 @@ public class MarqueeView extends FrameLayout {
      *
      * @param milliseconds 跑马灯时长,毫秒
      */
+    /****
+     * Set marquee duration
+     *
+     * @param milliseconds Marquee duration, milliseconds
+     */
     public void setInterval(int milliseconds) {
         if (milliseconds < 5000) {
             milliseconds = 5000;
@@ -160,6 +198,9 @@ public class MarqueeView extends FrameLayout {
     /**
      * 设置字体大小
      */
+    /****
+     * Set text size
+     */
     public void setTextSize(int size) {
         this.mTextSize = size;
         mContentTextView.setText(mTextSize);
@@ -168,6 +209,9 @@ public class MarqueeView extends FrameLayout {
     /**
      * 设置字体颜色
      */
+    /****
+     * Set text color
+     */
     public void setTextColor(int color) {
         this.mTextColor = color;
         mContentTextView.setTextColor(mTextColor);
@@ -175,6 +219,9 @@ public class MarqueeView extends FrameLayout {
 
     /**
      * 设置跑马灯内容
+     */
+    /****
+     * Set marquee content
      */
     public void setText(String text) {
         if (TextUtils.isEmpty(text)) {
@@ -187,6 +234,9 @@ public class MarqueeView extends FrameLayout {
     /**
      * 跑马灯是否开启
      */
+    /****
+     * Marquee is or not start
+     */
     public boolean isStart() {
         return isStart;
     }
@@ -194,6 +244,9 @@ public class MarqueeView extends FrameLayout {
 
     /**
      * 开启跑马灯
+     */
+    /****
+     * Start marquee
      */
     public void startFlip() {
         if(mScreenMode == AliyunScreenMode.Small){
@@ -210,6 +263,9 @@ public class MarqueeView extends FrameLayout {
     /**
      * 关闭跑马灯
      */
+    /****
+     * Stop marquee
+     */
     public void stopFlip() {
         this.mCurrentState = STOP;
         mMarqueeRootRelativeLayout.setVisibility(View.INVISIBLE);
@@ -222,6 +278,9 @@ public class MarqueeView extends FrameLayout {
     /**
      * 暂停
      */
+    /****
+     * Pause
+     */
     public void pause() {
         this.mCurrentState = PAUSE;
         mMarqueeRootRelativeLayout.setVisibility(View.INVISIBLE);
@@ -233,12 +292,18 @@ public class MarqueeView extends FrameLayout {
     /**
      * 设置当前屏幕状态
      */
+    /****
+     * Set current screen mode
+     */
     public void setScreenMode(AliyunScreenMode screenMode) {
         this.mScreenMode = screenMode;
     }
 
     /**
      * 创建动画
+     */
+    /****
+     * Create animation
      */
     public void createAnimation() {
         int textWidth = mContentTextView.getMeasuredWidth();
@@ -283,17 +348,29 @@ public class MarqueeView extends FrameLayout {
     /**
      * 跑马灯显示区域
      */
+    /****
+     * Marquee display area
+     */
     public enum MarqueeRegion{
         /**
          * 顶部
+         */
+        /****
+         * Top
          */
         TOP,
         /**
          * 中间
          */
+        /****
+         * Middle
+         */
         MIDDLE,
         /**
          * 底部
+         */
+        /****
+         * Bottom
          */
         BOTTOM;
     }

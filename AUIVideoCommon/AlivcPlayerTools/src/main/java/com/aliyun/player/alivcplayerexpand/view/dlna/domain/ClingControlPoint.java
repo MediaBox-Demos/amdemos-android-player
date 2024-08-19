@@ -5,6 +5,9 @@ import org.fourthline.cling.controlpoint.ControlPoint;
 /**
  * cling 控制点
  */
+/****
+ * Cling control point
+ */
 
 public class ClingControlPoint implements IControlPoint<ControlPoint> {
 

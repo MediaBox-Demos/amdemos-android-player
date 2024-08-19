@@ -5,7 +5,7 @@ import com.lzf.easyfloat.interfaces.OnDisplayHeight
 
 /**
  * @author: liuzhenfeng
- * @function: 获取屏幕有效高度的实现类
+ * @function: 获取屏幕有效高度的实现类  Implementation class for getting the effective height of the screen
  * @date: 2020-02-16  16:26
  */
 internal class DefaultDisplayHeight : OnDisplayHeight {

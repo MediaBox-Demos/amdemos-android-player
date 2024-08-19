@@ -19,7 +19,11 @@ import java.util.List;
 /**
  * 投屏设备选择adapter
  */
+/****
+ * The device selection adapter for the casting screen
+ */
 public class SelectSeriesAdapter extends RecyclerView.Adapter<SelectSeriesAdapter.SelectSeriesViewHolder> {
+    // TODO：Only Chinese
     private static String CREATE_TIME_MSG = "原创·138万次观看·06-01发布";
     private List<VideoInfo> mList = new ArrayList<>();
     private int mCurrentPostion = 0;
@@ -86,6 +90,9 @@ public class SelectSeriesAdapter extends RecyclerView.Adapter<SelectSeriesAdapte
 
     /**
      * 清空
+     */
+    /****
+     * Clear
      */
     public void clear() {
         if (mList != null && mList.size() > 0) {

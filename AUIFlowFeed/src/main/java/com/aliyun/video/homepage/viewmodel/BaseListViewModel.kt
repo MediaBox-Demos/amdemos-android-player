@@ -11,6 +11,9 @@ private const val TAG = "BaseListViewModel"
 /**
  *  列表请求的基础 ViewModel 类
  */
+/****
+ * The base ViewModel class for list requests
+ */
 open class BaseListViewModel<T> : BaseReactiveViewModel() {
     protected val mListData = mutableListOf<T>()
     val mListLiveData = MutableLiveData<MutableList<T>>()
@@ -23,6 +26,9 @@ open class BaseListViewModel<T> : BaseReactiveViewModel() {
 
     /**
      * 开始请求数据
+     */
+    /****
+     * Start requesting data
      */
     open fun requestListData(isLoadMore: Boolean = false,context: Context, refresh: Boolean) {
         if (refresh) {

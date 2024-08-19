@@ -36,6 +36,8 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.0'
 
     // 请参考 AndroidThirdParty 目录下的 config.gradle 文件，获取 播放器SDK 最新版本
+    // Please refer to the config.gradle file in the AndroidThirdParty directory for the latest version of the player SDK.
     // 或者您可以参考官网 SDK 更新情况：https://help.aliyun.com/zh/vod/developer-reference/sdk-overview-and-download
+    // Or you can refer to the official website for SDK updates: https://help.aliyun.com/zh/vod/developer-reference/sdk-overview-and-download
     api externalPlayerFull
 }

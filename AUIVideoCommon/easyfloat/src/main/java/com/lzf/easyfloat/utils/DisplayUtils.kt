@@ -13,7 +13,7 @@ import com.lzf.easyfloat.permission.rom.RomUtils
 
 /**
  * @author: liuzhenfeng
- * @function: 屏幕显示相关工具类
+ * @function: 屏幕显示相关工具类  Screen display related utils class
  * @date: 2019-05-23  15:23
  */
 object DisplayUtils {
@@ -43,6 +43,9 @@ object DisplayUtils {
     /**
      * 获取屏幕宽度（显示宽度，横屏的时候可能会小于物理像素值）
      */
+    /****
+     * Get the screen width (display width, which may be less than the physical pixel value in landscape)
+     */
     fun getScreenWidth(context: Context): Int {
         val windowManager = context.getSystemService(Service.WINDOW_SERVICE) as WindowManager
         val outMetrics = DisplayMetrics()
@@ -53,10 +56,16 @@ object DisplayUtils {
     /**
      * 获取屏幕高度（物理像素值的高度）
      */
+    /****
+     * Get the screen height (physical pixel value height)
+     */
     fun getScreenHeight(context: Context) = getScreenSize(context).y
 
     /**
      * 获取屏幕宽高
+     */
+    /****
+     * Get the screen width and height
      */
     fun getScreenSize(context: Context) = Point().apply {
         val windowManager = context.getSystemService(Service.WINDOW_SERVICE) as WindowManager
@@ -66,6 +75,9 @@ object DisplayUtils {
 
     /**
      * 获取状态栏高度
+     */
+    /****
+     * Get the status bar height
      */
     fun getStatusBarHeight(context: Context): Int {
         var result = 0
@@ -80,6 +92,9 @@ object DisplayUtils {
     /**
      * 获取导航栏真实的高度（可能未显示）
      */
+    /****
+     * Get the real height of the navigation bar (may not be displayed)
+     */
     fun getNavigationBarHeight(context: Context): Int {
         var result = 0
         val resources = context.resources
@@ -92,6 +107,9 @@ object DisplayUtils {
     /**
      * 获取导航栏当前的高度
      */
+    /****
+     * Get the current height of the navigation bar
+     */
     fun getNavigationBarCurrentHeight(context: Context) =
         if (hasNavigationBar(context)) getNavigationBarHeight(context) else 0
 
@@ -100,6 +118,12 @@ object DisplayUtils {
      *
      * @param context 上下文对象
      * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
+     */
+    /****
+     * Determine whether the virtual navigation bar is displayed
+     *
+     * @param context Context object
+     * @return true (displayed virtual navigation bar), false (not displayed or not supported virtual navigation bar)
      */
     fun hasNavigationBar(context: Context) = when {
         getNavigationBarHeight(context) == 0 -> false
@@ -112,6 +136,9 @@ object DisplayUtils {
     /**
      * 不包含导航栏的有效高度（没有导航栏，或者已去除导航栏的高度）
      */
+    /****
+     * The valid height without the navigation bar (without navigation bar or the height of the navigation bar has been removed)
+     */
     fun rejectedNavHeight(context: Context): Int {
         val point = getScreenSize(context)
         if (point.x > point.y) return point.y
@@ -121,6 +148,10 @@ object DisplayUtils {
     /**
      * 华为手机是否隐藏了虚拟导航栏
      * @return true 表示隐藏了，false 表示未隐藏
+     */
+    /****
+     * Huawei mobile whether hide the virtual navigation bar
+     * @return true indicates hidden, false indicates not hidden
      */
     private fun isHuaWeiHideNav(context: Context) =
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -133,6 +164,10 @@ object DisplayUtils {
      * 小米手机是否开启手势操作
      * @return false 表示使用的是虚拟导航键(NavigationBar)， true 表示使用的是手势， 默认是false
      */
+    /****
+     * Xiaomi mobile whether open the gesture operation
+     * @return false indicates using the virtual navigation key (NavigationBar), true indicates using the gesture, the default is false
+     */
     private fun isMiuiFullScreen(context: Context) =
         Settings.Global.getInt(context.contentResolver, "force_fsg_nav_bar", 0) != 0
 
@@ -140,11 +175,18 @@ object DisplayUtils {
      * Vivo手机是否开启手势操作
      * @return false 表示使用的是虚拟导航键(NavigationBar)， true 表示使用的是手势， 默认是false
      */
+    /****
+     * Vivo mobile whether open the gesture operation
+     * @return false indicates using the virtual navigation key (NavigationBar), true indicates using the gesture, the default is false
+     */
     private fun isVivoFullScreen(context: Context): Boolean =
         Settings.Secure.getInt(context.contentResolver, "navigation_gesture_on", 0) != 0
 
     /**
      * 其他手机根据屏幕真实高度与显示高度是否相同来判断
+     */
+    /****
+     * Other mobiles judge by whether the screen real height and display height are the same
      */
     private fun isHasNavigationBar(context: Context): Boolean {
         val windowManager: WindowManager =
@@ -164,6 +206,7 @@ object DisplayUtils {
         val displayWidth = displayMetrics.widthPixels
 
         // 部分无良厂商的手势操作，显示高度 + 导航栏高度，竟然大于物理高度，对于这种情况，直接默认未启用导航栏
+        // Some unscrupulous manufacturers gesture operation, display height + navigation bar height, even greater than the physical height, for this case, the default navigation bar is not enabled!
         if (displayHeight + getNavigationBarHeight(context) > realHeight) return false
 
         return realWidth - displayWidth > 0 || realHeight - displayHeight > 0

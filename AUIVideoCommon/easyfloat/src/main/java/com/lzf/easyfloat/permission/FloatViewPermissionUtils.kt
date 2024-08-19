@@ -14,7 +14,7 @@ import com.lzf.easyfloat.utils.Logger
 
 /**
  * @author: liuzhenfeng
- * @function: 悬浮窗权限工具类
+ * @function: 悬浮窗权限工具类  Floating Window Permission Utilities
  * @date: 2019-07-15  10:22
  */
 object FloatViewPermissionUtils {
@@ -23,8 +23,8 @@ object FloatViewPermissionUtils {
     private const val TAG = "PermissionUtils--->"
 
     /**
-     * 检测是否有悬浮窗权限
-     * 6.0 版本之后由于 google 增加了对悬浮窗权限的管理，所以方式就统一了
+     * 检测是否有悬浮窗权限  Check whether there is floating window permission
+     * 6.0 版本之后由于 google 增加了对悬浮窗权限的管理，所以方式就统一了  Since 6.0, Google has increased the management of floating window permissions, so the way is unified
      */
     @JvmStatic
     fun checkPermission(context: Context): Boolean =
@@ -38,7 +38,7 @@ object FloatViewPermissionUtils {
         } else commonROMPermissionCheck(context)
 
     /**
-     * 申请悬浮窗权限
+     * 申请悬浮窗权限  Apply floating window permission
      */
     @JvmStatic
     fun requestPermission(activity: Activity, onPermissionResult: OnPermissionResult) =
@@ -51,7 +51,7 @@ object FloatViewPermissionUtils {
             RomUtils.checkIsOppoRom() -> OppoUtils.applyOppoPermission(fragment)
             RomUtils.checkIsMeizuRom() -> MeizuUtils.applyPermission(fragment)
             RomUtils.checkIs360Rom() -> QikuUtils.applyPermission(fragment)
-            else -> Logger.i(TAG, "原生 Android 6.0 以下无需权限申请")
+            else -> Logger.i(TAG, "No permission application is required before native Android 6.0.")
         } else commonROMPermissionApply(fragment)
 
     private fun huaweiPermissionCheck(context: Context) =
@@ -70,8 +70,8 @@ object FloatViewPermissionUtils {
         OppoUtils.checkFloatWindowPermission(context)
 
     /**
-     * 6.0以后，通用悬浮窗权限检测
-     * 但是魅族6.0的系统这种方式不好用，需要单独适配一下
+     * 6.0以后，通用悬浮窗权限检测  Common floating window permission check after 6.0
+     * 但是魅族6.0的系统这种方式不好用，需要单独适配一下  But the system of Meizu 6.0 is not good to use this way, so we need to adapt it separately
      */
     private fun commonROMPermissionCheck(context: Context): Boolean =
         if (RomUtils.checkIsMeizuRom()) meizuPermissionCheck(context) else {
@@ -88,10 +88,11 @@ object FloatViewPermissionUtils {
         }
 
     /**
-     * 通用 rom 权限申请
+     * 通用 rom 权限申请  Common rom permission apply
      */
     private fun commonROMPermissionApply(fragment: Fragment) = when {
         // 这里也一样，魅族系统需要单独适配
+        // Same here, the Meizu system needs to be adapted separately
         RomUtils.checkIsMeizuRom() -> MeizuUtils.applyPermission(fragment)
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> try {
             commonROMPermissionApplyInternal(fragment)
@@ -99,6 +100,7 @@ object FloatViewPermissionUtils {
             Logger.e(TAG, Log.getStackTraceString(e))
         }
         // 需要做统计效果
+        // Need to do statistical effects
         else -> Logger.d(TAG, "user manually refuse OVERLAY_PERMISSION")
     }
 

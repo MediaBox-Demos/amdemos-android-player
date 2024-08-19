@@ -20,8 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# 播放器SDK混淆规则 --------->>>>>>>>> start
-# 最新混淆规则请查找官网文档
+# 播放器SDK混淆规则 Player SDK proguard rules --------->>>>>>>>> start
+# 最新混淆规则请查找官网文档 The latest proguard rules are documented on the official website
 # https://help.aliyun.com/zh/vod/developer-reference/quick-integration-1
 -keep class com.alivc.**{*;}
 -keep class com.aliyun.**{*;}
@@ -29,4 +29,4 @@
 -dontwarn com.alivc.**
 -dontwarn com.aliyun.**
 -dontwarn com.cicada.**
-# 播放器SDK混淆规则 ---------<<<<<<<<< end
+# 播放器SDK混淆规则 Player SDK proguard rules ---------<<<<<<<<< end

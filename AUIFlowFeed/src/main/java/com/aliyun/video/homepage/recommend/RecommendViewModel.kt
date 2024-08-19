@@ -43,6 +43,9 @@ const val PLAY_STATE_COMPLETE = 3
 /**
  * 非纯净 ViewModel，需要修改
  */
+/****
+ * Not a pure ViewModel, needed to be modified.
+ */
 class RecommendViewModel : BaseListViewModel<VideoInfo>() {
     private val mRepository by lazy {
         HomePageVideoListRepository()
@@ -68,6 +71,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
     ) {
         mListPlayManager = ListPlayManager.getListPlayManager(lifecycle)
         //lifecycle 生命周期 控制播放
+        //lifecycle Life cycle Control playback
         mListPlayManager.init(context)
         mListPlayManager.addPlayCallback(object : OnListPlayCallback {
             override fun onPrepare() {
@@ -87,6 +91,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
 
             override fun onPlayComplete() {
                 //显示默认状态
+                //Display default status
                 if (FloatViewPlayManager.mFloatViewShowing) return
                 if (mListPlayManager.getPlayerScene() == IPlayManagerScene.SCENE_ONLY_VOICE) {
                     onAudioModePlayComplete(mPosition, rcv)
@@ -102,6 +107,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
                 durationMillis: Int
             ) {
                 //更新进度
+                //Progress update
                 updatePlayProgress(rcv, playProgress, currentPlayMillis, durationMillis)
             }
 
@@ -163,10 +169,12 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
         refreshGlobalPlayConfig()
         mListPlayManager.setPlayerScene(IPlayManagerScene.SCENE_NORMAL)
         //显示上次播放的封面
+        //Display the last played cover
         if (mLastPosition in -1 until mListData.size) {
             showPlayFunctionView(false, mLastPosition, rcv)
         }
         //设置容器，在开始播放
+        // Set the container and start playing
         val container: ViewGroup? = getRecyclerViewItemChildView(
             rcv,
             position,
@@ -185,6 +193,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
     ) {
         if (!playing) {
             //关闭音频模式的 ui
+            //Disable audio mode ui
             showAudioMode(false, position, rcv, false)
             updatePlayIcon(position, rcv, show = true, playing = false)
             onShowContrastPlayTip(false, position, rcv)
@@ -275,6 +284,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
             )
         }
         //手势 View
+        //Gesture View
         val gestureView: View? =
             getRecyclerViewItemChildView<View>(rcv, position, R.id.mVideoGestureView)
         gestureView?.setTag(R.id.item_audio_mode, audioMode)
@@ -316,12 +326,29 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
      * 1.当前播放和列表同一集
      * 2.当前播放，是列表的选集
      */
+    /****
+     * Need to consider whether the current playback is the default number of episodes, if it is not the default number of episodes, do not need to renew the playback, directly from the beginning of the playback
+     * Exit scene
+     * 1. Normal exit scene
+     * 2. Picture-in-picture exit scene
+     * 3. Audio playback exit
+     * Where 1 and 2 are showing the cover
+     *
+     * Playback status
+     * 1. Playing
+     * 2. Pause
+     * Pause
+     * Whether it is currently playing
+     * 1. Currently playing is the same episode as the list.
+     * 2. Currently playing, is a selection of the list
+     */
     fun continuePlay(
         rcv: RecyclerView,
         playerViewContainerId: Int
     ) {
         if (mCurrentScrollPosition != mPosition) {
             //如果当前滑动的位置和之前的播放位置发送变化，则先暂停视频，播放当前视频
+            // If the current slide position sends a change from the previous playback position, pause the video first and play the current video
             mListPlayManager.pause()
             clickVideo(mCurrentScrollPosition, rcv, R.id.mVideoContainer, R.id.mVideoCover)
             return
@@ -334,11 +361,14 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
         mPlayerScene.value = playerScene
         if (playerScene == IPlayManagerScene.SCENE_FLOAT_PLAY) {
             //画中画播放，显示封面
+            //Picture-in-Picture playback with cover displayed
             showPlayFunctionView(false, mPosition, rcv)
             //滑动播放失效，除非点击新的视频
+            //Slide playback fails unless new video is clicked on
             mInFloatPlayState = true
         } else {
             //设置容器，在开始播放
+            // Set the container and start playing
             val container: ViewGroup? = getRecyclerViewItemChildView(
                 rcv,
                 mPosition,
@@ -349,6 +379,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
             val sameVideo = vid == mListPlayManager.getCurrentVideo().videoId
             if (playComplete) {
                 //显示封面
+                //Display cover
                 showPlayFunctionView(false, mPosition, rcv)
             } else {
                 hideViewWhenPlaying(rcv)
@@ -366,6 +397,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
             }
             if (pause || playComplete) {
                 //显示播放按钮
+                //Display Play Button
                 playIcon?.apply {
                     setImageResource(R.drawable.feed_play_play_icon)
                     this.visibility = View.VISIBLE
@@ -374,6 +406,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
 
             if (playerScene == IPlayManagerScene.SCENE_ONLY_VOICE && sameVideo) {
                 //音频模式，瀑布流显示音频模式，常驻进度条
+                //Audio mode, waterfall display audio mode, resident progress bar
                 showAudioMode(true, mPosition, rcv, pause)
             } else {
                 mListPlayManager.setPlayerScene(IPlayManagerScene.SCENE_NORMAL)
@@ -477,12 +510,14 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
         if (position == mPosition) {
             if (currentIsFloatPlay || !sameVideo) {
                 //如果之前是悬浮播放，直接恢复
+                //If it was floating play before, just resume it
                 val isPlaying = mListPlayManager.isPlaying()
                 continuePlay(rcv, playerViewContainerId)
                 if (!isPlaying) {
                     mListPlayManager.resumeListPlay()
                 }
                 //如果是同一个 ListPlayManager 则不关闭
+                //If it's the same ListPlayManager then don't close it.
                 FloatViewPlayManager.closeFloatPlayView(ListPlayManager.getCurrentListPlayManager() != mListPlayManager)
             } else if (previousIsFloatPlay && !mListPlayManager.isPlaying()) {
                 val container: ViewGroup? = getRecyclerViewItemChildView(
@@ -518,6 +553,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
                     mListPlayManager.recreateSurfaceView()
                 }
                 //播放
+                //Play
                 updatePlayPosition(position)
                 playPosition(position, rcv, playerViewContainerId, videoCoverId)
                 mPlayState.value = PLAY_STATE_PLAYING
@@ -532,6 +568,9 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
 
     /**
      * 通过 ViewModel 共享 AliListPlayer 和 SurfaceView 实现续播
+     */
+    /****
+     * Sharing AliListPlayer and SurfaceView through ViewModel to realize replaying.
      */
     fun getListPlayer(): ListPlayManager {
         return mListPlayManager
@@ -607,6 +646,7 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
         contrastPlayTipLayout?.visibility = if (show) View.VISIBLE else View.GONE
         if (show) {
             //延迟三秒
+            // Three-second delay
             contrastPlayTipLayout?.postDelayed({
                 contrastPlayTipLayout?.visibility = View.GONE
             }, 3000L)
@@ -632,10 +672,12 @@ class RecommendViewModel : BaseListViewModel<VideoInfo>() {
             playProgress.progress = progress
         }
         //隐藏play 按钮
+        //Hide the play button
         val playIcon: ImageView? =
             getRecyclerViewItemChildView(rcv, mPosition, R.id.mVideoPlayIcon)
         playIcon?.visibility = View.GONE
         //显示进度条
+        //Display progress bar
         val seekLayout: View? =
             getRecyclerViewItemChildView(rcv, mPosition, R.id.alivc_info_small_bar)
         seekLayout?.visibility = View.VISIBLE

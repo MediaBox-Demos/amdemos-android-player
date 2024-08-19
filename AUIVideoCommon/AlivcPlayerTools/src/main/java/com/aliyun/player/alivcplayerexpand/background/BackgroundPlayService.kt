@@ -30,6 +30,7 @@ class BackgroundPlayService : Service(), IForegroundService {
     private val notifyId = 4
     private lateinit var mPlayManager: IListPlayManager
     private lateinit var mNotificationUtils: NotificationUtils
+    //TODO: Only Chinese
     private var mAuthorName = "默认昵称"
     private lateinit var remoteViews: RemoteViews
     private lateinit var notification: Notification
@@ -44,6 +45,7 @@ class BackgroundPlayService : Service(), IForegroundService {
                 "onPrepare mVid:$mVid currentvid:${mPlayManager.getCurrentVideo().videoId}"
             )
             //更新当前标题和icon
+            //Update current title and icon
             if (mVid != mPlayManager.getCurrentVideo().videoId) {
                 updateRemoteView()
                 loadIcon()
@@ -119,6 +121,7 @@ class BackgroundPlayService : Service(), IForegroundService {
         )
         if (!mForceStartNotification) {
             notification =
+                // TODO: Only Chinese
                 mNotificationUtils.getNotification(this, "标题1", "内容化", R.mipmap.ic_launcher)
             startForeground(notifyId, notification)
             mForceStartNotification = true
@@ -142,26 +145,31 @@ class BackgroundPlayService : Service(), IForegroundService {
         }
         mPlaying = mPlayManager.isPlaying()
         // 设置 点击通知栏的上一首按钮时要执行的意图
+        // Settings Intent to be executed when clicking the Previous button in the notification bar
         remoteViews.setOnClickPendingIntent(
             R.id.btn_pre,
             getClickRemoteIntent(IPlayNotifyEvent.NOTIFY_PLAY_LAST)
         )
         // 设置 点击通知栏的下一首按钮时要执行的意图
+        // Settings Intent to be executed when clicking the Next button in the notification bar
         remoteViews.setOnClickPendingIntent(
             R.id.btn_next,
             getClickRemoteIntent(IPlayNotifyEvent.NOTIFY_PLAY_NEXT)
         )
         // 设置 点击通知栏的播放暂停按钮时要执行的意图
+        // Settings Intent to be executed when clicking the Play/Pause button in the notification bar
         remoteViews.setOnClickPendingIntent(
             R.id.btn_start,
             getClickRemoteIntent(IPlayNotifyEvent.NOTIFY_PLAY_ICON_CLICK)
         )
         // 设置 点击通知栏的根容器时要执行的意图
+        // Settings Intent to be executed when clicking the Root container in the notification bar
         remoteViews.setOnClickPendingIntent(
             R.id.ll_root,
             getClickRemoteIntent(IPlayNotifyEvent.NOTIFY_JUMP_DETAIL_PLAY)
         )
         //设置 点击通知栏，关闭按钮
+        // Settings Intent to be executed when clicking the Close button in the notification bar
         remoteViews.setOnClickPendingIntent(
             R.id.audio_mode_notification_close_icon,
             getClickRemoteIntent(IPlayNotifyEvent.NOTIFY_CLOSE_NOTIFY)
@@ -180,8 +188,8 @@ class BackgroundPlayService : Service(), IForegroundService {
             R.id.btn_start,
             if (mPlaying) R.drawable.notification_pause_icon else R.drawable.notification_play_icon
         )
-        remoteViews.setTextViewText(R.id.tv_title, mediaInfo?.title ?: "") // 设置通知栏上标题
-        remoteViews.setTextViewText(R.id.tv_artist, mAuthorName) // 设置通知栏上作者
+        remoteViews.setTextViewText(R.id.tv_title, mediaInfo?.title ?: "") // 设置通知栏上标题 Setting the title on the notification bar
+        remoteViews.setTextViewText(R.id.tv_artist, mAuthorName) // 设置通知栏上作者 Setting the author on the notification bar
 
     }
 
@@ -322,6 +330,7 @@ class BackgroundPlayService : Service(), IForegroundService {
                 }
                 IPlayNotifyEvent.NOTIFY_JUMP_DETAIL_PLAY -> {
                     //回到播放页
+                    //Jump to the playback page
                     collapseStatusBar()
                     backToPlayActivity()
 
@@ -329,11 +338,13 @@ class BackgroundPlayService : Service(), IForegroundService {
                 IPlayNotifyEvent.NOTIFY_CLOSE_NOTIFY -> {
                     stopForeground()
                     //停止播放器
+                    //Stop the player
                     mNotificationUtils.clearNotification()
                     mPlayManager.pause()
                     PlayServiceHelper.stopService(this)
                 }
                 -1 -> {
+                    // TODO: Only Chinese
                     mAuthorName = intent.getStringExtra(PlayServiceHelper.KEY_USER_NAME)
                         ?: "默认昵称"
                     remoteViews.setTextViewText(
@@ -344,6 +355,7 @@ class BackgroundPlayService : Service(), IForegroundService {
                     if (PlayServiceHelper.mPendingStopService) {
                         stopForeground()
                         //停止播放器
+                        //Stop the player
                         mNotificationUtils.clearNotification()
                         PlayServiceHelper.stopService(this)
                         PlayServiceHelper.mPendingStopService = false

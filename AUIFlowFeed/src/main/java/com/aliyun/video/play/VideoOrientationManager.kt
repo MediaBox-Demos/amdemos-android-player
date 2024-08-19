@@ -20,6 +20,13 @@ import com.aliyun.video.play.AliyunPlayerSkinFragment.Companion.STATE_FEED_TO_HA
  * 3.列表播放 <---> 全屏播放页面
  *
  */
+/****
+ * Attached to the Activity to manage the horizontal and vertical screen switching, there are a total of three switching states
+ * 1.list play <----> half screen play page
+ * 2.Half screen page <----> full screen page
+ * 3.list play <---> full screen play page
+ *
+ */
 
 private const val HALF_SCREEN_FRAGMENT = "half_screen_fragment"
 
@@ -27,6 +34,9 @@ class VideoOrientationManager {
 
     /**
      * 切换到半屏播放页
+     */
+    /****
+     * Switch to half-screen playback page
      */
     fun switchToHalfScreenVideo(
         activity: FragmentActivity,

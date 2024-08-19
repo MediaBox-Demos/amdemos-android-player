@@ -17,12 +17,23 @@ import java.util.*
  * 2.请求播放列表
  * 3.请求 sts
  */
+/****
+ * Test: http://vpdemo-proxy.aliyun.test
+ * Pre-release: https://pre-vpdemo-proxy.aliyuncs.com
+ * Release: https://vpdemo-proxy.aliyuncs.com
+ * 1. Request UserToken first
+ * 2. Request playlists
+ * 3. request sts
+ */
 open class HomePageVideoListRepository{
     var mStsInfo: StsInfo? = null
     private var mStsInit = false
 
     /**
      * 如果刷新需要传递上一次最后一个视频id，保证获取到的视频是没有播放过的
+     */
+    /****
+     * If refreshing need to pass the last video id of the last time ,ensure that the video you get was not played
      */
     protected var mLastVideoId: Long? = null
 

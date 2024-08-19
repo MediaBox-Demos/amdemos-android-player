@@ -8,12 +8,18 @@ import android.os.Environment;
 /**
  * 观看历史数据库帮助类
  */
+/****
+ * The help class of watching Historical database
+ */
 public class DatabaseHistoryHelper extends SQLiteOpenHelper {
 
     private static DatabaseHistoryHelper mInstance = null;
 
     /**
      * 数据库版本
+     */
+    /****
+     * The version of database
      */
     private static int DATABASE_VERSION = 1;
 

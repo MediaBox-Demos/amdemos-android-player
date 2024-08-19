@@ -16,6 +16,9 @@ public class AlivcSwipeRefreshLayout extends SwipeRefreshLayout {
     /**
      * 记录是否向下拖拽的标记
      */
+    /****
+     * Flag to record whether or not to drag down
+     */
     private boolean mIsDragger;
 
     public AlivcSwipeRefreshLayout(Context context) {
@@ -35,13 +38,16 @@ public class AlivcSwipeRefreshLayout extends SwipeRefreshLayout {
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
                     // 记录手指按下的位置
+                    // Record the position of the finger press
                     startY = ev.getY();
                     startX = ev.getX();
                     // 初始化标记
+                    // Initialize the flag
                     mIsDragger = false;
                     break;
                 case MotionEvent.ACTION_MOVE:
                     // 获取当前手指位置
+                    // Get the current position of the finger
                     float endY = ev.getY();
 
                     float distanceY = endY - startY;
@@ -53,6 +59,7 @@ public class AlivcSwipeRefreshLayout extends SwipeRefreshLayout {
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
                     // 初始化标记
+                    // Initialize the flag
                     mIsDragger = false;
                     break;
                 default:

@@ -25,6 +25,11 @@ import com.alivc.auiplayer.videoepisode.view.CenterLayoutManager;
  * @date 2023/8/29
  * @brief 短剧选集列表组件
  */
+/****
+ * @author keria
+ * @date 2023/8/29
+ * @brief episode anthology list component
+ */
 public class AUIEpisodePanelComponent extends FrameLayout {
     private OnPanelEventListener mOnPanelEventListener;
 

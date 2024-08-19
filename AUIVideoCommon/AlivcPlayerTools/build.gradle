@@ -31,7 +31,7 @@ dependencies {
     implementation project(':AUIVideoCommon:database')
     implementation project(':AUIVideoCommon:AliyunPlayerBase')
 
-    //弹幕
+    //弹幕 danmaku
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
 
     implementation externalAndroidX
@@ -43,7 +43,7 @@ dependencies {
     implementation externalEventBus
     implementation externalGlide
 
-    //投屏相关
+    //投屏相关 casting related
     // Cling library
     implementation 'com.aliyun.video:cling-core:2.1.1'
     implementation 'com.aliyun.video:cling-support:2.1.1'

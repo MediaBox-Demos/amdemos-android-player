@@ -20,6 +20,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 3.切换主线程任务，延时切换主线程
  * 4.使用线程池创建子线程，执行简单的异步任务
  */
+/****
+ * android main thread, sub-thread switching, main thread delay task tool class
+ *
+ * 1. get the main thread looper object through the {@link Looper#getMainLooper ()}, create mainHandler
+ * 2. thread pool parameters using the configuration of AsyncTask, AsyncTask is android sdk 26 version
+ * 3. Switch the main thread task, delay switch the main thread
+ * 4. Using the thread pool to create sub-threads to perform simple asynchronous tasks
+ */
 public class ThreadUtils {
 
     private static Handler sMainHandler = new Handler(Looper.getMainLooper());
@@ -27,6 +35,9 @@ public class ThreadUtils {
 
     /**
      * 线程池的参数采用AsyncTask的配置 -- android 26
+     */
+    /****
+     * thread pool parameters using the configuration of AsyncTask, AsyncTask is android sdk 26 version
      */
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
     // We want at least 2 threads and at most 4 threads in the core pool,
@@ -62,6 +73,10 @@ public class ThreadUtils {
      * 切换到主线程
      * @param runnable Runnable
      */
+    /****
+     * Switch to the main thread
+     * @param runnable Runnable
+     */
     public static void runOnUiThread(Runnable runnable) {
         runOnUiThread(runnable, 0);
     }
@@ -70,6 +85,11 @@ public class ThreadUtils {
      * 延时切换到主线程
      * @param runnable Runnable
      * @param delayed 时长 Millis
+     */
+    /****
+     * Delayed switch to the main thread
+     * @param runnable Runnable
+     * @param delayed Millis
      */
     public static void runOnUiThread(Runnable runnable, long delayed) {
         sMainHandler.postDelayed(runnable, delayed);
@@ -84,10 +104,15 @@ public class ThreadUtils {
      * 在任务数超过128，或者线程池Shutdown时将跳过这条任务
      * @param runnable Runnable
      */
+    /****
+     * Create a sub-thread in the thread pool to execute asynchronous tasks
+     * Skip this task if the task number exceeds 128 or the thread pool is Shutdown
+     * @param runnable Runnable
+     */
     public static void runOnSubThread(Runnable runnable) {
 
         if (THREAD_POOL_EXECUTOR.getQueue().size() == 128 || THREAD_POOL_EXECUTOR.isShutdown()) {
-            Log.e(TAG, "线程池爆满警告，请查看是否开启了过多的耗时线程");
+            Log.e(TAG, "The thread pool is full. Check whether too many time-consuming threads are started.");
             return;
         }
         THREAD_POOL_EXECUTOR.execute(runnable);

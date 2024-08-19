@@ -30,7 +30,7 @@ abstract class BaseActivity : FragmentActivity() {
             fitsSystemWindows(true)
             statusBarColor(statusBarColor)
             navigationBarColor(navigationBarColor)
-            autoDarkModeEnable(true) //自动状态栏字体和导航栏图标变色，必须指定状态栏颜色和导航栏颜色才可以自动变色哦
+            autoDarkModeEnable(true) //自动状态栏字体和导航栏图标变色，必须指定状态栏颜色和导航栏颜色才可以自动变色哦 Automatic status bar font and navigation bar icon color change, you must specify the status bar color and navigation bar color to automatically change the color.
             autoStatusBarDarkModeEnable(true, 0.2f) //
             init()
         }
@@ -38,7 +38,7 @@ abstract class BaseActivity : FragmentActivity() {
 
     fun hideStatusBar() {
         immersionBar {
-            hideBar(BarHide.FLAG_HIDE_BAR)  //隐藏状态栏或导航栏或两者，不写默认不隐藏
+            hideBar(BarHide.FLAG_HIDE_BAR)  //隐藏状态栏或导航栏或两者，不写默认不隐藏 Hide the status bar or navigation bar or both, leave it out to hide it by default
             init()
         }
     }
@@ -63,7 +63,7 @@ abstract class BaseActivity : FragmentActivity() {
 
     fun showStatusBar() {
         immersionBar {
-            hideBar(BarHide.FLAG_SHOW_BAR)  //隐藏状态栏或导航栏或两者，不写默认不隐藏
+            hideBar(BarHide.FLAG_SHOW_BAR)  //隐藏状态栏或导航栏或两者，不写默认不隐藏 Hide the status bar or navigation bar or both, leave it out to hide it by default
             init()
         }
     }
@@ -138,6 +138,9 @@ abstract class BaseActivity : FragmentActivity() {
 
     /**
      * @return 返回 true 表示要拦截
+     */
+    /****
+     * @return Returning true indicates interception
      */
     protected open fun handleBackSpace(): Boolean {
         return false

@@ -21,6 +21,7 @@ class ContrastPlayManager(context: Context) {
             val playRecordDao = mDataBase.playRecordDao()
             val playRecordList = playRecordDao.findList(AccountInfo.uid, vidList)
             //初始化一遍
+            //Init
             for (vid in vidList) {
                 if (!mPlayRecordList.containsKey(vid)) {
                     mPlayRecordList[vid] =
@@ -49,6 +50,7 @@ class ContrastPlayManager(context: Context) {
 
     private fun savePlayRecordInfo(vid: String, playDuration: Int) {
         //先更新本地数据
+        //Update local data first
         if (mPlayRecordList[vid] != null) {
             mPlayRecordList[vid]?.apply {
                 this.playDuration = playDuration

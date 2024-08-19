@@ -47,6 +47,10 @@ public class DownloadDataProvider {
      * 回复
      * @return
      */
+    /****
+     * Response
+     * @param loadDbDatasListener
+     */
     public void restoreMediaInfo(final LoadDbDatasListener loadDbDatasListener){
         aliyunDownloadMediaInfos = new ArrayList<>();
         downloadManager.findDatasByDb(new LoadDbDatasListener() {
@@ -63,6 +67,10 @@ public class DownloadDataProvider {
      * 获取所有下载 MediaInfo 信息
      * @return
      */
+    /****
+     * Get all download MediaInfo information
+     * @return
+     */
     public List<AliyunDownloadMediaInfo> getAllDownloadMediaInfo(){
         if(aliyunDownloadMediaInfos == null){
             aliyunDownloadMediaInfos = new ArrayList<>();
@@ -72,6 +80,10 @@ public class DownloadDataProvider {
 
     /**
      * 数据去重
+     * @return
+     */
+    /****
+     * Data deduplication
      * @return
      */
     public void deleteDumpData(){
@@ -93,6 +105,11 @@ public class DownloadDataProvider {
      * @param aliyunDownloadMediaInfo
      * @return
      */
+    /****
+     * Add new download tasks
+     * @param aliyunDownloadMediaInfo
+     * @return
+     */
     public void addDownloadMediaInfo(AliyunDownloadMediaInfo aliyunDownloadMediaInfo){
         if (hasAdded(aliyunDownloadMediaInfo)){
             return;
@@ -104,6 +121,11 @@ public class DownloadDataProvider {
 
     /**
      * 判断是否已经存在
+     * @param info
+     * @return
+     */
+    /****
+     * Determine whether it already exists
      * @param info
      * @return
      */
@@ -124,6 +146,11 @@ public class DownloadDataProvider {
      * @param aliyunDownloadMediaInfo
      * @return
      */
+    /****
+     * Delete already downloaded data
+     * @param aliyunDownloadMediaInfo
+     * @return
+     */
     public void deleteDownloadMediaInfo(AliyunDownloadMediaInfo aliyunDownloadMediaInfo){
         if (aliyunDownloadMediaInfos != null){
             downloadManager.deleteFile(aliyunDownloadMediaInfo);
@@ -134,6 +161,10 @@ public class DownloadDataProvider {
 
     /**
      * 删除所有视频
+     * @return
+     */
+    /****
+     * Delete all videos
      * @return
      */
     public void deleteAllDownloadInfo(ArrayList<AlivcDownloadMediaInfo> alivcDownloadMediaInfos){

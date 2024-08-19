@@ -14,6 +14,10 @@ import java.lang.reflect.Method;
  * notch screen (刘海屏) 检测utils
  * 适配了华为、oppo、小米、vivo
  */
+/****
+ * notch screen detection utils
+ * adapted for huawei, oppo, xiaomi, vivo
+ */
 public class NotchScreenUtil {
 
     private static final String TAG = NotchScreenUtil.class.getName();
@@ -21,10 +25,16 @@ public class NotchScreenUtil {
     /**
      *  设置应用窗口在华为notch手机使用刘海区的flag值, 该值为华为官方提供, 不要修改
      */
+    /****
+     * Set the flag value of the application window in Huawei notch phones, which is provided by Huawei official, do not modify.
+     */
     private static final int FLAG_NOTCH_SUPPORT_HW = 0x00010000;
 
     /**
      * vivo手机判断是否是notch, vivo官方提供, 不要修改
+     */
+    /****
+     * Vivo phone judgment is notch, Vivo official provides, do not modify.
      */
     private static final int FLAG_NOTCH_SUPPORT_VIVO = 0x00000020;
 
@@ -47,6 +57,10 @@ public class NotchScreenUtil {
      * oppo提供: 刘海屏判断.
      * @return true, 刘海屏; false: 非刘海屏
      */
+    /****
+     * oppo provides: notch screen judgment.
+     * @return true, notch screen; false: non-notch screen
+     */
     private static boolean checkOppo(Context context) {
         try {
             return context.getPackageManager().hasSystemFeature("com.oppo.feature.screen.heteromorphism");
@@ -59,6 +73,10 @@ public class NotchScreenUtil {
     /**
      * 小米提供: 刘海屏判断.
      * @return true, 刘海屏; false: 非刘海屏
+     */
+    /****
+     * Xiaomi provides: notch screen judgment.
+     * @return true, notch screen; false: non-notch screen
      */
     private static boolean checkMiUI(Context context) {
 
@@ -100,6 +118,11 @@ public class NotchScreenUtil {
      * @param context Context
      * @return true：刘海屏；false：非刘海屏
      */
+    /****
+     * Huawei provides: judgment whether it is a notch screen.
+     * @param context Context
+     * @return true: notch screen; false: non-notch screen
+     */
     private static boolean checkHuaWei(Context context) {
 
         boolean ret = false;
@@ -131,6 +154,11 @@ public class NotchScreenUtil {
      * @param context Context
      * @return true：是刘海屏；false：非刘海屏
      */
+    /****
+     * Vivo provides: judgment whether it is a notch screen.
+     * @param context Context
+     * @return true: notch screen; false: non-notch screen
+     */
     private static boolean checkVivo(Context context) {
 
         boolean ret;
@@ -152,6 +180,11 @@ public class NotchScreenUtil {
      *
      * @param context Context
      * @return int[0]值为刘海宽度 int[1]值为刘海高度。
+     */
+    /****
+     * Huawei provides: get notch size.
+     * @param context Context
+     * @return int[0] value of notch width; int[1] value of notch height.
      */
     public static int[] getNotchSize(Context context) {
 
@@ -187,6 +220,10 @@ public class NotchScreenUtil {
      * 华为提供: 设置应用窗口在华为刘海屏手机使用刘海区
      * @param window 应用页面window对象
      */
+    /****
+     * Huawei provides: set the application window in Huawei notch screen phones to use the notch area.
+     * @param window application page window object
+     */
     public static void setFullScreenWindowLayoutInDisplayCutout(Window window) {
         if (window == null) {
             return;
@@ -217,6 +254,10 @@ public class NotchScreenUtil {
      * 华为提供: 设置应用窗口在华为刘海屏手机不使用刘海区
      *
      * @param window 应用页面window对象
+     */
+    /****
+     * Huawei provides: set the application window in Huawei notch screen phones not to use the notch area.
+     * @param window application page window object
      */
     public static void setNotFullScreenWindowLayoutInDisplayCutout(Window window) {
         if (window == null) {

@@ -28,11 +28,13 @@ public class AUIVideoEpisodeLayoutManager extends AUIVideoListLayoutManager impl
     @Override
     public boolean canScrollVertically() {
         // 解决滑动冲突的问题，避免episode panel展开时，当触摸事件发生的时候，list view上下滑的事件被先响应到。
+        // Solve the sliding conflict problem: avoid the list view sliding up and down event being responded to first when the episodic panel expands and a touch event occurs.
         if (mRecyclerView != null) {
             for (int i = 0; i < mRecyclerView.getChildCount(); ++i) {
                 View child = mRecyclerView.getChildAt(i);
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.getChildViewHolder(child);
                 // 在这里处理ViewHolder的滑动事件
+                // The ViewHolder's slide event is handled here
                 if (viewHolder instanceof AUIVideoEpisodeAdapter.AUIVideoEpisodeViewHolder) {
                     AUIVideoEpisodeAdapter.AUIVideoEpisodeViewHolder vh = (AUIVideoEpisodeAdapter.AUIVideoEpisodeViewHolder) viewHolder;
                     if (vh.isPanelShow()) {
@@ -107,12 +109,19 @@ public class AUIVideoEpisodeLayoutManager extends AUIVideoListLayoutManager impl
     };
 
     //todo 测试改进
+    //todo test improvement
 
     /**
      * 监听ouTouch事件，因为如果从第二个视频滑动到第一个视频(快速连续滑动),
      * onScrollStateChanged是不会触发SCROLL_STATE_IDLE状态的,会导致
      * 第一个视频不会播放的问题,不会调用onPageSelected监听回调。
      * 经反复测试发现,会回调onTouch的事件,所以在这里进行触发
+     */
+    /****
+     * Listen to the ouTouch event, because if you slide from the second video to the first video (fast continuous slide),
+     * onScrollStateChanged is not going to trigger the SCROLL_STATE_IDLE state, which will cause the
+     * the first video will not play the problem, will not call onPageSelected listener callback.
+     * After repeated testing, we found that it will call back the event of onTouch, so we trigger it here.
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {

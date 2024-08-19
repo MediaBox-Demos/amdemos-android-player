@@ -7,6 +7,9 @@ import com.aliyun.player.alivcplayerexpand.R;
 /**
  * 分享 DialogFragment
  */
+/****
+ * Share DialogFragment
+ */
 public class AlivcShareDialogFragment extends BaseDialogFragment {
 
 

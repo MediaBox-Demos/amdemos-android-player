@@ -74,6 +74,7 @@ class MainActivity : BaseActivity() {
                         putInt(AliyunPlayerSkinFragment.FULL_SCREEN, screenType)
                     }
                     //进入播放详情页
+                    // Go to the playback details page
                     showFragment<AliyunPlayerSkinFragment>(
                         R.id.mFragmentContainer,
                         bundle,

@@ -7,6 +7,11 @@ import android.view.Surface;
  * @date 2023/9/26
  * @brief Surface状态回调
  */
+/****
+ * @author keria
+ * @date 2023/9/26
+ * @brief Surface status callback
+ */
 public interface OnSurfaceListener {
     void onSurfaceCreate(int index, Surface surface);
 

@@ -12,7 +12,7 @@ import com.lzf.easyfloat.core.FloatingWindowManager
 
 /**
  * @author: liuzhenfeng
- * @function: 软键盘工具类：解决浮窗内的EditText，无法弹起软键盘的问题
+ * @function: 软键盘工具类：解决浮窗内的EditText，无法弹起软键盘的问题 Soft keyboard tool class: to solve the problem that the soft keyboard cannot be popped up by the EditText in the floating window.
  * @date: 2019-08-17  11:11
  */
 object InputMethodUtils {
@@ -26,19 +26,19 @@ object InputMethodUtils {
     }
 
     /**
-     * 让浮窗获取焦点，并打开软键盘
+     * 让浮窗获取焦点，并打开软键盘 Make the floating window get focus and open the soft keyboard
      */
     @JvmStatic
     @JvmOverloads
     fun openInputMethod(editText: EditText, tag: String? = null) {
         FloatingWindowManager.getHelper(tag)?.apply {
-            // 更改flags，并刷新布局，让系统浮窗获取焦点
+            // 更改flags，并刷新布局，让系统浮窗获取焦点 Change flags and refresh the layout so that the system floating window gets focus
             params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
             windowManager.updateViewLayout(frameLayout, params)
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            // 打开软键盘
+            // 打开软键盘 Open soft keyboard
             val inputManager =
                 editText.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
             inputManager?.showSoftInput(editText, 0)
@@ -46,7 +46,7 @@ object InputMethodUtils {
     }
 
     /**
-     * 当软键盘关闭时，调用此方法，移除系统浮窗的焦点，不然系统返回键无效
+     * 当软键盘关闭时，调用此方法，移除系统浮窗的焦点，不然系统返回键无效 When the soft keyboard closes, call this method to remove the focus of the system floating window, otherwise the return key is invalid
      */
     @JvmStatic
     @JvmOverloads

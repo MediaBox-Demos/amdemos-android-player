@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author: liuzhenfeng
- * @function: 通过接口获取屏幕的有效显示高度
+ * @function: 通过接口获取屏幕的有效显示高度 Get the effective display height of the screen through the interface
  * @date: 2020-02-16  16:21
  */
 public interface OnDisplayHeight {
@@ -16,6 +16,12 @@ public interface OnDisplayHeight {
      *
      * @param context ApplicationContext
      * @return 高度值（int类型）
+     */
+    /****
+     *Get the effective display height of the screen without the virtual navigation bar
+     *
+     * @param context ApplicationContext
+     * @return Height value (int)
      */
     int getDisplayRealHeight(@NotNull Context context);
 }

@@ -26,6 +26,10 @@ import java.util.Collection;
  * Cling管理类
  * 对服务操作的代理类
  */
+/****
+ * Cling management class
+ * Proxy class for service operations
+ */
 public class ClingManager implements IClingManager {
 
     private static ClingManager mInstance = null;
@@ -34,6 +38,9 @@ public class ClingManager implements IClingManager {
     public static final ServiceType AV_TRANSPORT_SERVICE = new UDAServiceType("AVTransport");
     /**
      * 控制服务
+     */
+    /****
+     * Control service
      */
     public static final ServiceType RENDERING_CONTROL_SERVICE = new UDAServiceType("RenderingControl");
     private static final long SEARCH_TIMEOUT = 60000;
@@ -115,7 +122,7 @@ public class ClingManager implements IClingManager {
         for (Device device : devices) {
             ClingDevice clingDevice = new ClingDevice(device);
             clingDevices.add(clingDevice);
-            Log.e("AliyunDLNA", "查找设备投屏 : " + clingDevice.getDevice().getDetails().getFriendlyName());
+            Log.e("AliyunDLNA", "Find the device cast: " + clingDevice.getDevice().getDetails().getFriendlyName());
         }
         return clingDevices;
     }
@@ -178,6 +185,9 @@ public class ClingManager implements IClingManager {
     /**
      * 搜索设备超时计时
      */
+    /****
+     * Search device timeout countdown
+     */
     private void startSearchTimer() {
         if (mConnectTimer != null) {
             mConnectTimer.cancel();
@@ -206,6 +216,9 @@ public class ClingManager implements IClingManager {
 
     /**
      * 连接设备超时计时
+     */
+    /****
+     * Connect device timeout countdown
      */
     private void startConnectTimer() {
         if (mConnectTimer == null) {

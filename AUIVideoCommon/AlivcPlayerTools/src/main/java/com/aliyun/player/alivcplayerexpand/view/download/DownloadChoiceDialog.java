@@ -44,6 +44,7 @@ public class DownloadChoiceDialog extends Dialog {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setPadding(0,0,0,0);
         //// 在底部，宽度撑满
+        //// at the bottom, width propped up
         //WindowManager.LayoutParams params = getWindow().getAttributes();
         //params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         //params.gravity = Gravity.BOTTOM | Gravity.CENTER;
@@ -89,6 +90,9 @@ public class DownloadChoiceDialog extends Dialog {
     /**
      * ChoiceItemBottomDialog从下往上升起的动画动画
      */
+    /****
+     * ChoiceItemBottomDialog animation from bottom to top
+     */
     private void animateUp(){
         if(mContentView != null){
             return;
@@ -108,6 +112,9 @@ public class DownloadChoiceDialog extends Dialog {
 
     /**
      * ChoiceItemBottomDialog从下往上升起的动画动画
+     */
+    /****
+     * ChoiceItemBottomDialog animation from bottom to top
      */
     private void animateDown() {
         if (mContentView == null) {

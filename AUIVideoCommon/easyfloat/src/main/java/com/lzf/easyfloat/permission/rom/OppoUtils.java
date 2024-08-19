@@ -25,7 +25,7 @@ public class OppoUtils {
     private static final String TAG = "OppoUtils";
 
     /**
-     * 检测 360 悬浮窗权限
+     * 检测 360 悬浮窗权限  Detect 360 floating Window Permissions
      */
     public static boolean checkFloatWindowPermission(Context context) {
         final int version = Build.VERSION.SDK_INT;
@@ -55,13 +55,14 @@ public class OppoUtils {
     }
 
     /**
-     * oppo ROM 权限申请
+     * oppo ROM 权限申请  Apply oppo rom permissions
      */
     public static void applyOppoPermission(Fragment fragment) {
         //merge requestPermission from https://github.com/zhaozepeng/FloatWindowPermission/pull/26
         try {
             Intent intent = new Intent();
             //悬浮窗管理页面
+            //Floating Window Management Page
             ComponentName comp = new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.sysfloatwindow.FloatWindowListActivity");
             intent.setComponent(comp);
             fragment.startActivityForResult(intent, FloatViewPermissionUtils.requestCode);

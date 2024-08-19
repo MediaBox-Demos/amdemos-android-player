@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
  * 监听recycleView滑动状态，
  * 自动播放可见区域内的第一个视频
  */
+/****
+ * Listening to recycleView sliding state.
+ * Automatically play the first video in the visible area
+ */
 public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
     private static final String TAG = "AutoPlayScrollListener";
 
@@ -20,6 +24,9 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
     private int mLastVisiblePosition = 0;
     /**
      * 构造函数相关
+     */
+    /****
+     * Constructor related
      */
     private int mVideoViewId;
     private ListPlayCallback mListPlayCallback;
@@ -32,15 +39,24 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
     /**
      * 被处理的视频状态标签
      */
+    /****
+     * Processed video status tag
+     */
     private enum VideoTagEnum {
 
         /**
          * 自动播放视频
          */
+        /****
+         * Auto play video
+         */
         TAG_AUTO_PLAY_VIDEO,
 
         /**
          * 暂停视频
+         */
+        /****
+         * Pause video
          */
         TAG_PAUSE_VIDEO
     }
@@ -54,6 +70,7 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
                 autoPlayVideo(recyclerView, VideoTagEnum.TAG_AUTO_PLAY_VIDEO);
             default:
                 // 滑动时暂停视频 autoPlayVideo(recyclerView, VideoTagEnum.TAG_PAUSE_VIDEO);
+                // Pause video while sliding
                 break;
         }
 
@@ -80,6 +97,13 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
      * @param recyclerView
      * @param handleVideoTag 视频需要进行状态
      */
+    /****
+     * Loop through the visible player in the visible area
+     * Then calculate which player completely displayed by using the getLocalVisibleRect(rect) method
+     *
+     * @param recyclerView
+     * @param handleVideoTag Video needs to be in a certain state
+     */
     private void autoPlayVideo(RecyclerView recyclerView, VideoTagEnum handleVideoTag) {
         for (int i = 0; i < visibleCount; i++) {
             if (recyclerView != null && recyclerView.getChildAt(i) != null && recyclerView.getChildAt(i).findViewById(mVideoViewId) != null) {
@@ -91,6 +115,7 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
                 if (rect.top == 0 && rect.bottom == videoheight) {
                     handleVideo(handleVideoTag, i + firstVisibleItem);
                     // 跳出循环，只处理可见区域内的第一个播放器
+                    // Exit the loop and only handle the first player in the visible area
                     break;
                 }
             }
@@ -103,6 +128,11 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
      *
      * @param handleVideoTag 视频需要进行状态
      */
+    /****
+     * Video status processing
+     *
+     * @param handleVideoTag Video needs to be in a certain state
+     */
     private void handleVideo(VideoTagEnum handleVideoTag, int position) {
         if (mListPlayCallback == null) {
             Log.i(TAG, "mListPlayCallback is null");
@@ -112,12 +142,14 @@ public class AutoPlayScrollListener extends RecyclerView.OnScrollListener {
             case TAG_AUTO_PLAY_VIDEO:
                 if ((mListPlayCallback.getPlayState() != ListPlayCallback.STATE_PLAYING)) {
                     // 进行播放
+                    // Play video
                     mListPlayCallback.play(position);
                 }
                 break;
             case TAG_PAUSE_VIDEO:
                 if (mListPlayCallback.getPlayState() != ListPlayCallback.STATE_PAUSED) {
                     // 暂停视频
+                    // Pause video
                     mListPlayCallback.pause();
                 }
                 break;

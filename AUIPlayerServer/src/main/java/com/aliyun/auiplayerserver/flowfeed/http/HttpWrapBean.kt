@@ -26,7 +26,7 @@ class HttpWrapBean<T>(
         }
 
         fun <T> failed(data: T): HttpWrapBean<T> {
-            return HttpWrapBean(-200, "服务器停止维护了~~", data)
+            return HttpWrapBean(-200, "The server is out of maintenance", data)
         }
 
     }

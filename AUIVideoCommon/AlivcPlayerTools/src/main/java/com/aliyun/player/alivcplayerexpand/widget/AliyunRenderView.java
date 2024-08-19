@@ -41,6 +41,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 真正的播放器实例对象
      */
+    /****
+     * The real player instance object
+     */
     private AliListPlayer mAliPlayer;
     private ListPlayManager listPlayManager;
     /**
@@ -51,6 +54,10 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 判断当前解码状态,true:硬解,false:软解
      * 默认是硬解
+     */
+    /****
+     * Determine the current decoding status, true: hardware decoding, false: software decoding
+     * Default is hardware decoding
      */
     private boolean mCurrentEnableHardwareDecoder = true;
 
@@ -173,6 +180,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 获取真正的播放器实例对象
      */
+    /****
+     * Get the real player instance object
+     */
     public AliPlayer getAliPlayer() {
         return mAliPlayer;
     }
@@ -227,6 +237,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置播放源
      */
+    /****
+     * Set the playback source
+     */
     public void setDataSource(VidSts vidSts) {
         if (listPlayManager != null) {
             listPlayManager.setDataSource(vidSts);
@@ -235,6 +248,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 设置播放源
+     */
+    /****
+     * Set the playback source
      */
     public void setDataSource(VidAuth vidAuth) {
         if (listPlayManager != null) {
@@ -245,6 +261,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置播放源
      */
+    /****
+     * Set the playback source
+     */
     public void setDataSource(LiveSts liveSts) {
         if (listPlayManager != null) {
             listPlayManager.setDataSource(liveSts);
@@ -253,6 +272,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 设置播放源
+     */
+    /****
+     * Set the playback source
      */
     public void setDataSource(VidMps vidMps) {
         if (listPlayManager != null) {
@@ -263,6 +285,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置播放源
      */
+    /****
+     * Set the playback source
+     */
     public void setDataSource(UrlSource urlSource) {
         if (listPlayManager != null) {
             listPlayManager.setDataSource(urlSource);
@@ -271,6 +296,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 刷新sts信息
+     */
+    /****
+     * Refresh STS information
      */
     public void updateStsInfo(StsInfo stsInfo) {
         if (mAliPlayer != null) {
@@ -281,6 +309,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 刷新Auth信息
      */
+    /****
+     * Refresh Auth information
+     */
     public void updateAuthInfo(VidAuth vidAuth) {
         if (mAliPlayer != null) {
             mAliPlayer.updateVidAuth(vidAuth);
@@ -289,6 +320,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 设置是否静音
+     */
+    /****
+     * Set whether to mute
      */
     public void setMute(boolean isMute) {
         if (mAliPlayer != null) {
@@ -299,6 +333,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置音量
      */
+    /****
+     * Set volume
+     */
     public void setVolume(float v) {
         if (mAliPlayer != null) {
             mAliPlayer.setVolume(v);
@@ -307,6 +344,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 获取音量
+     */
+    /****
+     * Get volume
      */
     public float getVolume() {
         if (mAliPlayer != null) {
@@ -325,6 +365,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 是否开启自动播放
      */
+    /****
+     * Is auto play enabled
+     */
     public void setAutoPlay(boolean isAutoPlay) {
         if (mAliPlayer != null) {
             mAliPlayer.setAutoPlay(isAutoPlay);
@@ -333,6 +376,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 设置播放速率
+     */
+    /****
+     * Set playback rate
      */
     public void setSpeed(float speed) {
         if (mAliPlayer != null) {
@@ -356,6 +402,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 是否循环播放
      */
+    /****
+     * Is loop play enabled
+     */
     public void setLoop(boolean loop) {
         if (mAliPlayer != null) {
             mAliPlayer.setLoop(loop);
@@ -372,6 +421,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 截屏
      */
+    /****
+     * Screenshot
+     */
     public void snapshot() {
         if (mAliPlayer != null) {
             mAliPlayer.snapshot();
@@ -382,6 +434,11 @@ public class AliyunRenderView extends FrameLayout {
      * 选择 track
      *
      * @param index 索引
+     */
+    /****
+     * Select track
+     *
+     * @param index index
      */
     public void selectTrack(int index) {
         if (mAliPlayer != null) {
@@ -395,6 +452,12 @@ public class AliyunRenderView extends FrameLayout {
      * @param index 索引
      * @param focus 是否强制选择track
      */
+    /****
+     * Select track
+     *
+     * @param index index
+     * @param focus whether to force select track
+     */
     public void selectTrack(int index, boolean focus) {
         if (mAliPlayer != null) {
             mAliPlayer.selectTrack(index, focus);
@@ -403,6 +466,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 停止播放
+     */
+    /****
+     * Stop playing
      */
     public void stop() {
         if (listPlayManager != null) {
@@ -422,6 +488,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 暂停播放,直播流不建议使用
+     */
+    /****
+     * Pause playing, do not use for live streams
      */
     public void pause() {
         if (listPlayManager != null) {
@@ -450,6 +519,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 获取视频时长
      */
+    /****
+     * Get video duration
+     */
     public long getDuration() {
         if (mAliPlayer != null) {
             return mAliPlayer.getDuration();
@@ -460,6 +532,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 获取当前 track
      */
+    /****
+     * Get current track
+     */
     public TrackInfo currentTrack(TrackInfo.Type typeVideo) {
         if (mAliPlayer != null) {
             return mAliPlayer.currentTrack(typeVideo);
@@ -469,6 +544,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 获取当前 track
+     */
+    /****
+     * Get current track
      */
     @Deprecated
     public TrackInfo currentTrack(int ordinal) {
@@ -484,6 +562,12 @@ public class AliyunRenderView extends FrameLayout {
      * @param position 目标位置
      * @param seekMode 精准/非精准seek
      */
+    /****
+     * Seek
+     *
+     * @param position target position
+     * @param seekMode accurate/non-accurate seek
+     */
     public void seekTo(long position, IPlayer.SeekMode seekMode) {
         if (mAliPlayer != null) {
             mAliPlayer.seekTo(position, seekMode);
@@ -497,6 +581,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 缓存配置
      */
+    /****
+     * Cache configuration
+     */
     public void setCacheConfig(CacheConfig cacheConfig) {
         if (mAliPlayer != null) {
             mAliPlayer.setCacheConfig(cacheConfig);
@@ -505,6 +592,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 设置PlayerConfig
+     */
+    /****
+     * Set PlayerConfig
      */
     public void setPlayerConfig(PlayerConfig playerConfig) {
         if (mAliPlayer != null) {
@@ -523,6 +613,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 获取PlayerConfig
      */
+    /****
+     * Get PlayerConfig
+     */
     public PlayerConfig getPlayerConfig() {
         if (mAliPlayer != null) {
             return mAliPlayer.getConfig();
@@ -533,6 +626,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置缩放模式
      */
+    /****
+     * Set scale mode
+     */
     public void setScaleModel(IPlayer.ScaleMode scaleMode) {
         if (mAliPlayer != null) {
             mAliPlayer.setScaleMode(scaleMode);
@@ -541,6 +637,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 获取当前缩放模式
+     */
+    /****
+     * Get current scale mode
      */
     public IPlayer.ScaleMode getScaleModel() {
         if (mAliPlayer != null) {
@@ -552,6 +651,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置旋转模式
      */
+    /****
+     * Set rotate mode
+     */
     public void setRotateModel(IPlayer.RotateMode rotateModel) {
         if (mAliPlayer != null) {
             mAliPlayer.setRotateMode(rotateModel);
@@ -560,6 +662,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 获取当前旋转模式
+     */
+    /****
+     * Get current rotate mode
      */
     public IPlayer.RotateMode getRotateModel() {
         if (mAliPlayer != null) {
@@ -571,6 +676,9 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 设置镜像模式
      */
+    /****
+     * Set mirror mode
+     */
     public void setMirrorMode(IPlayer.MirrorMode mirrorMode) {
         if (mAliPlayer != null) {
             mAliPlayer.setMirrorMode(mirrorMode);
@@ -579,6 +687,9 @@ public class AliyunRenderView extends FrameLayout {
 
     /**
      * 获取当前镜像模式
+     */
+    /****
+     * Get current mirror mode
      */
     public IPlayer.MirrorMode getMirrorMode() {
         if (mAliPlayer != null) {
@@ -599,6 +710,11 @@ public class AliyunRenderView extends FrameLayout {
      *
      * @param enableHardwareDecoder true:硬解,false:软解
      */
+    /****
+     * Software/hardware decoder switch
+     *
+     * @param enableHardwareDecoder true:hardware decoder,false:software decoder
+     */
     public void enableHardwareDecoder(boolean enableHardwareDecoder) {
         if (mAliPlayer != null) {
             mCurrentEnableHardwareDecoder = enableHardwareDecoder;
@@ -610,6 +726,11 @@ public class AliyunRenderView extends FrameLayout {
      * 获取当前解码状态
      *
      * @return true:硬解,false:软解
+     */
+    /****
+     * Get current decoder status
+     *
+     * @return true:hardware decoder,false:software decoder
      */
     public boolean isHardwareDecoder() {
         return mCurrentEnableHardwareDecoder;
@@ -685,11 +806,16 @@ public class AliyunRenderView extends FrameLayout {
     /**
      * 纯音频、纯视频流监听
      */
+    /****
+     * Pure audio/video stream listener
+     */
     public interface OnVideoStreamTrackTypeListener {
         //纯视频
+        //pure video
         void onVideoOnlyType();
 
         //纯音频
+        //pure audio
         void onAudioOnlyType();
     }
 

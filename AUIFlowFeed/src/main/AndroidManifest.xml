@@ -21,9 +21,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
-    <!--系统悬浮窗权限-->
+    <!--系统悬浮窗权限 System permissions for floating windows-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--手机震动权限（EasyFloat不需要）-->
+    <!--手机震动权限（EasyFloat不需要）System permissions for phone vibration(Not required for EasyFloat)-->
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-sdk tools:overrideLibrary="com.github.leavesC:ReactiveHttp"></uses-sdk>
@@ -49,11 +49,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--适配华为（huawei）刘海屏-->
+        <!--适配华为（huawei）刘海屏 Adaptation of Huawei notch screen-->
         <meta-data
             android:name="android.notch_support"
             android:value="true" />
-        <!--适配小米（xiaomi）刘海屏-->
+        <!--适配小米（xiaomi）刘海屏 Adaptation of Xiaomi notch screen-->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />

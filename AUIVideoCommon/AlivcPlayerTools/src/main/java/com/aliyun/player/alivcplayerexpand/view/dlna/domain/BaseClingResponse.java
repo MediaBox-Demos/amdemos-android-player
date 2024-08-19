@@ -6,6 +6,9 @@ import org.fourthline.cling.model.message.UpnpResponse;
 /**
  * Cling 服务回调基类
  */
+/****
+ * Cling service callback base class
+ */
 
 public class BaseClingResponse<T> implements IResponse<T> {
 
@@ -19,6 +22,11 @@ public class BaseClingResponse<T> implements IResponse<T> {
      *
      * @param actionInvocation  cling action 调用
      */
+    /****
+     * Control operation success constructor
+     *
+     * @param actionInvocation  cling action invocation
+     */
     public BaseClingResponse(ActionInvocation actionInvocation) {
         mActionInvocation = actionInvocation;
     }
@@ -29,6 +37,13 @@ public class BaseClingResponse<T> implements IResponse<T> {
      * @param actionInvocation  cling action 调用
      * @param operation     执行状态
      * @param defaultMsg    错误信息
+     */
+    /****
+     * Control operation failure constructor
+     *
+     * @param actionInvocation  cling action invocation
+     * @param operation     Execution status
+     * @param defaultMsg    Error message
      */
     public BaseClingResponse(ActionInvocation actionInvocation, UpnpResponse operation, String defaultMsg) {
         mActionInvocation = actionInvocation;
@@ -41,6 +56,12 @@ public class BaseClingResponse<T> implements IResponse<T> {
      *
      * @param actionInvocation  cling action 调用
      * @param info      回调的对象
+     */
+    /****
+     * Callback when receiving
+     *
+     * @param actionInvocation  cling action invocation
+     * @param info      Callback object
      */
     public BaseClingResponse(ActionInvocation actionInvocation, T info) {
         mActionInvocation = actionInvocation;

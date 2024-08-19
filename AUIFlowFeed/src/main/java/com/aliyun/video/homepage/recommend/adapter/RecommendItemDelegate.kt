@@ -74,6 +74,7 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
                 val coverUrl =
                     if (item.firstFrameUrl.isNullOrEmpty()) item.coverUrl else item.firstFrameUrl
                 //封面
+                //Cover
                 mVideoCover.visibility = View.VISIBLE
                 ImageLoader.loadImg(
                     coverUrl,
@@ -81,23 +82,29 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
                     R.drawable.ic_material_placeholder
                 )
                 //时间-总时长
+                //time-total duration
                 tvSmallDuration.text = DateUtils.formatElapsedTime(item.duration.toLong())
                 alivcInfoSmallDuration.text = DateUtils.formatElapsedTime(item.duration.toLong())
                 //标题
+                //title
                 root.removeCallbacks(mVideoFunctionHideRunnable)
                 mVideoTitle.text = item.title
                 if (item.user != null) {
                     //头像
+                    //Avatar
                     ImageLoader.loadCircleImg(
                         item.user?.avatarUrl,
                         mPortrait,
                         R.drawable.default_portrait_icon
                     )
                     //昵称
+                    //Username
+                    val defaultNickname = mAuthorName.context.getString(R.string.default_nickname)
                     mAuthorName.text =
-                        if (item.user?.userName?.isEmpty() == true) "默认昵称.尼古拉斯" else item.user?.userName
+                        if (item.user?.userName?.isEmpty() == true) defaultNickname else item.user?.userName
                 }
                 //默认显示 pause icon
+                //Pause icon is displayed by default
                 mPlayIconShow = false
                 mVideoPlayIcon.apply {
                     this.visibility = View.VISIBLE
@@ -107,11 +114,13 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
                         val playing = mVideoPlayIcon.getTag(R.id.item_playing) as Boolean
                         if (playing) {
                             //进入暂停
+                            //Pause
                             clickFuc.pauseVideo(position)
                             showPlayIcon(false)
                             root.removeCallbacks(mVideoFunctionHideRunnable)
                         } else {
                             //播放
+                            //Play
                             clickFuc.playVideo(position)
                             showPlayIcon(true)
                             root.removeCallbacks(mVideoFunctionHideRunnable)
@@ -121,6 +130,7 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
                 }
                 root.setOnClickListener {
                     //进入半屏播放页
+                    //To half-screen playback page
                     clickFuc.jumpHalfScreenPage(position)
                 }
                 mCommentNumber.setOnClickListener {
@@ -128,6 +138,7 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
                 }
                 alivcScreenMode.setOnClickListener {
                     //进入全屏播放页
+                    //To full-screen playback page
                     clickFuc.jumpFullScreenPage(position)
                 }
                 layoutContrastPlayTip.setOnClickListener {
@@ -166,6 +177,7 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
                     }
                 })
                 //选中是正常音量，没选中是静音
+                //Checked for normal volume, unchecked for mute
                 updateVoiceCheckBox()
                 checkBoxVoice.setOnCheckedChangeListener { buttonView, isChecked ->
                     if (mViewAttach) {
@@ -187,6 +199,7 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
         private fun updateVoiceCheckBox() {
             mItemViewBinding.apply {
                 //checked 表示非静音
+                //checked means not muted
                 if (checkBoxVoice.isChecked == PlayConfigManager.getPlayConfig().listPlayMute) {
                     checkBoxVoice.isChecked = !PlayConfigManager.getPlayConfig().listPlayMute
                 }
@@ -216,8 +229,13 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
          * 更新当前主题色
          * @param theme 设置的主题色
          */
+        /****
+         * Update the current theme color
+         * @param theme Set theme color
+         */
         private fun updateSeekBarTheme(theme: Theme) {
             //获取不同主题的图片
+            // Get pictures of different themes
             var progressDrawableResId =
                 R.drawable.alivc_info_seekbar_bg_blue
             var thumbResId =
@@ -242,9 +260,11 @@ class RecommendItemDelegate(val clickFuc: OnRecommendItemClick) :
             }
 
             //这个很有意思。。哈哈。不同的seekbar不能用同一个drawable，不然会出问题。
+            // This is interesting. Haha. You can't use the same drawable for different seekbars or something will go wrong.
             // https://stackoverflow.com/questions/12579910/seekbar-thumb-position-not-equals-progress
             mItemViewBinding.apply {
                 //设置到对应控件中
+                //Set to the corresponding control
                 val smallProgressDrawable: Drawable? =
                     ContextCompat.getDrawable(itemView.context, progressDrawableResId)
                 val smallThumb: Drawable? =

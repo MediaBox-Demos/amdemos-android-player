@@ -25,10 +25,15 @@ import com.aliyun.player.alivcplayerexpand.util.AliyunScreenMode;
  * 手势指导页面。
  * 主要在{@link com.aliyun.player.alivcplayerexpand.widget.AliyunVodPlayerView} 使用。
  */
+/****
+ * Guide page for gestures.
+ * Mainly used by {@link com.aliyun.player.alivcplayerexpand.widget.AliyunVodPlayerView}.
+ */
 
 public class GuideView extends LinearLayout implements ITheme {
 
     //三个文字显示
+    //Three text
     private TextView mBrightText, mProgressText, mVolumeText;
 
     public GuideView(Context context) {
@@ -48,17 +53,20 @@ public class GuideView extends LinearLayout implements ITheme {
 
     private void init() {
         //设置页面布局
+        //Set page layout
         setBackgroundColor(Color.parseColor("#88000000"));
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.alivc_view_guide, this, true);
 
         //这几个文字有颜色的变化
+        //These three text have color changes
         mBrightText = (TextView) findViewById(R.id.bright_text);
         mProgressText = (TextView) findViewById(R.id.progress_text);
         mVolumeText = (TextView) findViewById(R.id.volume_text);
 
         //默认是隐藏的
+        //By default it is hidden
         hide();
     }
 
@@ -67,22 +75,31 @@ public class GuideView extends LinearLayout implements ITheme {
      *
      * @param mode 全屏，小屏
      */
+    /****
+     * Set the current screen mode
+     *
+     * @param mode full screen, small screen
+     */
     public void setScreenMode(AliyunScreenMode mode) {
         if (mode == AliyunScreenMode.Small) {
             //小屏时隐藏
+            //Small screen hide
             hide();
             return;
         }
 //只有第一次进入全屏的时候显示。通过SharedPreferences记录这个值。
+        //Only the first time entering full screen is displayed. Record this value by SharedPreferences
         SharedPreferences spf = getContext().getSharedPreferences("alivc_guide_record", Context.MODE_PRIVATE);
         boolean hasShown = spf.getBoolean("has_shown", false);
         //如果已经显示过了，就不接着走了
+        //If it has been displayed, it will not go
         if (hasShown) {
             return;
         } else {
             setVisibility(VISIBLE);
         }
         //记录下来
+        //Record
         SharedPreferences.Editor editor = spf.edit();
         editor.putBoolean("has_shown", true);
         editor.apply();
@@ -90,6 +107,9 @@ public class GuideView extends LinearLayout implements ITheme {
 
     /**
      * 隐藏不显示
+     */
+    /****
+     * Hide and do not display
      */
     public void hide() {
         setVisibility(GONE);
@@ -99,6 +119,12 @@ public class GuideView extends LinearLayout implements ITheme {
      * 手势点击到了就隐藏
      *
      * @param event 触摸事件
+     * @return
+     */
+    /****
+     * The gesture clicked to hide
+     *
+     * @param event touch event
      * @return
      */
     @Override
@@ -111,6 +137,11 @@ public class GuideView extends LinearLayout implements ITheme {
      * 设置主题色
      *
      * @param theme 支持的主题
+     */
+    /****
+     * Set the theme color
+     *
+     * @param theme Supported theme
      */
     @Override
     public void setTheme(Theme theme) {
@@ -128,6 +159,7 @@ public class GuideView extends LinearLayout implements ITheme {
 
         int color = ContextCompat.getColor(getContext(), colorRes);
 //这三个text的颜色会改变
+        //These three text colors will change
         mBrightText.setTextColor(color);
         mProgressText.setTextColor(color);
         mVolumeText.setTextColor(color);

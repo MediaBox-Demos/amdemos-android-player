@@ -17,7 +17,9 @@ import android.util.Log;
 /**
  * 网络连接状态的监听器。通过注册broadcast实现的
  */
-
+/**
+ * Listener for network connection status. This is achieved by registering a broadcast
+ */
 public class NetWatchdog {
 
     private static final String TAG = NetWatchdog.class.getSimpleName();
@@ -25,28 +27,42 @@ public class NetWatchdog {
 
     private Context mContext;
     //网络变化监听
+    //Network Change Listening
     private NetChangeListener mNetChangeListener;
     private NetConnectedListener mNetConnectedListener;
 
     //广播过滤器，监听网络变化
+    //Broadcast Filter, listen network change
     private IntentFilter mNetIntentFilter = new IntentFilter();
 
     /**
      * 网络变化监听事件
      */
+    /****
+     * Network Change Listening
+     */
     public interface NetChangeListener {
         /**
          * wifi变为4G
+         */
+        /****
+         * wifi to 4G
          */
         void onWifiTo4G();
 
         /**
          * 4G变为wifi
          */
+        /****
+         * 4G to wifi
+         */
         void on4GToWifi();
 
         /**
          * 网络断开
+         */
+        /****
+         * Network Disconnected
          */
         void onNetDisconnected();
     }
@@ -55,14 +71,23 @@ public class NetWatchdog {
     /**
      * 判断是否有网络的监听
      */
+    /****
+     * Determine if there is a network listener
+     */
     public interface NetConnectedListener {
         /**
          * 网络已连接
+         */
+        /****
+         * Network Connected
          */
         void onReNetConnected(boolean isReconnect);
 
         /**
          * 网络未连接
+         */
+        /****
+         * Network UnConnected
          */
         void onNetUnConnected();
     }
@@ -71,6 +96,7 @@ public class NetWatchdog {
         @Override
         public void onReceive(Context context, Intent intent) {
             //获取手机的连接服务管理器，这里是连接管理器类
+            //Get the connection service manager of the phone, here is the connection manager class
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
             NetworkInfo wifiNetworkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -117,6 +143,10 @@ public class NetWatchdog {
                     4G 切换 wifi 时候，首先会收到 4G 断开的通知，再收到 wifi 连接的通知，会导致
                     该回调被调用两次。netInfo.getType()：1：wifi，0：4G
                  */
+                /*
+                    When 4G switches wifi, first we will receive 4G disconnect notification, then we will receive wifi connect notification, which will lead to
+                    This callback is called twice. netInfo.getType(): 1: wifi, 0: 4G
+                 */
                 if (mNetChangeListener != null) {
                     mNetChangeListener.on4GToWifi();
                 }
@@ -140,6 +170,11 @@ public class NetWatchdog {
      *
      * @param l 监听事件
      */
+    /****
+     * Set Network Change Listener
+     *
+     * @param l listener
+     */
     public void setNetChangeListener(NetChangeListener l) {
         mNetChangeListener = l;
     }
@@ -151,6 +186,9 @@ public class NetWatchdog {
     /**
      * 开始监听
      */
+    /****
+     * Start Watch
+     */
     public void startWatch() {
         try {
             mContext.registerReceiver(mReceiver, mNetIntentFilter);
@@ -160,6 +198,9 @@ public class NetWatchdog {
 
     /**
      * 结束监听
+     */
+    /****
+     * Stop Watch
      */
     public void stopWatch() {
         try {
@@ -175,8 +216,15 @@ public class NetWatchdog {
      * @param context 上下文
      * @return 是否连接
      */
+    /****
+     * Static method to get whether there is a network connection
+     *
+     * @param context context
+     * @return whether connected
+     */
     public static boolean hasNet(Context context) {
         //获取手机的连接服务管理器，这里是连接管理器类
+        //Get the connection service manager of the phone, here is the connection manager class
         ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo wifiNetworkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -209,8 +257,15 @@ public class NetWatchdog {
      * @param context 上下文
      * @return 是否是4G
      */
+    /****
+     * Static judge whether it is 4G network
+     *
+     * @param context context
+     * @return whether 4G
+     */
     public static boolean is4GConnected(Context context) {
         //获取手机的连接服务管理器，这里是连接管理器类
+        //Get the connection service manager of the phone, here is the connection manager class
         ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo mobileNetworkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);

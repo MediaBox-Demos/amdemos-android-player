@@ -228,6 +228,7 @@ public class BubbleSeekBar extends View {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
         // MIUI禁止了开发者使用TYPE_TOAST，Android 7.1.1 对TYPE_TOAST的使用更严格
+        // MIUI prohibits developers from using TYPE_TOAST, Android 7.1.1 is stricter on TYPE_TOAST usage
         if (BubbleUtils.isMIUI() || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
         } else {
@@ -324,6 +325,7 @@ public class BubbleSeekBar extends View {
         mPaint.setTextSize(mBubbleTextSize);
 
         // 计算滑到两端气泡里文字需要显示的宽度，比较取最大值为气泡的半径
+        // Calculate the width of the text that needs to be displayed when sliding into the bubbles at both ends, and compare the maximum value to the radius of the bubbles.
         String text;
         if (isShowProgressInFloat) {
             text = float2String(isRtl ? mMax : mMin);
@@ -383,13 +385,13 @@ public class BubbleSeekBar extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        int height = mThumbRadiusOnDragging * 2; // 默认高度为拖动时thumb圆的直径
+        int height = mThumbRadiusOnDragging * 2; // 默认高度为拖动时thumb圆的直径 The default height is the diameter of the thumb circle when dragging.
         if (isShowThumbText) {
             mPaint.setTextSize(mThumbTextSize);
             mPaint.getTextBounds("j", 0, 1, mRectText); // j is the highest of all letters and numbers
-            height += mRectText.height(); // 如果显示实时进度，则原来基础上加上进度文字高度和间隔
+            height += mRectText.height(); // 如果显示实时进度，则原来基础上加上进度文字高度和间隔 If real-time progress is displayed, add the height of the progress text and the interval to the original.
         }
-        if (isShowSectionText && mSectionTextPosition >= TextPosition.BOTTOM_SIDES) { // 如果Section值在track之下显示，比较取较大值
+        if (isShowSectionText && mSectionTextPosition >= TextPosition.BOTTOM_SIDES) { // 如果Section值在track之下显示，比较取较大值 If the Section value is displayed under track, the comparison takes the larger value
             mPaint.setTextSize(mSectionTextSize);
             mPaint.getTextBounds("j", 0, 1, mRectText);
             height = Math.max(height, mThumbRadiusOnDragging * 2 + mRectText.height());

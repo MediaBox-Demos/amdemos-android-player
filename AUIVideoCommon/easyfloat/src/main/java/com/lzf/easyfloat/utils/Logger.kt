@@ -12,7 +12,7 @@ internal object Logger {
 
     private var tag = "EasyFloat--->"
 
-    // 设为false关闭日志
+    // 设为false关闭日志 Set to false to turn off logging
     private var logEnable = BuildConfig.DEBUG
 
     fun i(msg: Any) = i(tag, msg.toString())

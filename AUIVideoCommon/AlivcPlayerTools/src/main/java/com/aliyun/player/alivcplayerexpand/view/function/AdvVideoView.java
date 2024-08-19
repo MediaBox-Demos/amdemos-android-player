@@ -33,36 +33,54 @@ import java.lang.ref.WeakReference;
  *
  * @author hanyu
  */
+/****
+ * Video Ads View
+ *
+ * @author hanyu
+ */
 public class AdvVideoView extends RelativeLayout implements View.OnClickListener {
 
     private static final String TAG = AdvVideoView.class.getSimpleName();
 
     //广告播放器的surfaceView
+    //SurfaceView of the ad player
     private SurfaceView mAdvSurfaceView;
     //用于播放视频广告的播放器
+    //Player for playing video ads
     private AliPlayer mAdvVideoAliyunVodPlayer;
 
     //对外info改变监听
+    //out Info change listener
     private IPlayer.OnInfoListener mOutOnInfoListener;
     //对外错误监听
+    //out Error listener
     private IPlayer.OnErrorListener mOutOnErrorListener;
     //对外播放完成监听
+    //out Playback complete listener
     private IPlayer.OnCompletionListener mOutOnCompletionListener;
     //对外loading状态监听
+    //out Loading status listener
     private IPlayer.OnLoadingStatusListener mOutOnLoadingStatusListener;
     //对外renderingStart监听
+    //out RenderingStart listener
     private IPlayer.OnRenderingStartListener mOutOnRenderingStartListener;
     //状态改变监听
+    //state change listener
     private IPlayer.OnStateChangedListener mOutOnStateChangedListener;
     //对外准备完成监听
+    //out Prepared listener
     private IPlayer.OnPreparedListener mOutPreparedListener;
     //返回按钮点击事件
+    //back image view click listener
     private OnBackImageViewClickListener mOnBackImageViewClickListener;
     //播放器的状态
+    //player state
     private int mPlayerState = -1;
     //视频广告返回按钮
+    //video ad back button
     private ImageView mBackImageView;
     //视频广告标志View
+    //video ad flag
     private TextView mAdvTipsTextView;
 
 
@@ -134,15 +152,22 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
      *
      * @param view 子view
      */
+    /****
+     * addSubView Add subview to layout
+     *
+     * @param view subview
+     */
     private void addSubView(View view) {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         //添加到布局中
+        //add to layout
         addView(view, params);
     }
 
     private void addSubViewByWrapContent(View view){
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         //添加到布局中
+        //add to layout
         addView(view, params);
     }
 
@@ -152,6 +177,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
         params.topMargin = (int) getResources().getDimension(R.dimen.alivc_common_margin_6);
         params.rightMargin = (int) getResources().getDimension(R.dimen.alivc_common_margin_4);
         //添加到布局中
+        //add to layout
         addView(view, params);
     }
 
@@ -166,27 +192,39 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 初始化视频广告
      */
+    /****
+     * Initialize video ad
+     */
     private void initAdvPlayer() {
         SurfaceHolder holder = mAdvSurfaceView.getHolder();
         //增加surfaceView的监听
+        //Add listener to surfaceView
         holder.addCallback(new AdvSurfaceHolderCallback(this));
 
         //该播放器用于播放器视频广告
+        //Player for playing video ads
         mAdvVideoAliyunVodPlayer = AliPlayerFactory.createAliPlayer(getContext().getApplicationContext());
         mAdvVideoAliyunVodPlayer.setAutoPlay(true);
         //设置准备回调
+        //Set prepared callback
         mAdvVideoAliyunVodPlayer.setOnPreparedListener(new AdvPlayerOnPreparedListener(this));
         //播放器加载回调
+        //Player loading callback
         mAdvVideoAliyunVodPlayer.setOnLoadingStatusListener(new AdvPlayerOnLoadingStatusListener(this));
         //播放信息监听
+        //Player information listener
         mAdvVideoAliyunVodPlayer.setOnInfoListener(new AdvPlayerOnInfoListener(this));
         //第一帧显示
+        //First frame display
         mAdvVideoAliyunVodPlayer.setOnRenderingStartListener(new AdvPlayerOnRenderingStartLitener(this));
         //状态改变监听
+        //State change listener
         mAdvVideoAliyunVodPlayer.setOnStateChangedListener(new AdvPlayerOnStateChangedListener(this));
         //播放结束
+        //Playback end
         mAdvVideoAliyunVodPlayer.setOnCompletionListener(new AdvPlayerOnCompletionListener(this));
         //播放器出错监听
+        //Player error listener
         mAdvVideoAliyunVodPlayer.setOnErrorListener(new AdvPlayerOnErrorListener(this));
 
         mAdvVideoAliyunVodPlayer.setDisplay(mAdvSurfaceView.getHolder());
@@ -194,6 +232,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
 
     /**
      * 设置vidSts
+     */
+    /****
+     * Set vidSts
      */
     public void optionSetVidSts(VidSts vidSts) {
         if (mAdvVideoAliyunVodPlayer != null) {
@@ -204,6 +245,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 设置vidSuth
      */
+    /****
+     * Set vidSuth
+     */
     public void optionSetVidAuth(VidAuth vidAuth) {
         if (mAdvVideoAliyunVodPlayer != null) {
             mAdvVideoAliyunVodPlayer.setDataSource(vidAuth);
@@ -212,6 +256,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
 
     /**
      * 设置urlSource
+     */
+    /****
+     * Set urlSource
      */
     public void optionSetUrlSource(UrlSource urlSource) {
         if (mAdvVideoAliyunVodPlayer != null) {
@@ -222,6 +269,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 设置vidMps
      */
+    /****
+     * Set vidMps
+     */
     public void optionSetVidMps(VidMps vidMps) {
         if (mAdvVideoAliyunVodPlayer != null) {
             mAdvVideoAliyunVodPlayer.setDataSource(vidMps);
@@ -231,6 +281,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * prepared操作
      */
+    /****
+     * Prepared operation
+     */
     public void optionPrepare() {
         if (mAdvVideoAliyunVodPlayer != null) {
             mAdvVideoAliyunVodPlayer.prepare();
@@ -239,6 +292,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
 
     /**
      * 开始操作
+     */
+    /****
+     * Start operation
      */
     public void optionStart() {
         if (mAdvVideoAliyunVodPlayer != null) {
@@ -251,6 +307,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 暂停操作
      */
+    /****
+     * Pause operation
+     */
     public void optionPause() {
         if (mAdvVideoAliyunVodPlayer != null) {
             mAdvVideoAliyunVodPlayer.pause();
@@ -259,6 +318,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
 
     /**
      * 停止操作
+     */
+    /****
+     * Stop operation
      */
     public void optionStop() {
         if (mAdvVideoAliyunVodPlayer != null) {
@@ -269,6 +331,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 视频广告的返回按钮是否展示
      */
+    /****
+     * Whether the back button for video ads is displayed
+     */
     public void isShowAdvVideoBackIamgeView(boolean isShow){
         if(mBackImageView != null){
             mBackImageView.setVisibility(isShow ? View.VISIBLE : View.GONE);
@@ -278,6 +343,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 视频广告是否展示提示View
      */
+    /****
+     * Whether to show video ads or notView
+     */
     public void isShowAdvVideoTipsTextView(boolean isShow){
         if(mAdvTipsTextView != null){
             mAdvTipsTextView.setVisibility(isShow ? View.VISIBLE : View.GONE);
@@ -285,6 +353,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //获取视频广告的播放器
+    //Get video ad player
     public AliPlayer getAdvVideoAliyunVodPlayer() {
         return mAdvVideoAliyunVodPlayer;
     }
@@ -300,12 +369,18 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 设置prepared监听
      */
+    /****
+     * Set prepared listener
+     */
     public void setOutPreparedListener(IPlayer.OnPreparedListener outPreparedListener) {
         this.mOutPreparedListener = outPreparedListener;
     }
 
     /**
      * 设置onLoading状态监听
+     */
+    /****
+     * Set onLoading status listener
      */
     public void setOutOnLoadingStatusListener(IPlayer.OnLoadingStatusListener onLoadingStatusListener) {
         this.mOutOnLoadingStatusListener = onLoadingStatusListener;
@@ -314,12 +389,18 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 设置播放完成监听
      */
+    /****
+     * Set playback end listener
+     */
     public void setOutOnCompletionListener(IPlayer.OnCompletionListener onCompletionListener) {
         this.mOutOnCompletionListener = onCompletionListener;
     }
 
     /**
      * 设置对外info改变监听
+     */
+    /****
+     * Set out info change listener
      */
     public void setOutOnInfoListener(IPlayer.OnInfoListener onInfoListener) {
         this.mOutOnInfoListener = onInfoListener;
@@ -328,6 +409,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 设置对外 renderingStart 监听
      */
+    /****
+     * Set out renderingStart listener
+     */
     public void setOutOnRenderingStartListener(IPlayer.OnRenderingStartListener onRenderingStartListener) {
         this.mOutOnRenderingStartListener = onRenderingStartListener;
     }
@@ -335,11 +419,15 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 设置对外错误监听
      */
+    /****
+     * Set out error listener
+     */
     public void setOutOnErrorListener(IPlayer.OnErrorListener onErrorListener) {
         this.mOutOnErrorListener = onErrorListener;
     }
 
     //状态改变监听
+    //State change listener
     public void setOutOnStateChangedListener(IPlayer.OnStateChangedListener listener) {
         this.mOutOnStateChangedListener = listener;
     }
@@ -353,6 +441,9 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 获取视频广告播放器的状态
      */
+    /****
+     * Get video ad player status
+     */
     public int getAdvPlayerState() {
         return mPlayerState;
     }
@@ -361,9 +452,15 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
         /**
          * 广告
          */
+        /****
+         * Ad
+         */
         VIDEO_ADV,
         /**
          * 原视频
+         */
+        /****
+         * Original video
          */
         VIDEO_SOURCE;
     }
@@ -371,33 +468,57 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * 将要播放的视频
      */
+    /****
+     * The video to be played
+     */
     public enum IntentPlayVideo {
         /**
          * 先播放中间广告,播放完成后再播放最后一条广告
+         */
+        /****
+         * Play the middle ad first, and play the last ad after it is completed
          */
         MIDDLE_END_ADV_SEEK,
         /**
          * 播放中间广告,并且播放完成需要seek
          */
+        /****
+         * Play the middle ad, and seek after it is completed
+         */
         MIDDLE_ADV_SEEK,
         /**
          * 播放开始广告
+         */
+        /****
+         * ad when playback start
          */
         START_ADV,
         /**
          * 播放中间广告
          */
+        /****
+         * ad when playback middle
+         */
         MIDDLE_ADV,
         /**
          * 播放结束广告
+         */
+        /****
+         * ad when playback end
          */
         END_ADV,
         /**
          * 原视频左seek
          */
+        /****
+         * Original video left seek
+         */
         REVERSE_SOURCE,
         /**
          * 正常seek
+         */
+        /****
+         * Normal seek
          */
         NORMAL;
     }
@@ -405,7 +526,11 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     /**
      * ------------------------------------ 视频广告播放器相关回调 ------------------------------------
      */
+    /****
+     * ------------------------------------ Video ad player related callbacks ------------------------------------
+     */
     //SurfaceView回调监听
+        //SurfaceView callback
     public static class AdvSurfaceHolderCallback implements SurfaceHolder.Callback{
 
         private WeakReference<AdvVideoView> weakReference;
@@ -420,6 +545,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
             if(advVideoView != null && advVideoView.mAdvVideoAliyunVodPlayer != null){
                 advVideoView.mAdvVideoAliyunVodPlayer.setDisplay(holder);
                 //防止黑屏
+                //Prevent black screen
                 advVideoView.mAdvVideoAliyunVodPlayer.redraw();
             }
         }
@@ -442,6 +568,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //准备完成回调
+    //Prepared complete callback
     public static class AdvPlayerOnPreparedListener implements IPlayer.OnPreparedListener {
 
         private WeakReference<AdvVideoView> weakReference;
@@ -460,6 +587,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //loading状态监听
+    //Loading status listener
     public static class AdvPlayerOnLoadingStatusListener implements IPlayer.OnLoadingStatusListener {
 
         private WeakReference<AdvVideoView> weakReference;
@@ -494,6 +622,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //播放信息监听
+    //Play information listener
     public static class AdvPlayerOnInfoListener implements IPlayer.OnInfoListener {
 
         private WeakReference<AdvVideoView> weakReference;
@@ -512,6 +641,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //首帧显示监听
+    //First frame display listener
     public static class AdvPlayerOnRenderingStartLitener implements IPlayer.OnRenderingStartListener {
 
         private WeakReference<AdvVideoView> weakReference;
@@ -532,6 +662,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //播放状态改变监听
+    //Play status change listener
     public static class AdvPlayerOnStateChangedListener implements IPlayer.OnStateChangedListener {
 
         private WeakReference<AdvVideoView> weakReference;
@@ -551,6 +682,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //播放完成监听
+    //Play completion listener
     public static class AdvPlayerOnCompletionListener implements IPlayer.OnCompletionListener{
 
         private WeakReference<AdvVideoView> weakReference;
@@ -571,6 +703,7 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
 
     //播放出错监听
+    //Play error listener
     public static class AdvPlayerOnErrorListener implements IPlayer.OnErrorListener{
 
         private WeakReference<AdvVideoView> weakReference;
@@ -589,5 +722,8 @@ public class AdvVideoView extends RelativeLayout implements View.OnClickListener
     }
     /**
      * ------------------------------------ 视频广告播放器相关回调 ------------------------------------
+     */
+    /****
+     * ------------------------------------ Video ad player related callbacks ------------------------------------
      */
 }

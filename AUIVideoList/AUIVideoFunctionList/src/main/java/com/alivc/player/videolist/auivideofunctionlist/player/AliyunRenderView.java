@@ -32,8 +32,11 @@ public class AliyunRenderView {
     private PlayerListener mOnPlayerListener;
 
     // 通过接口设置，可以达到精准seek效果，默认是 IPlayer.SeekMode.Inaccurate
-    // 当前SDK默认是 IPlayer.SeekMode.Inaccurate ，即：非精准seek
+    // Through the interface settings, you can achieve accurate seek effect, the default is IPlayer.SeekMode.Inaccurate.
+    // The current SDK default is IPlayer.SeekMode.Inaccurate, i.e.: non-accurate seek
+    // SeekMode.Inaccurate by default, i.e. not accurate seek.
     // 如果想要精准seek，请设置为 IPlayer.SeekMode.Accurate
+    // If you want accurate seek, please set it to IPlayer.SeekMode.Accurate
     private static final IPlayer.SeekMode DEFAULT_SEEK_MODE = IPlayer.SeekMode.Accurate;
 
     public AliyunRenderView(Context context) {

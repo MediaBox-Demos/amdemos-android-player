@@ -9,6 +9,11 @@ import androidx.annotation.NonNull;
  *
  * 注意：如果第一次点击涉及到阻塞主线程/主线程耗时的情况则FastClickUtil的判断并不靠谱
  */
+/****
+ * Tool class to limit multiple triggers for quick clicks
+ *
+ * Note: FastClickUtil's judgment is not reliable if the first click involves blocking the main thread / main thread timing out.
+ */
 public class FastClickUtil {
 
 
@@ -16,10 +21,16 @@ public class FastClickUtil {
     /**
      * 两次点击间隔不能少于300ms
      */
+    /****
+     * The interval between two clicks cannot be less than 300ms.
+     */
     private static final int MIN_DELAY_TIME = 500;
 
     /**
      * activity两次点击间隔不能少于800ms
+     */
+    /****
+     * Activity two clicks interval cannot be less than 800ms.
      */
     private static final int MIN_DELAY_TIME_ACTIVITY = 800;
     private static long sLastClickTime;
@@ -42,6 +53,15 @@ public class FastClickUtil {
      * @param activitySimpleName Activity.class.getSimpleName()
      * @return boolean
      */
+    /****
+     * fix consecutive clicks to pop up multiple activities
+     * 1. Setting android:launchMode="singleTop" does not work in this scenario
+     * 2. Some phones may have different blocking times for activities, causing the interval to exceed 500ms. Here we locate 800 milliseconds can handle the majority of phones and situations
+     * 3. Through recording activitySimpleName, avoid the situation where users need to wait for the user to be familiar with consecutive entry of multiple pages
+     *
+     * @param activitySimpleName Activity.class.getSimpleName()
+     * @return boolean
+     */
     public static boolean isFastClickActivity(@NonNull String activitySimpleName) {
 
         long currentClickTime = System.currentTimeMillis();
@@ -49,6 +69,7 @@ public class FastClickUtil {
         sLastClickTime = currentClickTime;
         if (!activitySimpleName.equals(sLastActivitySimpleName)) {
             //如果两次的activity不是同一个，不是快速点击
+            //If the two activities are not the same, it's not a quick click
             isFastClick = false;
             sLastActivitySimpleName = activitySimpleName;
         }

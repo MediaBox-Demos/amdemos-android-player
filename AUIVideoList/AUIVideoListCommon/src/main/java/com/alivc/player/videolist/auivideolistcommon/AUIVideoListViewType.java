@@ -9,15 +9,24 @@ public enum AUIVideoListViewType {
     /**
      * 性能模式
      */
+    /****
+     * Functional mode
+     */
     FUNCTION_LIST,
 
     /**
      * 标准模式
      */
+    /****
+     * Standard mode
+     */
     STANDARD_LIST,
 
     /**
      * 短剧场景
+     */
+    /****
+     * Episode mode
      */
     EPISODE,
 }

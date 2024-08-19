@@ -10,4 +10,11 @@
     <string name="play_detail">Detail</string>
     <string name="play_speed_changed">Switched to %1$s speed</string>
 
+    <string name="request_float_window_permission">The use of the floating window function requires the authorization of the floating window permission.</string>
+    <string name="open_permission">Open permission </string>
+    <string name="request_small_window_permission">Small window play requires system permissions</string>
+    <string name="to_cancel">Cancel</string>
+    <string name="loose_delete">Loose to delete</string>
+    <string name="remove_float_window">Remove float window</string>
+    <string name="default_nickname">Default username: Nicholas</string>
 </resources>

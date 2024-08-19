@@ -7,19 +7,19 @@ import java.util.List;
 
 public class AliyunVideoListBean {
     /**
-     * 视频审核状态，审核中
+     * 视频审核状态，审核中 Video review status, under review
      */
     public static final String STATUS_CENSOR_ON = "onCensor";
     /**
-     * 视频审核状态，待审核
+     * 视频审核状态，待审核 Video review status, pending
      */
     public static final String STATUS_CENSOR_WAIT = "check";
     /**
-     * 视频审核状态，审核通过
+     * 视频审核状态，审核通过 Video review status, approved
      */
     public static final String STATUS_CENSOR_SUCCESS = "success";
     /**
-     * 视频审核状态，审核不通过
+     * 视频审核状态，审核不通过 Video review status, review failed
      */
     public static final String STATUS_CENSOR_FAIL = "fail";
 

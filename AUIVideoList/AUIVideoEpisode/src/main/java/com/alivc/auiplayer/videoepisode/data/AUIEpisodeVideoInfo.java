@@ -8,10 +8,17 @@ import java.util.Locale;
 /**
  * 短剧单集视频数据
  */
+/****
+ * single episode video data
+ */
+
 public class AUIEpisodeVideoInfo extends VideoInfo {
 
     /**
      * 视频唯一id
+     */
+    /****
+     * video unique id
      */
     public int videoId;
 
@@ -20,6 +27,9 @@ public class AUIEpisodeVideoInfo extends VideoInfo {
     /**
      * 视频封面图
      */
+    /****
+     * video cover url
+     */
     public String coverUrl;
 
     /// --------视频播放信息--------
@@ -27,10 +37,16 @@ public class AUIEpisodeVideoInfo extends VideoInfo {
     /**
      * 视频播放时长
      */
+    /****
+     * video duration
+     */
     public int videoDuration;
 
     /**
      * 视频播放
+     */
+    /****
+     * video play count
      */
     public int videoPlayCount;
 
@@ -39,20 +55,32 @@ public class AUIEpisodeVideoInfo extends VideoInfo {
     /**
      * 点赞状态
      */
+    /****
+     * like status
+     */
     public boolean isLiked;
 
     /**
      * 点赞数量
+     */
+    /****
+     * like count
      */
     public int likeCount;
 
     /**
      * 评论数量
      */
+    /****
+     * comment count
+     */
     public int commentCount;
 
     /**
      * 分享数量
+     */
+    /****
+     * share count
      */
     public int shareCount;
 
@@ -62,10 +90,17 @@ public class AUIEpisodeVideoInfo extends VideoInfo {
      * @param number 原始数字
      * @return 字符串
      */
+    /****
+     * format number
+     *
+     * @param number original number
+     * @return string
+     */
     public static String formatNumber(int number) {
         if (number < 10000) {
             return String.valueOf(number);
         }
+        // TODO: Only Chinese
         return String.format("%.1f万", ((float) number / 10000));
     }
 

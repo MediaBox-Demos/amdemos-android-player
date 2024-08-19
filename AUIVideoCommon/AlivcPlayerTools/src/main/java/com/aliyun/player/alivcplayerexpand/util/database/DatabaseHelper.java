@@ -9,6 +9,9 @@ import android.text.TextUtils;
 /**
  * 下载数据库帮助类
  */
+/****
+ * Download the database help class
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper mInstance = null;
@@ -17,6 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * 数据库版本
+     */
+    /****
+     * Database version
      */
     private static int DATABASE_VERSION = 1;
 

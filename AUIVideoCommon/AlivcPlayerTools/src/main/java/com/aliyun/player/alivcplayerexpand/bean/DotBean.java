@@ -5,10 +5,16 @@ import java.io.Serializable;
 /**
  * 打点信息
  */
+/****
+ * DotBean information
+ */
 public class DotBean implements Serializable {
 
     /**
      * "time":"15","content":"测试打点内容"
+     */
+    /****
+     * "time": "15", "content": "Test DotBean content"
      */
     private String time;
     private String content;

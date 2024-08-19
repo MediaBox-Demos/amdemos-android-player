@@ -67,14 +67,14 @@ public abstract class AUIPlayerBaseListActivity extends AppCompatActivity {
     }
 
     /**
-     * 标题的resourceID， 不要直接使用文本，要适配多语言
+     * 标题的resourceID， 不要直接使用文本，要适配多语言  Title resourceID Do not use text directly, to adapt multi-language
      *
      * @return
      */
     public abstract int getTitleResId();
 
     /**
-     * 是否显示返回按钮
+     * 是否显示返回按钮  Whether to display the back button
      *
      * @return
      */

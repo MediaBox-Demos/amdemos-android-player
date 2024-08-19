@@ -8,6 +8,9 @@ import org.fourthline.cling.support.model.TransportInfo;
 /**
  * 获取播放状态回调
  */
+/****
+ * Get the result of the playback status callback
+ */
 
 public class ClingTransportInfoResponse extends BaseClingResponse<TransportInfo> implements IResponse<TransportInfo> {
 

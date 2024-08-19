@@ -24,6 +24,11 @@ import java.util.List;
  *
  * @author hanyu
  */
+/****
+ * Download information wrapper class
+ *
+ * @author hanyu
+ */
 public class AliyunDownloadMediaInfo {
 
     private static final String TAG = AliyunDownloadMediaInfo.class.getSimpleName();
@@ -398,37 +403,64 @@ public class AliyunDownloadMediaInfo {
         /**
          * 空闲状态
          */
+        /****
+         * Idle state
+         */
         Idle,
         /**
          * 准备状态
+         */
+        /****
+         * Prepare state
          */
         Prepare,
         /**
          * 等待状态
          */
+        /****
+         * Wait state
+         */
         Wait,
         /**
          * 开始状态
+         */
+        /****
+         * Start state
          */
         Start,
         /**
          * 暂停状态
          */
+        /****
+         * Pause state
+         */
         Stop,
         /**
          * 完成状态
+         */
+        /****
+         * Complete state
          */
         Complete,
         /**
          * 错误状态
          */
+        /****
+         * Error state
+         */
         Error,
         /**
          * 删除状态
          */
+        /****
+         * Delete state
+         */
         Delete,
         /**
          * 文件处理状态
+         */
+        /****
+         * File state
          */
         File;
 

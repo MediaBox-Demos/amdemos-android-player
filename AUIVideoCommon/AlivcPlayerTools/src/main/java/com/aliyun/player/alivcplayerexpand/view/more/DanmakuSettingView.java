@@ -14,24 +14,39 @@ import com.aliyun.player.alivcplayerexpand.R;
 /**
  * 弹幕设置View
  */
+/****
+ * Danmaku Settings View
+ */
 public class DanmakuSettingView extends LinearLayout {
 
     /**
      * 透明度默认值
      */
+    /****
+     * Transparency default value
+     */
     public static final int ALPHA_PROGRESS_DEFAULT = 0;
     /**
      * 速率默认值
      */
+    /****
+     * Speed default value
+     */
     public static final int SPEED_PROGRESS_DEFAULT = 30;
     /**
      * 默认显示区域
+     */
+    /****
+     * Default display region
      */
     public static final int REGION_PROGRESS_DEFAULT = 0;
 
     private View view;
     /**
      * 透明度
+     */
+    /****
+     * Transparency
      */
     private SeekBar mAlphaSeek;
     private TextView mAlphaValueTextView;
@@ -40,6 +55,9 @@ public class DanmakuSettingView extends LinearLayout {
     /**
      * 区域
      */
+    /****
+     * Region
+     */
     private SeekBar mRegionSeek;
     private TextView mRegionValueTextView;
     private SeekBar.OnSeekBarChangeListener mOnRegionSeekBarChangeListener;
@@ -47,12 +65,18 @@ public class DanmakuSettingView extends LinearLayout {
     /**
      * 速率
      */
+    /****
+     * Speed
+     */
     private SeekBar mSpeedSeek;
     private TextView mSpeedValueTextView;
     private SeekBar.OnSeekBarChangeListener mOnSpeedSeekBarChangeListener;
     private int mSpeedProgress;
     /**
      * 恢复默认
+     */
+    /****
+     * Restore default
      */
     private TextView mDefaultTextView;
     private OnDefaultClickListener mOnDefaultClickListener;

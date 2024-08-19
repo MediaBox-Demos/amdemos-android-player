@@ -41,8 +41,10 @@ public class AUIVideoFunctionListController {
     }
 
     // 播放器相关配置
+    // Player-related configuration
     private void initPlayerConfigs(Context context) {
         //开启本地缓存，统一约定在cache路径下的Preload目录
+        //Turn on local cache and standardize on the Preload directory under the cache path
         String cacheDir = context.getExternalCacheDir() + File.separator + "Preload";
         enableLocalCache(true, cacheDir);
         setCacheFileClearConfig(30 * 24 * 60, 20 * 1024, 0);
@@ -103,6 +105,9 @@ public class AUIVideoFunctionListController {
     /**
      * 开启本地缓存
      */
+    /****
+     * enable local cache
+     */
     public void enableLocalCache(boolean enable, String path) {
         AliPlayerGlobalSettings.enableLocalCache(enable, 10 * 1024, path);
     }
@@ -110,12 +115,18 @@ public class AUIVideoFunctionListController {
     /**
      * 设置缓存清除策略
      */
+    /****
+     * set cache clear strategy
+     */
     public void setCacheFileClearConfig(long expireMin, long maxCapacityMB, long freeStorageMB) {
         AliPlayerGlobalSettings.setCacheFileClearConfig(expireMin, maxCapacityMB, freeStorageMB);
     }
 
     /**
      * 清除缓存
+     */
+    /****
+     * clear cache
      */
     public void clearCache() {
         AliPlayerGlobalSettings.clearCaches();

@@ -10,6 +10,9 @@ import java.util.Collection;
 /**
  * 单例设备列表, 保证全局只有一个设备列表
  */
+/****
+ *Device list in singleton mode, guarantees that there is only one device list globally.
+ */
 
 public class ClingDeviceList {
 
@@ -17,6 +20,9 @@ public class ClingDeviceList {
 
     /**
      * 投屏设备列表 都是引用该 list
+     */
+    /****
+     * Screen casting device list is all references to this list
      */
     private Collection<ClingDevice> mClingDeviceList;
 

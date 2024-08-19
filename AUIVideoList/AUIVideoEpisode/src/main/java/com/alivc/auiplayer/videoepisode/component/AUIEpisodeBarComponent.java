@@ -18,6 +18,11 @@ import com.alivc.auiplayer.videoepisode.data.AUIEpisodeData;
  * @date 2023/8/30
  * @brief 短剧页面底部bar组件
  */
+/****
+ * @author keria
+ * @date 2023/8/30
+ * @brief episode page bottom bar component
+ */
 public class AUIEpisodeBarComponent extends FrameLayout {
     private TextView mTitleTextView;
 

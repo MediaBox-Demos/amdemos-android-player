@@ -23,6 +23,9 @@ public class MeizuUtils {
     /**
      * 检测 meizu 悬浮窗权限
      */
+    /****
+     * Detect meizu floating window permissions
+     */
     public static boolean checkFloatWindowPermission(Context context) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= 19) {
@@ -35,6 +38,9 @@ public class MeizuUtils {
     /**
      * 去魅族权限申请页面
      */
+    /****
+     * Go to the meizu Permission Request page
+     */
     public static void applyPermission(Fragment fragment) {
         try {
             Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
@@ -42,11 +48,12 @@ public class MeizuUtils {
             fragment.startActivityForResult(intent, FloatViewPermissionUtils.requestCode);
         } catch (Exception e) {
             try {
-                Log.e(TAG, "获取悬浮窗权限, 打开AppSecActivity失败, " + Log.getStackTraceString(e));
+                Log.e(TAG, "Failed to start AppSecActivity by obtaining float window permissions " + Log.getStackTraceString(e));
                 // 最新的魅族flyme 6.2.5 用上述方法获取权限失败, 不过又可以用下述方法获取权限了
+                // The latest Meizu flyme 6.2.5 use the above method to get permissions failed, but it can also get permissions using the following method
                 FloatViewPermissionUtils.commonROMPermissionApplyInternal(fragment);
             } catch (Exception eFinal) {
-                Log.e(TAG, "获取悬浮窗权限失败, 通用获取方法失败, " + Log.getStackTraceString(eFinal));
+                Log.e(TAG, "Failed to obtain hover window permission, common access method failed " + Log.getStackTraceString(eFinal));
             }
         }
 

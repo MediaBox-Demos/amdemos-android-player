@@ -21,6 +21,7 @@ import okhttp3.Request;
 
 /**
  * okhttp简易封装
+ * okhttp simple package
  */
 public class AlivcOkHttpClient {
     private static AlivcOkHttpClient alivcOkHttpClient;
@@ -188,6 +189,11 @@ public class AlivcOkHttpClient {
      *
      * @return 组装参数后的FormBody。
      */
+    /****
+     *  The parameters used to construct the POS request.
+     *
+     * @return The FormBody after assembling the parameters.
+     */
     public FormBody formBody(Map<String, String> param) {
         FormBody.Builder builder = new FormBody.Builder();
         if (param != null) {
@@ -208,6 +214,11 @@ public class AlivcOkHttpClient {
      * 当GET请求携带参数的时候，将参数以key=value的形式拼装到GET请求URL的后面，并且中间以?符号隔开。
      *
      * @return 携带参数的URL请求地址。
+     */
+    /****
+     * When a GET request carries parameters, the parameters are spelled out as key=value at the end of the GET request URL and separated by ? symbol to separate them.
+     *
+     * @return The URL request address that carries the parameters.
      */
     public String urlWithParam(String url, Map<String, ? extends Object> params) {
         if (params != null) {
@@ -244,6 +255,9 @@ public class AlivcOkHttpClient {
     /**
      * 带参数带get请求
      */
+    /****
+     * Get request with parameters
+     */
     public void get(String url, HashMap<String, ? extends Object> params, HttpCallBack httpCallBack) {
 
         Request request = new Request.Builder().url(urlWithParam(url, params)).build();
@@ -252,6 +266,9 @@ public class AlivcOkHttpClient {
 
     /**
      * post请求
+     */
+    /****
+     * post request
      */
     public void post(String url, Map<String, String> params, HttpCallBack httpCallBack) {
         Request request = new Request.Builder().url(url).post(formBody(params)).build();
@@ -262,10 +279,16 @@ public class AlivcOkHttpClient {
         /**
          * 错误回调
          */
+        /****
+         * Error callbacks
+         */
         void onError(Request request, IOException e);
 
         /**
          * 成功回调
+         */
+        /****
+         * Success callback
          */
         void onSuccess(Request request, String result);
     }

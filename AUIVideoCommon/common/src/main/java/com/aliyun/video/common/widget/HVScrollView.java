@@ -56,6 +56,15 @@ import java.util.List;
  * 代码修改于v4的25.0.0版本的NestedScrollView，参考了RecyclerView的双向滚动的事件，参考了FrameLayoutd的onMeasure和ScrollView的HorizontalScrollView的onMeasure
  * 支持滑动末尾，ViewPager的页面切换
  */
+/****
+ * Author: LuckyJayce
+ * HVScrollView is just like {@link ScrollView}, but it supports acting
+ * as both a nested scrolling parent and child on both new and old versions of Android.
+ * can scroll horizontal and vertical
+ * It is a vertical ScrollView when canScrollH is set to false.
+ * Code modified from v4 version 25.0.0 of NestedScrollView, refer to RecyclerView's bi-directional scroll event, refer to FrameLayoutd's onMeasure and ScrollView's HorizontalScrollView's onMeasure.
+ * Support end sliding, ViewPager page switching
+ */
 public class HVScrollView extends ViewGroup implements NestedScrollingParent,
         NestedScrollingChild, ScrollingView {
     private boolean DEBUG = false;

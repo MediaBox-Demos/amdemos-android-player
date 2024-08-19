@@ -14,28 +14,46 @@ import com.aliyun.player.alivcplayerexpand.R;
 /**
  * 试看
  */
+/****
+ * TrailersView
+ */
 public class TrailersView extends RelativeLayout {
 
     private View view;
     /**
      * 开通vip
      */
+    /****
+     * Open vip
+     */
     private TextView mTrailerOpenTextView;
     /**
      * 重新播放
+     */
+    /****
+     * Replay
      */
     private LinearLayout mTrailerPlayAgainRootView;
 
     /**
      * 重播
      */
+    /****
+     * Replay
+     */
     public OnTrailerViewClickListener mListener;
     /**
      * 视频播放试看tips
      */
+    /****
+     * Video trial play tips
+     */
     private LinearLayout mTrailerPlayTipsRoot;
     /**
      * 视频试看播放完成tips
+     */
+    /****
+     * Video trial play tips
      */
     private FrameLayout mTrailerTipsRootView;
 

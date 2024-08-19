@@ -20,6 +20,9 @@ data class VolumeSettingInfo(
     /**
      * 视频的index
      */
+    /****
+     * Video Index
+     */
     @ColumnInfo(name = "video_index")
     var videoIndex: Int
 )

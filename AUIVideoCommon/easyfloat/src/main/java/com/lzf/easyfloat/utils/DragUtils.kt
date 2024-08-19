@@ -14,7 +14,7 @@ import com.lzf.easyfloat.widget.BaseSwitchView
  * @author: liuzhenfeng
  * @date: 2020/10/24  21:29
  * @Package: com.lzf.easyfloat.utils
- * @Description: 拖拽打开、关闭浮窗
+ * @Description: 拖拽打开、关闭浮窗 Drag and drop to open and close floating windows
  */
 object DragUtils {
 
@@ -27,13 +27,13 @@ object DragUtils {
     private var offset = 0f
 
     /**
-     * 注册侧滑创建浮窗
-     * @param event Activity 的触摸事件
-     * @param listener 右下角区域触摸事件回调
-     * @param layoutId 右下角区域的布局文件
-     * @param slideOffset 当前屏幕侧滑进度
-     * @param start 动画开始阈值
-     * @param end 动画结束阈值
+     * 注册侧滑创建浮窗 Sign up for side-swipe to create floating windows
+     * @param event Activity 的触摸事件 Activity's touch events
+     * @param listener 右下角区域触摸事件回调 Right-bottom area touch event callback
+     * @param layoutId 右下角区域的布局文件 Right-bottom area layout file
+     * @param slideOffset 当前屏幕侧滑进度 Current screen slide progress
+     * @param start 动画开始阈值 Animation start threshold
+     * @param end 动画结束阈值 Animation end threshold
      */
     @JvmOverloads
     fun registerSwipeAdd(
@@ -47,20 +47,24 @@ object DragUtils {
         if (event == null) return
 
         // 设置了侧滑监听，使用侧滑数据
+        // Side-slip listener set up to use side-slip data
         if (slideOffset != -1f) {
             // 如果滑动偏移，超过了动画起始位置，开始显示浮窗，并执行偏移动画
+            // If the sliding offset exceeds the animation start position, start showing the window, and execute the offset animation
             if (slideOffset >= start) {
                 val progress = minOf((slideOffset - start) / (end - start), 1f)
                 setAddView(event, progress, listener, layoutId)
             } else dismissAdd()
         } else {
             // 未提供侧滑监听，根据手指坐标信息，判断浮窗信息
+            // No side-slip listener provided, according to the hand coordinates information, judge the window information
             screenWidth = DisplayUtils.getScreenWidth(LifecycleUtils.application)
             offset = event.rawX / screenWidth
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> downX = event.rawX
                 MotionEvent.ACTION_MOVE -> {
                     // 起始值小于最小边界值，并且当前偏离量大于最小边界
+                    // Starting value less than the minimum boundary value, and the current offset value is greater than the minimum boundary
                     if (downX < start * screenWidth && offset >= start) {
                         val progress = minOf((offset - start) / (end - start), 1f)
                         setAddView(event, progress, listener, layoutId)
@@ -81,12 +85,14 @@ object DragUtils {
         layoutId: Int
     ) {
         // 设置触摸状态监听
+        // Set touch status listener
         addView?.let {
             it.setTouchRangeListener(event, listener)
             it.translationX = it.width * (1 - progress)
             it.translationY = it.width * (1 - progress)
         }
         // 手指抬起或者事件取消，关闭添加浮窗
+        // The hand is lifted or the event is canceled, close the add floating window
         if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) dismissAdd()
         else showAdd(layoutId)
     }
@@ -106,6 +112,7 @@ object DragUtils {
                     if (!isCreated || view == null) return@createResult
                     if ((view as ViewGroup).childCount > 0) {
                         // 获取区间判断布局
+                        // Get the interval to judge the layout
                         view.getChildAt(0).apply {
                             if (this is BaseSwitchView) {
                                 addView = this
@@ -121,12 +128,12 @@ object DragUtils {
     }
 
     /**
-     * 注册侧滑关闭浮窗
-     * @param event 浮窗的触摸事件
-     * @param listener 关闭区域触摸事件回调
-     * @param layoutId 关闭区域的布局文件
-     * @param showPattern 关闭区域的浮窗类型
-     * @param appFloatAnimator 关闭区域的浮窗出入动画
+     * 注册侧滑关闭浮窗 Sign up for side-swipe to close floating windows
+     * @param event 浮窗的触摸事件  Floating window's touch events
+     * @param listener 关闭区域触摸事件回调  Close area touch event callback
+     * @param layoutId 关闭区域的布局文件  Close area layout file
+     * @param showPattern 关闭区域的浮窗类型  Close area floating window type
+     * @param appFloatAnimator 关闭区域的浮窗出入动画  Close area floating window animation
      */
     @JvmOverloads
     fun registerDragClose(
@@ -138,8 +145,10 @@ object DragUtils {
     ) {
         showClose(layoutId, showPattern, appFloatAnimator)
         // 设置触摸状态监听
+        // Set touch status listener
         closeView?.setTouchRangeListener(event, listener)
         // 抬起手指时，关闭删除选项
+        // Lift the hand when the hand is lifted, close the delete option
         if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) dismissClose()
     }
 
@@ -162,6 +171,7 @@ object DragUtils {
                     if (!isCreated || view == null) return@createResult
                     if ((view as ViewGroup).childCount > 0) {
                         // 获取区间判断布局
+                        // Get the interval to judge the layout
                         view.getChildAt(0).apply { if (this is BaseSwitchView) closeView = this }
                     }
                 }

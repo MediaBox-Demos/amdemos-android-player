@@ -26,10 +26,19 @@ import java.io.IOException;
  * @author cross_ly DATE 2019/01/24
  * <p>描述:
  */
+/****
+ * @author cross_ly DATE 2019/01/24
+ * <p>Description:
+ */
 public class FileUtils {
 
     /**
      * 获取数据库存储路径
+     * @param context
+     * @return
+     */
+    /****
+     * Getting the database storage path
      * @param context
      * @return
      */
@@ -49,14 +58,20 @@ public class FileUtils {
      * 获取sdcard剩余内存
      * @return 单位b
      */
+    /****
+     * Get the remaining memory on the sdcard
+     * @return unitb
+     */
     public static long getSdcardAvailableSize() {
 
         File directory = Environment.getExternalStorageDirectory();
 
         StatFs statFs = new StatFs(directory.getPath());
         //获取可供程序使用的Block数量
+        //Get the number of Blocks available to the program
         long blockAvailable = statFs.getAvailableBlocks();
         //获得Sdcard上每个block的size
+        //Get the size of each block of Sdcard
         long blockSize = statFs.getBlockSize();
 
         return blockAvailable * blockSize;
@@ -66,14 +81,20 @@ public class FileUtils {
      * 获取sdcard总内存大小
      * @return 单位b
      */
+    /****
+     * Get the total memory size of the sdcard
+     * @return unitb
+     */
     public static long getSdcardTotalSize() {
 
         File directory = Environment.getExternalStorageDirectory();
 
         StatFs statFs = new StatFs(directory.getPath());
         //获得sdcard上 block的总数
+        //Get the total number of Blocks
         long blockCount = statFs.getBlockCount();
         //获得sdcard上每个block 的大小
+        //Get the size of each block of Sdcard
         long blockSize = statFs.getBlockSize();
 
         return blockCount * blockSize;
@@ -133,6 +154,9 @@ public class FileUtils {
     /**
      * 保存图片到本地
      */
+    /****
+     * Save the picture to the local
+     */
     public static String saveBitmap(Bitmap bitmap,String path){
         File dir = new File(path);
         if(!dir.exists()){
@@ -168,6 +192,11 @@ public class FileUtils {
      * android Q 版本默认路径
      * /storage/emulated/0/Android/data/包名/files/Media/
      * android Q 以下版本默认"/sdcard/DCIM/Camera/"
+     */
+    /****
+     * Android Q version default path
+     * /storage/emulated/0/Android/data/package/files/Media/
+     * Android Q below version default "/sdcard/DCIM/Camera/"
      */
     public static String getDir(Context context) {
         String dir;
@@ -220,6 +249,7 @@ public class FileUtils {
         values.put(MediaStore.Images.Media.IS_PENDING, 0);
         resolver.update(item, values, null, null);
         //打印写入时间
+        //Print Write Time
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -259,5 +289,6 @@ public class FileUtils {
         values.put(MediaStore.Video.Media.IS_PENDING, 0);
         resolver.update(item, values, null, null);
         //打印写入时间
+        //Print Write Time
     }
 }

@@ -18,6 +18,10 @@ import com.aliyun.auiplayerapp.R;
  * 检查权限/权限数组
  * request权限
  */
+/****
+ * Check permissions/privilege array
+ * request permissions
+ */
 public class PermissionUtils {
 
     private static final String TAG = PermissionUtils.class.getName();
@@ -40,6 +44,9 @@ public class PermissionUtils {
     /**
      * 无权限时对应的提示内容
      */
+    /****
+     * The content of the alert for no permission
+     */
     public static final int[] NO_PERMISSION_TIP = {
         R.string.alivc_common_no_camera_permission,
         R.string.alivc_common_no_record_bluetooth_permission,
@@ -58,6 +65,14 @@ public class PermissionUtils {
      * @param context Context
      * @return true 已经拥有所有check的权限 false存在一个或多个未获得的权限
      */
+    /****
+     * Check multiple permissions
+     *
+     * Check permissions
+     * @param permissions Array of permissions
+     * @param context Context
+     * @return true Already have all permissions checked false One or more unobtained permissions exist
+     */
     public static boolean checkPermissionsGroup(Context context, String[] permissions) {
 
         for (String permission : permissions) {
@@ -74,6 +89,12 @@ public class PermissionUtils {
      * @param permission 权限
      * @return boolean
      */
+    /****
+     * Check single permissions
+     * @param context context
+     * @param permission Permission
+     * @return boolean
+     */
     private static boolean checkPermission(Context context, String permission) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -88,8 +109,15 @@ public class PermissionUtils {
      * @param permissions 权限数组
      * @param requestCode 请求码
      */
+    /****
+     * Request permission
+     * @param activity Activity
+     * @param permissions Array of permissions
+     * @param requestCode request code
+     */
     public static void requestPermissions(Activity activity, String[] permissions, int requestCode) {
         // 先检查是否已经授权
+        // Check if authorization has been granted first
         if (!checkPermissionsGroup(activity, permissions)) {
             ActivityCompat.requestPermissions(activity, permissions, requestCode);
         }
@@ -97,6 +125,11 @@ public class PermissionUtils {
 
     /**
      * 通过AppOpsManager判断小米手机授权情况
+     *
+     * @return boolean
+     */
+    /****
+     * Determining Xiaomi phone authorization through AppOpsManager
      *
      * @return boolean
      */

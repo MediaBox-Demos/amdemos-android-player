@@ -3,6 +3,9 @@ package com.aliyun.player.alivcplayerexpand.listener;
 /**
  * 屏幕状态监听
  */
+/****
+ * Screen status listener
+ */
 public interface LockPortraitListener {
 
     int FIX_MODE_SMALL = 1;

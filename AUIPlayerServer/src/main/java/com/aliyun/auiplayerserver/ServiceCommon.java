@@ -12,6 +12,9 @@ public class ServiceCommon {
     /**
      * 视频列表每页数据
      */
+    /****
+     * Data per page of the video list
+     */
     public static final int DEFAULT_PAGE_SIZE = 10;
 
     public static int RESPONSE_SUCCESS = 200;

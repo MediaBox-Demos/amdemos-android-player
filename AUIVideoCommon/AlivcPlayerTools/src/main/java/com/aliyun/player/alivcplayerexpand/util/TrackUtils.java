@@ -18,25 +18,30 @@ public class TrackUtils {
 
                     if (trackInfoType == TrackInfo.Type.TYPE_SUBTITLE) {
                         //字幕
+                        //subtitle
                         if (!TextUtils.isEmpty(trackInfo.getSubtitleLang())) {
                             trackInfoList.add(trackInfo);
                         }
                     } else if (trackInfoType == TrackInfo.Type.TYPE_AUDIO) {
                         //音轨
+                        //audio track
                         if (!TextUtils.isEmpty(trackInfo.getAudioLang())) {
                             trackInfoList.add(trackInfo);
                         }
                     } else if (trackInfoType == TrackInfo.Type.TYPE_VIDEO) {
                         //码率
+                        //bitrate
                         if (trackInfo.getVideoBitrate() > 0) {
                             if (trackInfoList.size() == 0) {
                                 //添加自动码率
+                                //add auto bitrate
                                 trackInfoList.add(trackInfo);
                             }
                             trackInfoList.add(trackInfo);
                         }
                     } else if (trackInfoType == TrackInfo.Type.TYPE_VOD) {
                         //清晰度
+                        //definition
                         if (!TextUtils.isEmpty(trackInfo.getVodDefinition())) {
                             trackInfoList.add(trackInfo);
                         }

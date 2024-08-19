@@ -64,6 +64,7 @@ public class HttpClientUtil {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 in = connection.getInputStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -76,6 +77,7 @@ public class HttpClientUtil {
             } else {
                 in = connection.getErrorStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -150,6 +152,7 @@ public class HttpClientUtil {
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 in = connection.getInputStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -162,6 +165,7 @@ public class HttpClientUtil {
             } else {
                 in = connection.getErrorStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -231,10 +235,12 @@ public class HttpClientUtil {
             connection.setReadTimeout(CONNECTION_TIMEOUT);
 
             //设置输入流和输出流,都设置为true
+            //Set the input and output streams to true.
             connection.setDoOutput(true);
             connection.setDoInput(true);
 
             //把提交的数据以输出流的形式提交到服务器
+            //Submit the submitted data to the server as an output stream
             OutputStream os = connection.getOutputStream();
             os.write(data.getBytes());
 
@@ -247,6 +253,7 @@ public class HttpClientUtil {
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 in = connection.getInputStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -259,6 +266,7 @@ public class HttpClientUtil {
             } else {
                 in = connection.getErrorStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -327,10 +335,12 @@ public class HttpClientUtil {
             connection.setReadTimeout(CONNECTION_TIMEOUT);
 
             //设置输入流和输出流,都设置为true
+            //Set the input and output streams to true.
             connection.setDoOutput(true);
             connection.setDoInput(true);
 
             //把提交的数据以输出流的形式提交到服务器
+            //Submit the submitted data to the server as an output stream
             OutputStream os = connection.getOutputStream();
             os.write(data.getBytes());
 
@@ -343,6 +353,7 @@ public class HttpClientUtil {
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 in = connection.getInputStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();
@@ -355,6 +366,7 @@ public class HttpClientUtil {
             } else {
                 in = connection.getErrorStream();
                 //下面对获取到的输入流进行读取
+                //The input stream obtained is read below
                 inputStreamReader = new InputStreamReader(in);
                 bufr = new BufferedReader(inputStreamReader);
                 response = new StringBuilder();

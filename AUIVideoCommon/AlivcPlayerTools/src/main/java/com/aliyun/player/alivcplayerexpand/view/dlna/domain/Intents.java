@@ -68,25 +68,43 @@ public class Intents {
     /**
      * 主动获取播放进度
      */
+    /****
+     * Polling for remote device playback progress
+     */
     public static final String ACTION_GET_POSITION = INTENT_ACTION_PREFIX + "get_position";
     /**
      * 远程设备回传播放进度
+     */
+    /****
+     * Remote device playback progress reporting
      */
     public static final String ACTION_POSITION_CALLBACK = INTENT_ACTION_PREFIX + "position_callback";
     /**
      * 音量回传
      */
+    /****
+     * volume reporting
+     */
     public static final String ACTION_VOLUME_CALLBACK = INTENT_ACTION_PREFIX + "volume_callback";
     /**
      * 播放进度回传值
+     */
+    /****
+     * playback progress reporting
      */
     public static final String EXTRA_POSITION = INTENT_ACTION_PREFIX + "extra_position";
     /**
      * 音量回传值
      */
+    /****
+     * volume reporting
+     */
     public static final String EXTRA_VOLUME = INTENT_ACTION_PREFIX + "extra_volume";
     /**
      * 投屏端播放完成
+     */
+    /****
+     * Playback is complete on the cast side
      */
     public static final String ACTION_PLAY_COMPLETE = INTENT_ACTION_PREFIX + "play_complete";
 

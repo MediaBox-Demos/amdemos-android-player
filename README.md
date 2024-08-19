@@ -4,6 +4,14 @@ A demo project for Apsara Video Player SDK.
 
 ## **Demo编译**
 
+### **License**
+
+如果您没有配置自己的license，将无法运行此项目。
+
+[管理License](https://help.aliyun.com/zh/apsara-video-sdk/user-guide/license-authorization-and-management)
+
+[接入License](https://help.aliyun.com/zh/apsara-video-sdk/user-guide/access-to-license)
+
 ### **Environment**
 
 * Gradle 7.5-bin，插件版本7.1.2

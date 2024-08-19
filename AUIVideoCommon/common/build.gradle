@@ -50,11 +50,15 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'//loading 动画
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.20"
     //适配状态栏
+    //Adapt the status bar
     // 基础依赖包，必须要依赖
+    // Basic dependencies,neccessary to depend
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     // fragment快速实现（可选）
+    // fast Fragment implementation(optional)
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     // kotlin扩展（可选）
+    // kotlin extension(optional)
     implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'

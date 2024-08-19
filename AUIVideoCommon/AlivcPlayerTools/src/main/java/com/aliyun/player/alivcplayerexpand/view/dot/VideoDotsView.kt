@@ -72,6 +72,7 @@ class VideoDotsView @JvmOverloads constructor(
     private fun handleTouchEvent(x: Float): Boolean {
         for (index in mDotList.indices) {
             //该点在View 中的相对坐标
+            // Relative coordinates of the point in the View.
             val cx =
                 (mDotList[index].time.toFloat()) / mDurationSeconds * (measuredWidth - paddingRight - paddingLeft)
             if (cx - mDotRadius * 3 < x && cx + mDotRadius * 3 > x) {
@@ -86,6 +87,9 @@ class VideoDotsView @JvmOverloads constructor(
 
     /**
      * 设置打点数据和时间
+     */
+    /****
+     * Setting up dot data and time
      */
     fun setData(list: List<DotBean>, durationSeconds: Float) {
         mDurationSeconds = durationSeconds

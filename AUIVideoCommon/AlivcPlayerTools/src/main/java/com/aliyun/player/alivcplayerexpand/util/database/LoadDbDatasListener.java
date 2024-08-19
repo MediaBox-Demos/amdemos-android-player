@@ -9,10 +9,18 @@ import java.util.List;
  *
  * @author hanyu
  */
+/****
+ * Database load data listening
+ *
+ * @author hanyu
+ */
 public interface LoadDbDatasListener {
 
     /**
      * 数据加载成功
+     */
+    /****
+     * Data load success
      */
     public void onLoadSuccess(List<AliyunDownloadMediaInfo> dataList);
 }

@@ -14,6 +14,9 @@ import java.util.TimeZone;
 /**
  * 时间格式化工具类
  */
+/****
+ * Time formatting tool class
+ */
 public class TimeFormater {
 
     /**
@@ -21,6 +24,12 @@ public class TimeFormater {
      *
      * @param ms 毫秒数
      * @return 格式化后的字符串
+     */
+    /****
+     * Format milliseconds to xx:xx:xx time format.
+     *
+     * @param ms milliseconds
+     * @return formatted string
      */
     public static String formatMs(long ms) {
         int seconds = (int) (ms / 1000);

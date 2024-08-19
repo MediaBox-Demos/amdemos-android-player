@@ -10,6 +10,10 @@ import android.util.Log;
  * Created by lifujun on 2017/9/12.
  * 屏幕开屏/锁屏监听工具类
  */
+/****
+ * Created by lifujun on 2017/9/12.
+ * Screen On/Lock Listening Utility class
+ */
 
 public class ScreenStatusController {
 
@@ -51,17 +55,20 @@ public class ScreenStatusController {
 
 
     //监听事件
+    //Event listener
     public interface ScreenStatusListener {
         void onScreenOn();
 
         void onScreenOff();
     }
     //设置监听
+    //Set listener
     public void setScreenStatusListener(ScreenStatusListener l) {
         mScreenStatusListener = l;
     }
 
     //开始监听
+    //Start listening
     public void startListen() {
         if (mContext != null) {
             mContext.registerReceiver(mScreenStatusReceiver, mScreenStatusFilter);
@@ -69,6 +76,7 @@ public class ScreenStatusController {
     }
 
     //结束监听
+    //Stop listening
     public void stopListen() {
         if (mContext != null) {
             mContext.unregisterReceiver(mScreenStatusReceiver);

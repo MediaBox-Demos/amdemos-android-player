@@ -19,6 +19,9 @@ import java.util.List;
 /**
  * 投屏设备选择adapter
  */
+/****
+ * The device selection adapter for the casting screen
+ */
 public class ScreenCostAdapter extends RecyclerView.Adapter<ScreenCostAdapter.ScreenCostViewHolder> {
 
     private Collection<ClingDevice> deviceList = new ArrayList<>();
@@ -77,6 +80,9 @@ public class ScreenCostAdapter extends RecyclerView.Adapter<ScreenCostAdapter.Sc
 
     /**
      * 清空
+     */
+    /****
+     * Clear
      */
     public void clear() {
         if (deviceList != null && deviceList.size() > 0) {

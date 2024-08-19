@@ -62,6 +62,9 @@ data class DownloadResourceEntity(
     /**
      * 本地保存路径
      */
+    /****
+     * Local Save Path
+     */
     @ColumnInfo(name = "path")
     @SerializedName("path") var downLoadPath: String
 

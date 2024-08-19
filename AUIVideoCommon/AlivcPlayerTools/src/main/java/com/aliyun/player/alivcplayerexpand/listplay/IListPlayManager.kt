@@ -34,6 +34,9 @@ interface IListPlayManager {
     /**
      * feed 流播放列表
      */
+    /****
+     * feed stream playlist
+     */
     fun setPlayList(
         list: MutableList<Pair<String, String>>,
         refresh: Boolean
@@ -43,6 +46,9 @@ interface IListPlayManager {
 
     /**
      * 剧集列表播放相关接口
+     */
+    /****
+     * Episode list playback related interface
      */
     fun playNextSeries(): Int
     fun playPreviousSeries(): Int
@@ -67,10 +73,17 @@ interface IListPlayManager {
      * 设置播放是否静音
      * @param mute true 静音 false 开启声音，默认静音
      */
+    /****
+     * Set whether to mute playback
+     * @param mute true to mute, false to open sound, default mute
+     */
     fun setPlayMute(mute: Boolean)
 
     /**
      * 设置为全局播放器，不受 LifeCycle 的影响
+     */
+    /****
+     * Set as a global player, not affected by LifeCycle
      */
     fun setGlobalPlayEnable(enable: Boolean)
 
@@ -78,11 +91,18 @@ interface IListPlayManager {
      * 设置播放器的场景
      * @param scene 参考 [IPlayManagerScene]
      */
+    /****
+     * Set the scene of the player
+     * @param scene Refer to [IPlayManagerScene]
+     */
     fun setPlayerScene(scene: Int)
     fun getPlayerScene(): Int
 
 
     /** 下面的接口是为了代理播放器，实现一些特定功能 ***/
+    /****
+     * The following interfaces are to proxy the player, implement some specific functions
+     */
     open fun setDataSource(urlSource: UrlSource?): Unit
 
     fun setDataSource(vidSts: VidSts?)

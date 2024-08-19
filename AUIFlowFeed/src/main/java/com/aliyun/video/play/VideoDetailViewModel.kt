@@ -174,6 +174,9 @@ class VideoDetailViewModel :
     /**
      * 通过 ViewModel 共享 AliListPlayer 和 SurfaceView 实现续播
      */
+    /****
+     * Sharing AliListPlayer and SurfaceView through ViewModel to realize replaying.
+     */
     fun getListPlayer(): ListPlayManager {
         return mListPlayManager!!
     }
@@ -240,12 +243,14 @@ class VideoDetailViewModel :
         Log.i(TAG, "requestDotInfo")
         viewModelScope.launch {
             //模拟
+            //Analog
             val requestDots = Math.random() > 0.5f
             if (requestDots) {
                 withMain {
                     Log.i(TAG, "requestDotInfo start request ")
                     mDotList.clear()
                     //每10秒打一个点
+                    //Dot every 10 seconds
                     for (index in 1..VideoDotInfoData.dotInfoArray.size) {
                         if (duration < (index) * 20) {
                             break

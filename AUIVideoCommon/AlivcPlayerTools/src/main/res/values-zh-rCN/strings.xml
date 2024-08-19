@@ -153,6 +153,7 @@
     <string name="alivc_player_trailer_player_tips">试看前5分钟</string>
     <string name="alivc_player_not_check_any_browser">未检测到浏览器</string>
     <string name="alivc_player_play_screening_fail">投屏失败</string>
+    <string name="alivc_player_play_screening_start">开始投屏</string>
     <string name="alivc_player_local_not_support_screencost">本地视频不支持投屏功能</string>
 
     <string name="alivc_player_cache_toast_4g">连接wifi，或允许运营商下载</string>
@@ -248,6 +249,7 @@
     <string name="alivc_player_setting_auto_close">关闭</string>
     <string name="alivc_player_setting_seek_accurate">精准Seek</string>
     <string name="alivc_player_setting_seek_inaccurate">非精准Seek</string>
+    <string name="alivc_player_setting_auto_bitrate">自动码率</string>
 
     <!--播放参数-->
     <string name="alivc_player_config_title">播放参数设置</string>
@@ -323,5 +325,8 @@
     <string name="aui_player_develper_mode_resolution_ratio">分辨率：</string>
     <string name="aui_player_develper_mode_framerate">帧率：</string>
     <string name="aui_player_develper_mode_color_standard">颜色标准:</string>
+
+    <string name="default_author_name">默认昵称</string>
+    <string name="create_time_msg">原创·138万次观看·06-01发布</string>
 
 </resources>

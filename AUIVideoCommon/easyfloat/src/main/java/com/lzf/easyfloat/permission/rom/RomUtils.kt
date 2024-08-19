@@ -10,14 +10,14 @@ import java.io.InputStreamReader
 /**
  * @author: liuzhenfeng
  * @github：https://github.com/princekin-f/EasyFloat
- * @function: 判断手机ROM
+ * @function: 判断手机ROM  Determine the phone ROM
  * @date: 2020-01-07  22:30
  */
 object RomUtils {
     private const val TAG = "RomUtils--->"
 
     /**
-     * 获取 emui 版本号
+     * 获取 emui 版本号  Get the emui version number
      */
     @JvmStatic
     fun getEmuiVersion(): Double {

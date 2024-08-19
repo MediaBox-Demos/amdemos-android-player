@@ -84,6 +84,9 @@ public class DownloadSection extends StatelessSection {
         /**
          * 数据刷新的时候有可能失败,导致已完成的数据一直显示下载中
          */
+        /****
+         * The data refresh may fail, resulting in the completed data being displayed as being downloaded.
+         */
         if (status == AliyunDownloadMediaInfo.Status.Start && mediaInfo.getProgress() == 100) {
             mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Complete);
             status = AliyunDownloadMediaInfo.Status.Complete;
@@ -148,6 +151,9 @@ public class DownloadSection extends StatelessSection {
 
     /**
      * 视频大小格式化,这里由于要和IOS同步,所以先四舍五入保留两位小数,再四舍五入保留一位小数
+     */
+    /****
+     * Video size formatting, since IOS synchronization, first round to two decimal places, then round to one decimal place.
      */
     private String formatSizeDecimal(long size) {
         float kb = (size / 1024 * 1.0f);

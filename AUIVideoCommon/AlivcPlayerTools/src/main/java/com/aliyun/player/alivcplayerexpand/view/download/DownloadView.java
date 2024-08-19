@@ -36,6 +36,10 @@ import static com.aliyun.player.alivcplayerexpand.view.download.DownloadSection.
  *
  * @author Mulberry create on 2018/4/12.
  */
+/****
+ * Offline download interface This interface contains the download list, list item editing (select all, delete), Empty data display and other operations.
+ * @author Mulberry create on 2018/4/12.
+ */
 public class DownloadView extends FrameLayout implements OnClickListener, CompoundButton.OnCheckedChangeListener {
     private SectionedRecyclerViewAdapter sectionAdapter;
     private RecyclerView downloadListView;
@@ -56,9 +60,16 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      * 离线视频列表
      * 点击item,根据item 的状态改变全选的选中/未选中状态
      */
+    /****
+     * Offline video list
+     * Click the item, change the selected/unselected state according to the state of the item.
+     */
     private boolean itemFollowCheckBox = true;
     /**
      * 用于判断当前是否处于编辑状态
+     */
+    /****
+     * Used to determine whether the current state is in the editing state.
      */
     private boolean isEditeState = false;
 
@@ -226,6 +237,9 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
     /**
      * 删除单个视频
      */
+    /****
+     * Delete a single video.
+     */
     public void deleteDownloadInfo(AliyunDownloadMediaInfo downloadMediaInfo) {
         changeDownloadEditState(false);
         isEditeState = false;
@@ -265,12 +279,17 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      *
      * @param alldownloadMediaInfos
      */
+    /****
+     * Add all the current items.
+     * @param alldownloadMediaInfos
+     */
     public void addAllDownloadMediaInfo(List<AliyunDownloadMediaInfo> alldownloadMediaInfos) {
         if (alldownloadMediaInfos == null) {
             return;
         }
 
         // TODO: 2018/4/18 这不是一个正确的做法，做排序没有多大意义 业务需要永远保证正在下载的section在前
+        // TODO: 2018/4/18 This is not a correct approach, it doesn't make much sense to do sorting Business needs to always make sure that the section that is being downloaded is in the front
         //Collections.sort(alldownloadMediaInfos, new Comparator<AliyunDownloadMediaInfo>() {
         //    @Override
         //    public int compare(AliyunDownloadMediaInfo o1, AliyunDownloadMediaInfo o2) {
@@ -312,6 +331,10 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      * 添加一个item
      *
      * @param downloadMedia   要添加的item
+     */
+    /****
+     * Add an item.
+     * @param downloadMedia   The item to add.
      */
     public void addDownloadMediaInfo(AliyunDownloadMediaInfo downloadMedia) {
         if (hasAdded(downloadMedia)) {
@@ -382,6 +405,7 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
 
                     if (tag.equals(DOWNLOADED_TAG)) {
                         // 点击播放下载完成的视频
+                        // Click to play the downloaded video
                         if (onDownloadItemClickListener != null) {
                             onDownloadItemClickListener.onDownloadedItemClick(positionInSection);
                         }
@@ -389,6 +413,7 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
 
                     if (tag.equals(DOWNLOADING_TAG)) {
                         // 点击下载中的视频
+                        // Click to the downloading video
                         if (onDownloadItemClickListener != null) {
                             onDownloadItemClickListener.onDownloadingItemClick(alivcDownloadMediaInfos,positionInSection);
                         }
@@ -408,6 +433,9 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
 
     /**
      * 下载完成的视频item点击事件
+     */
+    /****
+     * The video item click event of downloaded videos.
      */
     public interface OnDownloadItemClickListener {
         void onDownloadedItemClick(int positin);
@@ -469,6 +497,10 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      *
      * @param info 下载媒体信息
      */
+    /****
+     * Determine whether it already exists.
+     * @param info Download media information.
+     */
     public boolean hasAdded(AliyunDownloadMediaInfo info) {
         for (AlivcDownloadMediaInfo downloadMediaInfo : alivcDownloadingMediaInfos) {
             if (info.getFormat().equals(downloadMediaInfo.getAliyunDownloadMediaInfo().getFormat()) &&
@@ -502,6 +534,10 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      *
      * @param aliyunDownloadMediaInfo
      */
+    /****
+     * Update the value of the item.
+     * @param aliyunDownloadMediaInfo Download media information.
+     */
     public void updateInfo(AliyunDownloadMediaInfo aliyunDownloadMediaInfo) {
         AlivcDownloadMediaInfo tmpInfo = null;
         for (AlivcDownloadMediaInfo info : alivcDownloadingMediaInfos) {
@@ -531,6 +567,9 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
     /**
      * 切换为编辑状态
      */
+    /****
+     * Switch to edit status.
+     */
     public void changeDownloadEditState(boolean isEdit) {
         for (AlivcDownloadMediaInfo info : alivcDownloadMediaInfos) {
             if (info != null) {
@@ -555,6 +594,10 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      *
      * @param aliyunDownloadMediaInfo
      */
+    /****
+     * Update download completion.
+     * @param aliyunDownloadMediaInfo Download media information.
+     */
     public void updateInfoByComplete(AliyunDownloadMediaInfo aliyunDownloadMediaInfo) {
         if (aliyunDownloadMediaInfo.getStatus() == AliyunDownloadMediaInfo.Status.Complete) {
             removeDownloadingMeiaInfo(aliyunDownloadMediaInfo);
@@ -570,6 +613,10 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      *
      * @param info
      */
+    /****
+     * Download error.
+     * @param info Download media information.
+     */
     public void updateInfoByError(AliyunDownloadMediaInfo info) {
         if (info != null && info.getStatus() == AliyunDownloadMediaInfo.Status.Error) {
             sectionAdapter.notifyDataSetChanged();
@@ -580,6 +627,9 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
 
     /**
      * 根据是否有数据判断是否显示downloadEmptyView
+     */
+    /****
+     * According to whether there is data, determine whether to show downloadEmptyView.
      */
     public void showDownloadContentView() {
         if (alivcDownloadMediaInfos.size() > 0 || alivcDownloadingMediaInfos.size() > 0) {
@@ -626,6 +676,10 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
      * 获取所有下载 MediaInfo 信息
      * @return
      */
+    /****
+     * Get all download MediaInfo information.
+     * @return All download MediaInfo information.
+     */
     public ArrayList<AlivcDownloadMediaInfo> getAllDownloadMediaInfo(){
         if(alivcDownloadMediaInfos == null){
             alivcDownloadMediaInfos = new ArrayList<>();
@@ -635,6 +689,9 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
 
     /**
      * 获取所有下载 MediaInfo 信息
+     */
+    /****
+     * Get all download MediaInfo information.
      */
     public ArrayList<AlivcDownloadMediaInfo> getDownloadMediaInfo(){
         ArrayList<AlivcDownloadMediaInfo> allDownloadMediaInfo = new ArrayList<>();

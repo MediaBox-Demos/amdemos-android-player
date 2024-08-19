@@ -39,6 +39,12 @@ import java.security.MessageDigest;
  * Function: Glide 工具类支持加载常规、圆角、圆形图片
  * Description:
  */
+/****
+ * @Author: AriesHoo on 2018/7/23 10:53
+ * @E-Mail: AriesHoo@126.com
+ * Function: Glide toolkit supports loading regular, rounded, and rounded images!
+ * Description.
+ */
 public class ImageLoader {
 
     private static int sCommonPlaceholder = -1;
@@ -62,6 +68,11 @@ public class ImageLoader {
      *
      * @param placeholderColor
      */
+    /****
+     * Setting the default color
+     *
+     * @param placeholderColor
+     */
     public static void setPlaceholderColor(@ColorInt int placeholderColor) {
         mPlaceholderColor = placeholderColor;
         sCommonPlaceholderDrawable = new GradientDrawable();
@@ -77,6 +88,11 @@ public class ImageLoader {
      *
      * @param placeholderRoundRadius
      */
+    /****
+     * Setting rounded corners image placeholder background image rounded corners magnitude
+     *
+     * @param placeholderRoundRadius
+     */
     public static void setPlaceholderRoundRadius(float placeholderRoundRadius) {
         mPlaceholderRoundRadius = placeholderRoundRadius;
         setPlaceholderColor(mPlaceholderColor);
@@ -84,6 +100,11 @@ public class ImageLoader {
 
     /**
      * 设置圆形图片的占位图
+     *
+     * @param circlePlaceholder
+     */
+    /****
+     * Set circular image placeholder
      *
      * @param circlePlaceholder
      */
@@ -100,6 +121,11 @@ public class ImageLoader {
      *
      * @param commonPlaceholder
      */
+    /****
+     * Set normal image placeholder
+     *
+     * @param commonPlaceholder
+     */
     public static void setCommonPlaceholder(int commonPlaceholder) {
         sCommonPlaceholder = commonPlaceholder;
     }
@@ -113,6 +139,11 @@ public class ImageLoader {
      *
      * @param roundPlaceholder
      */
+    /****
+     * Set rounded image placeholder
+     *
+     * @param roundPlaceholder
+     */
     public static void setRoundPlaceholder(int roundPlaceholder) {
         sRoundPlaceholder = roundPlaceholder;
     }
@@ -123,6 +154,13 @@ public class ImageLoader {
 
     /**
      * 普通加载图片
+     *
+     * @param obj
+     * @param iv
+     * @param placeholder
+     */
+    /****
+     * Load ordinary images
      *
      * @param obj
      * @param iv
@@ -152,6 +190,13 @@ public class ImageLoader {
      * @param obj
      * @param iv
      * @param placeholder 占位图
+     */
+    /****
+     * Load circular images
+     *
+     * @param obj
+     * @param iv
+     * @param placeholder
      */
     public static void loadCircleImg(Object obj, ImageView iv, Drawable placeholder) {
         Glide.with(iv.getContext()).load(obj).apply(getRequestOptions()
@@ -261,6 +306,15 @@ public class ImageLoader {
      * @param dp                  圆角尺寸-dp
      * @param placeholder         -占位图
      * @param isOfficial-是否官方模式圆角
+     */
+    /****
+     * Load rounded images
+     *
+     * @param obj
+     * @param iv
+     * @param dp
+     * @param placeholder
+     * @param isOfficial
      */
     public static void loadRoundImg(Object obj, ImageView iv, float dp, Drawable placeholder, boolean isOfficial) {
         Glide.with(iv.getContext()).load(obj).apply(getRequestOptions()

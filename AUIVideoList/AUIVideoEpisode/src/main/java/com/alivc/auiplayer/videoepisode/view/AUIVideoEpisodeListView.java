@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alivc.auiplayer.videoepisode.AUIVideoEpisodeController;
+import com.alivc.auiplayer.videoepisode.R;
 import com.alivc.auiplayer.videoepisode.adapter.AUIVideoEpisodeAdapter;
 import com.alivc.auiplayer.videoepisode.data.AUIEpisodeData;
 import com.alivc.auiplayer.videoepisode.data.AUIEpisodeVideoInfo;
@@ -38,6 +39,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
     private boolean mAutoPlayNext;
 
     // 默认初始跳转到的短剧集数
+    //Default number of episodes to jump to initially
     private int mInitialEpisodeIndex = 0;
 
     private boolean mInited = false;
@@ -79,6 +81,13 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
      * 通过该接口，设置短剧初始集数，则默认跳转展示第几集；如果不设置，则默认从第1集开始
      *
      * @param index 短剧集数
+     */
+    /****
+     * Setting the initial episode number
+     * <p>
+     * Through this interface, set the initial number of episodes, then the default jump to show the first episode; if not set, then the default start from the first episode
+     * <p> * Set the initial number of episodes of a short drama through this interface.
+     * @param index number of episodes
      */
     public void setInitialEpisodeIndex(int index) {
         mInitialEpisodeIndex = index;
@@ -131,7 +140,9 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
                     mController.setSurface(surface);
                 } else if (index == mSelectedPosition + 1) {
                     // TODO: 当前版本，PreRender Player仅支持预渲染列表下一个视频的画面；指定预渲染上一个视频的画面，有待后续版本支持。
+                    // TODO: The current version, PreRender Player only supports pre-rendering the next video screen; Specify the pre-rendering of the previous video to be supported in subsequent releases.
                     // 只对后面的 viewHolder 进行预加载
+                    // Preloads only the viewHolder behind it.
                     mController.setSurfaceToPreRenderPlayer(surface);
                 }
             }
@@ -153,6 +164,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
                     return;
                 }
                 // 更新本地数据
+                // Update local data
                 for (AUIEpisodeVideoInfo dataSource : mEpisodeData.list) {
                     if (dataSource.getId() == episodeVideoInfo.getId()) {
                         dataSource.likeCount = isSelected ? dataSource.likeCount + 1 : dataSource.likeCount - 1;
@@ -160,6 +172,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
                     }
                 }
                 // 请求点赞API...
+                // Request the like API...
             }
 
             @Override
@@ -203,7 +216,8 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
 
     public void updateEpisodeData(AUIEpisodeData episodeData, boolean isRefresh) {
         if (episodeData == null || episodeData.list == null) {
-            Toast.makeText(mContext, "网络异常，请检查网络是否正确连接", Toast.LENGTH_SHORT).show();
+            String errorMessage = mContext.getString(R.string.network_error_and_check);
+            Toast.makeText(mContext, errorMessage, Toast.LENGTH_SHORT).show();
             setRefreshing(false);
             return;
         }
@@ -251,6 +265,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
     @Override
     public void onItemClick(int position) {
         // 交互体验优化，如果当前短剧item页的面板处于展开状态，全屏触摸事件显示时，先关闭面板
+        // Interaction experience optimization, if the panel of the current episode item page is expanded, the full-screen touch event is displayed first to close the panel
         AUIVideoListViewHolder viewHolderByPosition = getViewHolderByPosition(position);
         if (viewHolderByPosition instanceof AUIVideoEpisodeAdapter.AUIVideoEpisodeViewHolder) {
             if (((AUIVideoEpisodeAdapter.AUIVideoEpisodeViewHolder) viewHolderByPosition).hidePanelIfNeed()) {
@@ -274,6 +289,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
         Log.i("CheckFunc", "onInitComplete" + " mSelectedPosition: " + mSelectedPosition);
 
         // 只允许回调一次onInitComplete；已有的逻辑，如果去掉，会导致2->1会直接跳到0，存在bug
+        // Allow onInitComplete to be called back only once; the existing logic, if removed, would cause 2->1 to jump directly to 0, which is buggy
         if (mInited) {
             return;
         }
@@ -291,7 +307,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
     @Override
     public void onPageSelected(int position) {
         Log.i("CheckFunc", "onPageSelected " + " position " + position);
-        super.onPageSelected(position);//校验，并不做实际上的跳转
+        super.onPageSelected(position);//校验，并不做实际上的跳转 Calibrate and don't do the actual jumps
 
         mRecyclerView.post(() -> {
             AUIVideoListViewHolder playerViewHolder = getViewHolderByPosition(position);
@@ -301,6 +317,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
             }
             mController.onPageSelected(position, ((AUIVideoEpisodeAdapter.AUIVideoEpisodeViewHolder) playerViewHolder).getSurface());
             // 只对后面的 viewHolder 进行预加载
+            // Preloads only the viewHolder behind it.
             setPreRenderViewHolder(position + 1);
         });
     }
@@ -355,6 +372,7 @@ public class AUIVideoEpisodeListView extends AUIVideoListView {
             Log.i("CheckFunc", "onCompletion  " + "moveToNextPosition: " + (mSelectedPosition + 1) + " duration:  " + duration + " getItemCount: " + mAUIVideoListAdapter.getItemCount());
 
             // 直接跳转，可以避免获取不到viewHolder
+            // By jumping directly, you can avoid not getting the viewHolder
             mRecyclerView.smoothScrollToPosition(mSelectedPosition + 1);
             onPageSelected(mSelectedPosition + 1);
         }

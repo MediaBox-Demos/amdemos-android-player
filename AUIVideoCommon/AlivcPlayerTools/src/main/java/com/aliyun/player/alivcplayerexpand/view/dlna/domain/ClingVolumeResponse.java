@@ -6,6 +6,9 @@ import org.fourthline.cling.model.message.UpnpResponse;
 /**
  * 获取音量回调
  */
+/****
+ * Get volume callback
+ */
 
 public class ClingVolumeResponse extends BaseClingResponse<Integer> {
 

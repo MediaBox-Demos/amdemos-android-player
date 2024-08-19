@@ -6,6 +6,9 @@ import java.util.TimerTask;
 /**
  * 获取播放进度的定时任务
  */
+/****
+ * Timed task to get playback progress
+ */
 public class GetInfoTimerTask {
 
     private Timer mTimer;
@@ -14,6 +17,10 @@ public class GetInfoTimerTask {
 
     /**
      * @param time 间隔时长
+     * @param task TimerTask
+     */
+    /****
+     * @param time Interval
      * @param task TimerTask
      */
     public GetInfoTimerTask(long time, TimerTask task) {

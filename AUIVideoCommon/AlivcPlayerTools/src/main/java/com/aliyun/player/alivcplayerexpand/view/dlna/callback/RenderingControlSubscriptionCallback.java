@@ -18,6 +18,9 @@ import java.util.Map;
 /**
  * RenderingControl 事件回传
  */
+/****
+ * RenderingControl event callbacks
+ */
 
 public class RenderingControlSubscriptionCallback extends BaseSubscriptionCallback {
 
@@ -46,6 +49,7 @@ public class RenderingControlSubscriptionCallback extends BaseSubscriptionCallba
         try {
             lastChange = new LastChange(new RenderingControlLastChangeParser(), lastChangeValue);
             //获取音量 volume
+            // Get volume
             int volume = 0;
             if (lastChange.getEventedValue(0, RenderingControlVariable.Volume.class) != null) {
 

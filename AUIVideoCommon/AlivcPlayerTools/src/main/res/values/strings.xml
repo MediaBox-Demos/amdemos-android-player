@@ -147,6 +147,7 @@
     <string name="alivc_player_trailer_player_tips">You can only watch the first five minutes</string>
     <string name="alivc_player_not_check_any_browser">Browser not detected</string>
     <string name="alivc_player_play_screening_fail">Screen casting failed</string>
+    <string name="alivc_player_play_screening_start">Screen casting start</string>
     <string name="alivc_player_local_not_support_screencost">Local video does not support the screen projection function</string>
 
     <string name="alivc_player_cache_toast_4g">Connect to a WiFi or enable Download on Provider Network</string>
@@ -163,7 +164,7 @@
 
     <string name="alivc_player_setting">Settings</string>
 
-    <!--缓存页面-->
+    <!--缓存页面 cache page -->
     <string name="alivc_player_cache_video_edit">Edit</string>
     <string name="alivc_player_download_video_delete">Delete</string>
     <string name="alivc_player_download_video_all_selected">Select All</string>
@@ -242,7 +243,7 @@
     <string name="alivc_player_rts_server_recoverr">RTS Server Recover</string>
     <string name="alivc_player_agree_camera_permission">You must agree the camera permission request before you use the code scan function</string>
 
-    <!--播放设置-->
+    <!--播放设置 playing setting -->
     <string name="alivc_player_type_title">Player Source</string>
     <string name="alivc_player_type_edit">Edit</string>
     <string name="alivc_player_type_edit_finish">Finish</string>
@@ -273,7 +274,9 @@
     <string name="alivc_player_setting_seek_accurate">Accurate seeking</string>
     <string name="alivc_player_setting_seek_inaccurate">Inaccurate seeking</string>
 
-    <!--播放参数-->
+    <string name="alivc_player_setting_auto_bitrate">Auto Bitrate</string>
+
+    <!--播放参数 playing config -->
     <string name="alivc_player_config_title">Playback Parameter Settings</string>
     <string name="alivc_player_config_start_buffer_level">Startup</string>
     <string name="alivc_player_config_high_buffer_level">Stuttering Fix</string>
@@ -316,5 +319,7 @@
     <string name="aui_player_develper_mode_framerate">Frame Rate：</string>
     <string name="aui_player_develper_mode_color_standard">Color Standard:</string>
 
+    <string name="default_author_name">Default name</string>
+    <string name="create_time_msg">Original·1.38 million views·Posted 06/01</string>
 
 </resources>

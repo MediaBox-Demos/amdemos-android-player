@@ -11,6 +11,9 @@ import com.aliyun.player.alivcplayerexpand.R;
 /**
  * 手势滑动的音量提示框。
  */
+/**
+ * Gesture sliding volume prompt box.
+ */
 public class VolumeDialog extends BaseGestureDialog {
 
     private static final String TAG = VolumeDialog.class.getSimpleName();
@@ -27,6 +30,11 @@ public class VolumeDialog extends BaseGestureDialog {
      * 更新音量值
      * @param percent 音量百分比
      */
+    /****
+     * Update volume value
+     *
+     * @param percent Volume percent
+     */
     public void updateVolume(float percent) {
         mTextView.setText((int)percent + "%");
         mImageView.setImageLevel((int) percent);
@@ -36,6 +44,12 @@ public class VolumeDialog extends BaseGestureDialog {
      * 获取最后的音量
      * @param changePercent 变化的百分比
      * @return 最后的音量
+     */
+    /****
+     * Get the final volume
+     *
+     * @param changePercent Change percent
+     * @return Final volume
      */
     public float getTargetVolume(int changePercent) {
         float newVolume = initVolume - changePercent;

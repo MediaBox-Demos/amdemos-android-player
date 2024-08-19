@@ -181,6 +181,7 @@ public abstract class AUIVideoListView extends FrameLayout implements OnRecycler
         this.mSelectedPosition = position;
         if (mDataList.size() - position < DEFAULT_PRELOAD_NUMBER && !mIsLoadMore) {
             // 正在加载中, 防止网络太慢或其他情况造成重复请求列表
+            // Loading, to prevent slow networks and other conditions from duplicating the request list.
             mIsLoadMore = true;
             if (mOnLoadDataListener != null) {
                 mOnLoadDataListener.onLoadMore();
@@ -215,6 +216,12 @@ public abstract class AUIVideoListView extends FrameLayout implements OnRecycler
                 有两种解决方法：
                     1.如下，如果是刷新加载数据，手动调用 onPageSelected(0)。
                     2.创建新的 List 对象，设置给 ListAdapter。
+             */
+            /*
+                After refreshing, ListAdapter.submitList will not refresh the RecyclerView, resulting in onPageSelected not being triggered, leading to moveTo not being called eventually.
+                There are two solutions:
+                    1. as below, if it is refreshing to load data, call onPageSelected(0) manually.
+                    2. Create a new List object and set it to ListAdapter.
              */
             MoveToPosition(0);
             onPageSelected(0);

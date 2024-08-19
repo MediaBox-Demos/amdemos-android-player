@@ -17,60 +17,101 @@ import java.util.List;
  *
  * @author hanyu
  */
+/****
+ * Database management classes
+ *
+ * @author hanyu
+ */
 public class DatabaseManager {
 
     /**
      * 下载数据库名称
      */
+    /****
+     * Download database name
+     */
     public static final String DB_NAME = "Player_Download.db";
     /**
      * 观看历史数据库名
+     */
+    /****
+     * Watch history database name
      */
     public static final String HISTORY_DB_NAME = "Player_Watch_History.db";
 
     /**
      * 表名
      */
+    /****
+     * Table name
+     */
     private static final String TABLE_NAME = "player_download_info";
 
     /**
      * 观看历史表名
+     */
+    /****
+     * Watch history table name
      */
     public static final String WATCH_HISTORY_TABLE_NAME = "player_watch_history_info";
 
     /**
      * 准备状态
      */
+    /****
+     * Prepared status
+     */
     private static final int PREPARED_STATE = 1;
 
     /**
      * 下载中状态
+     */
+    /****
+     * Downloading status
      */
     private static final int DOWNLOADING_STATE = 3;
 
     /**
      * 停止状态
      */
+    /****
+     * Stop status
+     */
     private static final int STOP_STATE = 4;
 
     /**
      * 完成状态
      */
+    /****
+     * Completed status
+     */
     private static final int COMPLETED_STATE = 5;
     /**
      * 等待状态
+     */
+    /****
+     * Wait status
      */
     private static final int WAIT_STATE = 2;
     /**
      * 未观看
      */
+    /****
+     * Not watched
+     */
     private static final int NOT_WATCH = 0;
     /**
      * 已观看
      */
+    /****
+     * Watched
+     */
     private static final int HAS_WATCHED = 1;
     /**
      * 建表语句
+     */
+    /****
+     * Create table statement
      */
     public static final String CREATE_TABLE_SQL = "create table if not exists " + DatabaseManager.TABLE_NAME +
             " (" + DatabaseManager.ID + " integer primary key autoincrement," +
@@ -87,6 +128,9 @@ public class DatabaseManager {
     /**
      * 观看历史
      */
+    /****
+     * Watch history
+     */
     public static final String CREATE_TABLE_SQL_WATCH_HISTORY = "create table if not exists " + WATCH_HISTORY_TABLE_NAME +
             " (" + DatabaseManager.ID + " integer primary key autoincrement," + DatabaseManager.VID + " text," +
             DatabaseManager.TITLE + " text," + DatabaseManager.COVERURL + " text," + DatabaseManager.DURATION + " text," +
@@ -101,20 +145,32 @@ public class DatabaseManager {
     /**
      * 查询所有语句
      */
+    /****
+     * Query all statement
+     */
     private static final String SELECT_ALL_SQL = "select * from " + DatabaseManager.TABLE_NAME;
 
     /**
      * 根据tvId查询对应的电视剧
+     */
+    /****
+     * Query the corresponding TV series according to tvId
      */
     private static final String SELECT_ALL_BY_TVID = "select * from " + DatabaseManager.TABLE_NAME + " where tvid=?";
 
     /**
      * 根据状态查询数据
      */
+    /****
+     * Query data according to status
+     */
     private static final String SELECT_WITH_STATUS_SQL = "select * from " + DatabaseManager.TABLE_NAME + " where status=?";
 
     /**
      * 查询已观看的视频
+     */
+    /****
+     * Query watched videos
      */
     private static final String SELECT_WATCHED_SQL = "select * from " + DatabaseManager.TABLE_NAME + " where watched=?";
 
@@ -154,9 +210,15 @@ public class DatabaseManager {
     /**
      * 下载数据库帮助类
      */
+    /****
+     * Download database help class
+     */
     private DatabaseHelper databaseHelper;
     /**
      * 下载数据库
+     */
+    /****
+     * Download database
      */
     private SQLiteDatabase mSqliteDatabase;
 
@@ -177,6 +239,9 @@ public class DatabaseManager {
     /**
      * 创建数据库
      */
+    /****
+     * Create database
+     */
     public void createDataBase(Context context) {
         databaseHelper = DatabaseHelper.getInstance(context.getApplicationContext());
         if (mSqliteDatabase == null) {
@@ -191,6 +256,9 @@ public class DatabaseManager {
     /**
      * 创建数据库
      */
+    /****
+     * Create database
+     */
     public void createDataBase(Context context,String dbPath) {
         databaseHelper = DatabaseHelper.getInstance(context,dbPath);
         if (mSqliteDatabase == null) {
@@ -204,6 +272,9 @@ public class DatabaseManager {
 
     /**
      * 查询某条数据是否已经插入到数据库中
+     */
+    /****
+     * Query whether the data has been inserted into the database
      */
     public int selectItemExist(AliyunDownloadMediaInfo mediaInfo) {
         Cursor cursor = mSqliteDatabase.query(TABLE_NAME, new String[] {"id"}, "vid=? and quality=?",
@@ -246,6 +317,7 @@ public class DatabaseManager {
 
     public int update(AliyunDownloadMediaInfo mediaInfo) {
         //没有tvId那么是单集
+        //It's a single episode if there's no tvId.
         if (TextUtils.isEmpty(mediaInfo.getTvId())) {
             return updateByVidAndQuality(mediaInfo);
         } else {
@@ -255,6 +327,9 @@ public class DatabaseManager {
 
     /**
      * 根据vid和quality更新清晰度
+     */
+    /****
+     * Update the clarity according to vid and quality
      */
     private int updateByVidAndQuality(AliyunDownloadMediaInfo mediaInfo) {
         ContentValues contentValues = new ContentValues();
@@ -266,12 +341,16 @@ public class DatabaseManager {
         contentValues.put(TVNAME,mediaInfo.getTvName());
         contentValues.put(WATCHED,mediaInfo.getWatched());
         /*更新清晰度*/
+        /*Update clarity*/
         return mSqliteDatabase.update(TABLE_NAME, contentValues, " vid=? and quality=?",
                                       new String[] {mediaInfo.getVid(), mediaInfo.getQuality()});
     }
 
     /**
      * 根据vid更新数据库
+     */
+    /****
+     * Update the database according to vid
      */
     private int updateByVid(AliyunDownloadMediaInfo mediaInfo) {
         ContentValues contentValues = new ContentValues();
@@ -281,6 +360,7 @@ public class DatabaseManager {
         contentValues.put(TRACKINDEX, mediaInfo.getQualityIndex());
         contentValues.put(FORMAT, mediaInfo.getFormat());
         /*更新清晰度*/
+        /*Update clarity*/
         contentValues.put(QUALITY, mediaInfo.getQuality());
         contentValues.put(TVNAME,mediaInfo.getTvName());
         contentValues.put(WATCHED,mediaInfo.getWatched());
@@ -290,6 +370,9 @@ public class DatabaseManager {
 
     /**
      * 删除所有数据
+     */
+    /****
+     * Delete all data
      */
     public void deleteAll() {
         if (!mSqliteDatabase.isOpen()) {
@@ -301,6 +384,9 @@ public class DatabaseManager {
     /**
      * 删除指定的数据
      */
+    /****
+     * Delete the specified data
+     */
     public void deleteItem(AliyunDownloadMediaInfo mediaInfo) {
         if (!mSqliteDatabase.isOpen()) {
             mSqliteDatabase = databaseHelper.getWritableDatabase();
@@ -310,6 +396,9 @@ public class DatabaseManager {
 
     /**
      * 查询已观看的数据
+     */
+    /****
+     * Query the data that has been watched
      */
     public List<AliyunDownloadMediaInfo> selectWatchedList(){
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
@@ -328,6 +417,9 @@ public class DatabaseManager {
     /**
      * 查询所有下载中状态的数据
      */
+    /****
+     * Query all data in the download state
+     */
     public List<AliyunDownloadMediaInfo> selectDownloadingList() {
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
         if(databaseHelper == null){
@@ -344,6 +436,9 @@ public class DatabaseManager {
 
     /**
      * 查询处于暂停状态的数据
+     */
+    /****
+     * Query all data in the pause state
      */
     public List<AliyunDownloadMediaInfo> selectStopedList() {
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
@@ -362,6 +457,9 @@ public class DatabaseManager {
     /**
      * 查询处于暂停状态的数据
      */
+    /****
+     * Query all data in the pause state
+     */
     public List<AliyunDownloadMediaInfo> selectWaitList() {
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
         if(databaseHelper == null){
@@ -378,6 +476,9 @@ public class DatabaseManager {
 
     /**
      * 查询所有完成状态的数据
+     */
+    /****
+     * Query all data in the completion state
      */
     public List<AliyunDownloadMediaInfo> selectCompletedList() {
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
@@ -396,6 +497,9 @@ public class DatabaseManager {
     /**
      * 查询所有准备状态的数据
      */
+    /****
+     * Query all data in the preparation state
+     */
     public List<AliyunDownloadMediaInfo> selectPreparedList() {
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
         if(databaseHelper == null){
@@ -412,6 +516,9 @@ public class DatabaseManager {
 
     /**
      * 根据tvId查找相应的剧集
+     */
+    /****
+     * Find the corresponding episode according to tvId
      */
     public List<AliyunDownloadMediaInfo> selectAllByTvId(String tvId) {
         if (!mSqliteDatabase.isOpen()) {

@@ -13,6 +13,15 @@ import androidx.room.PrimaryKey
  *  5.弹幕位置
  *  6.后台播放，开关
  */
+/****
+ * Playback configuration, included configuration
+ * 1.feed autoplay switch
+ * 2.feed stream playback, video on audio
+ * 3.whether to support continuous playback
+ * 4. danmaku switch
+ * 5. danmaku position
+ * 6.background playback, switch
+ */
 @Entity
 data class VideoPlayConfig(
     @PrimaryKey()

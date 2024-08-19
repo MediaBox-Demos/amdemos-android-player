@@ -5,7 +5,7 @@ import android.view.View
 
 /**
  * @author: liuzhenfeng
- * @function: 通过Kotlin DSL实现接口回调效果
+ * @function: 通过Kotlin DSL实现接口回调效果 Interface callback effects via Kotlin DSL
  * @date: 2019-08-26  17:06
  */
 class FloatCallbacks {
@@ -13,6 +13,7 @@ class FloatCallbacks {
     lateinit var builder: Builder
 
     // 带Builder返回值的lambda
+    // lambda with Builder return value
     fun registerListener(builder: Builder.() -> Unit) {
         this.builder = Builder().also(builder)
     }

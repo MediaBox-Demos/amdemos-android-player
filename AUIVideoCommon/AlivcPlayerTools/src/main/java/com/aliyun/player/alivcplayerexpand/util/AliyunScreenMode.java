@@ -8,13 +8,22 @@ package com.aliyun.player.alivcplayerexpand.util;
 /**
  * UI 全屏和小屏模式
  */
+/**
+ * UI full screen and small screen modes
+ */
 public enum AliyunScreenMode {
     /**
      * 小屏模式
      */
+    /****
+     * Small screen mode
+     */
     Small,
     /**
      * 全屏模式
+     */
+    /****
+     * Full screen mode
      */
     Full
 }

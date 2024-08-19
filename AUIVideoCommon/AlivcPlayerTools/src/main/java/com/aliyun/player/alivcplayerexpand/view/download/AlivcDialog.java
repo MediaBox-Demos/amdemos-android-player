@@ -18,31 +18,51 @@ import com.aliyun.player.alivcplayerexpand.R;
  * @author Mulberry
  *         create on 2018/4/19.
  */
+/****
+ * Offline video tab, edit --> delete dialog
+ * @author Mulberry
+ * create on 2018/4/19.
+ */
 
 public class AlivcDialog extends Dialog {
 
     //确定按钮
+    //Confirm button
     private Button btnConfirm;
     //取消按钮
+    //Cancel button
     private Button btnCancel;
     //消息标题文本
+    //Message title text
     private ImageView ivDialogIcon;
     //消息提示文本
+    //Message prompt text
     private TextView tvMessage;
     //从外界设置的title文本
+    //From the outside set the title text
     private int  dialogIcon;
     //从外界设置的消息文本
+    //From the outside set the message text
     private String messageStr;
     //确定文本和取消文本的显示内容
+    //Confirm text and cancel text display content
     private String confirmStr, cancelStr;
     //取消按钮被点击了的监听器
+    //the listener of Cancel button clicked
     private onCancelOnclickListener onCancelOnclickListener;
     //确定按钮被点击了的监听器
+    //the listener of Confirm button clicked
     private onConfirmClickListener onConfirmClickListener;
 
 
     /**
      * 设置取消按钮的显示内容和监听
+     *
+     * @param str
+     * @param onCancelOnclickListener
+     */
+    /****
+     * Setting up the display of the cancel button and listening to it.
      *
      * @param str
      * @param onCancelOnclickListener
@@ -56,6 +76,12 @@ public class AlivcDialog extends Dialog {
 
     /**
      * 设置确定按钮的显示内容和监听
+     *
+     * @param str
+     * @param onYesOnclickListener
+     */
+    /****
+     * Setting up the display of the confirm button and listening to it.
      *
      * @param str
      * @param onYesOnclickListener
@@ -86,13 +112,17 @@ public class AlivcDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alivc_dialog_delete);
         //按空白处不能取消动画
+        //Can not cancel the animation by clicking on the blank
         setCanceledOnTouchOutside(false);
 
         //初始化界面控件
+        //Initialize the interface controls
         initView();
         //初始化界面数据
+        //Initialize the interface data
         initData();
         //初始化界面控件的事件
+        //Initialize the interface control events
         initEvent();
 
     }
@@ -100,8 +130,12 @@ public class AlivcDialog extends Dialog {
     /**
      * 初始化界面的确定和取消监听器
      */
+    /****
+     * Initialize the interface listeners.
+     */
     private void initEvent() {
         //设置确定按钮被点击后，向外界提供监听
+        //Set the confirm button to be clicked after providing a listener
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +145,7 @@ public class AlivcDialog extends Dialog {
             }
         });
         //设置取消按钮被点击后，向外界提供监听
+        //Set the cancel button to be clicked after providing a listener
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,13 +159,18 @@ public class AlivcDialog extends Dialog {
     /**
      * 初始化界面控件的显示数据
      */
+    /****
+     * Initialize the interface control display data.
+     */
     private void initData() {
         //如果用户自定了title和message
+        //If the user customized the title and message
         ivDialogIcon.setBackgroundResource(dialogIcon);
         if (messageStr != null) {
             tvMessage.setText(messageStr);
         }
         //如果设置按钮的文字
+        //If the set button text
         if (confirmStr != null) {
             btnConfirm.setText(confirmStr);
         }
@@ -141,6 +181,9 @@ public class AlivcDialog extends Dialog {
 
     /**
      * 初始化界面控件
+     */
+    /****
+     * Initialize the interface controls.
      */
     private void initView() {
         btnConfirm = (Button) findViewById(R.id.yes);
@@ -154,6 +197,11 @@ public class AlivcDialog extends Dialog {
      *
      * @param icon
      */
+    /****
+     * From the outside Activity to set the title of the dialog.
+     *
+     * @param icon
+     */
     public void setDialogIcon(int icon) {
         dialogIcon = icon;
     }
@@ -163,12 +211,20 @@ public class AlivcDialog extends Dialog {
      *
      * @param message
      */
+    /****
+     * From the outside Activity to set the dialog message.
+     *
+     * @param message
+     */
     public void setMessage(String message) {
         messageStr = message;
     }
 
     /**
      * 设置确定按钮和取消被点击的接口
+     */
+    /****
+     * Set the interface of the confirm button and cancel button clicked.
      */
     public interface onConfirmClickListener {
         void onConfirm();

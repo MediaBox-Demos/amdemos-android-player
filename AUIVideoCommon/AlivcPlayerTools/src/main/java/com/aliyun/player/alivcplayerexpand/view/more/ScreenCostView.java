@@ -37,6 +37,11 @@ import org.fourthline.cling.model.meta.Device;
  *
  * @author hanyu
  */
+/****
+ * Cast
+ *
+ * @author hanyu
+ */
 public class ScreenCostView extends LinearLayout {
 
     private OnDeviceItemClickListener mOutDLNAOptionListener;
@@ -45,9 +50,11 @@ public class ScreenCostView extends LinearLayout {
      * DLNA start
      */
     //发现设备监听
+    //find out Device Listener
     private DeviceSearchListener mDeviceSearchListener = new DeviceSearchListener();
     private ClingManager clingUpnpServiceManager;
     //连接监听
+    //connect Listener
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
@@ -76,14 +83,23 @@ public class ScreenCostView extends LinearLayout {
     /**
      * 刷新
      */
+    /****
+     * Refresh
+     */
     private ImageView mRefreshImageView;
     /**
      * 设备列表
+     */
+    /****
+     * Device List
      */
     private RecyclerView mRecyclerView;
     private ScreenCostAdapter mScreenCostAdapter;
     /**
      * 刷新投屏设备动画
+     */
+    /****
+     * Refresh Cast Device Animation
      */
     private ObjectAnimator mRefreshValueAnimator;
     private View mSearchStateParentView;
@@ -143,11 +159,12 @@ public class ScreenCostView extends LinearLayout {
 
     private void initListener() {
         //刷新
+        //Refresh
         mRefreshImageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 mRefreshValueAnimator.start();
-                Log.e("AliyunDLNA", "投屏设备搜索刷新 : ");
+                Log.e("AliyunDLNA", "Cast device search refresh: ");
                 clingUpnpServiceManager.searchDevices();
             }
         });
@@ -158,7 +175,7 @@ public class ScreenCostView extends LinearLayout {
                 ThreadUtils.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("AliyunDLNA", "投屏设备添加 : ");
+                        Log.e("AliyunDLNA", "Add cast device: ");
                         if (clingUpnpServiceManager != null) {
                             clingUpnpServiceManager.onSearchSuccess();
                         }
@@ -175,7 +192,7 @@ public class ScreenCostView extends LinearLayout {
                 ThreadUtils.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("AliyunDLNA", "投屏设备移除 : ");
+                        Log.e("AliyunDLNA", "Remove cast device: ");
                         mScreenCostAdapter.remove((ClingDevice) device);
                         mRefreshValueAnimator.cancel();
                     }
@@ -201,6 +218,7 @@ public class ScreenCostView extends LinearLayout {
                     @Override
                     public void run() {
                         //清除数据
+                        //Clear data
                         ClingDeviceList.getInstance().destroy();
                         mScreenCostAdapter.clear();
                         mSearchStateTextView.setText(R.string.alivc_screen_cost_scanning);
@@ -239,10 +257,12 @@ public class ScreenCostView extends LinearLayout {
         });
 
         //item点击事件
+        //Item click event
         mScreenCostAdapter.setOnDeviceItemClickListener(new OnDeviceItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // 选择连接设备
+                //Select connection device
                 ClingDevice item = mScreenCostAdapter.getItem(position);
                 if (item == null) {
                     return;
@@ -257,7 +277,7 @@ public class ScreenCostView extends LinearLayout {
                 if (clingUpnpServiceManager != null){
                     clingUpnpServiceManager.onStartConnectDevice();
                 }
-                Log.e("AliyunDLNA", "投屏设备链接 ");
+                Log.e("AliyunDLNA", "Cast device link");
                 if (mOutDLNAOptionListener != null) {
                     mOutDLNAOptionListener.onItemClick(position);
                 }

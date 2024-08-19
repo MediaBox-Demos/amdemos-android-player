@@ -42,16 +42,23 @@ import java.util.Date;
 /**
  * Cling 实现的控制方法
  */
-
+/****
+ * Control methods implemented by Cling
+ */
 public class ClingPlayControl implements IPlayControl {
 
     private static final String TAG = ClingPlayControl.class.getSimpleName();
     /** 每次接收 500ms 延迟 */
+    /** 500ms delay per reception */
     private static final int RECEIVE_DELAY = 500;
     /** 上次设置音量时间戳, 防抖动 */
+    /** Last time of setting volume, to prevent shake */
     private long mVolumeLastTime;
     /**
      * 当前状态
+     */
+    /****
+     * Current state
      */
     private @DLANPlayState.DLANPlayStates int mCurrentState = DLANPlayState.STOP;
     private static final String DIDL_LITE_FOOTER = "</DIDL-Lite>";
@@ -62,14 +69,14 @@ public class ClingPlayControl implements IPlayControl {
     @Override
     public void playNew(final String url, final ControlCallback callback) {
 
-        stop(new ControlCallback() { // 1、 停止当前播放视频
+        stop(new ControlCallback() { // 1、 停止当前播放视频 1. Stop the current playing video
             @Override
             public void success(IResponse response) {
 
-                setAVTransportURI(url, new ControlCallback() {   // 2、设置 url
+                setAVTransportURI(url, new ControlCallback() {   // 2、设置 url  2. Set the URL
                     @Override
                     public void success(IResponse response) {
-                        play(callback);                        // 3、播放视频
+                        play(callback);                        // 3、播放视频 3. Play the video
                     }
 
                     @Override
@@ -285,6 +292,12 @@ public class ClingPlayControl implements IPlayControl {
      * @param url   片源地址
      * @param callback  回调
      */
+    /****
+     * Setting up the source for the first playback
+     *
+     * @param url source address
+     * @param callback callback
+     */
     private void setAVTransportURI(String url, final ControlCallback callback) {
         if (TextUtils.isEmpty(url)) {
             return;
@@ -323,6 +336,9 @@ public class ClingPlayControl implements IPlayControl {
 
     /**
      * 获取当前播放状态
+     */
+    /****
+     * Get the current playback status
      */
     @Override
     public void getTransportInfo(final ControlReceiveCallback callback){

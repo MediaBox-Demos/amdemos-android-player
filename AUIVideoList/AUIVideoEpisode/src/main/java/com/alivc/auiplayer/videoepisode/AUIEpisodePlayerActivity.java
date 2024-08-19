@@ -53,6 +53,7 @@ public class AUIEpisodePlayerActivity extends AppCompatActivity {
         hideSystemStatusBar();
 
         // Android特有功能，禁止app录屏和截屏
+        // Android-specific feature to disable app screen recording and screenshots
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setContentView(R.layout.activity_episode_player);
@@ -68,6 +69,7 @@ public class AUIEpisodePlayerActivity extends AppCompatActivity {
         mVideoEpisodeView.showPlayTitleContent(false);
 
         // 设置短剧初始集数，默认从第1集开始
+        // Set the initial episode number, default from the first episode
 //        mVideoEpisodeView.setInitialEpisodeIndex(3);
     }
 
@@ -139,9 +141,12 @@ public class AUIEpisodePlayerActivity extends AppCompatActivity {
     /**
      * 网络请求
      */
+    /****
+     * network request
+     */
     private static AUIEpisodeData loadDataFromJson() {
         Gson gson = new Gson();
-        return gson.fromJson(getHtmlContent(AUIEpisodeConstants.EPISODE_JSON_URL), new TypeToken<AUIEpisodeData>() {
+        return gson.fromJson(getHtmlContent(AUIEpisodeConstants.getLocalizedEpisodeUrl(false)), new TypeToken<AUIEpisodeData>() {
         }.getType());
     }
 

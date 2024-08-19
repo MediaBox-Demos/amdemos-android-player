@@ -38,6 +38,9 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * 推荐 Fragment
  */
+/****
+ * Recommended Fragment
+ */
 private const val DEFAULT_FRESH_TIMES = 2000
 
 class RecommendFragment : BaseFragment(R.layout.layout_list_recommend_fragment),
@@ -221,6 +224,7 @@ class RecommendFragment : BaseFragment(R.layout.layout_list_recommend_fragment),
                 if (mIsHidden || isHostInvalid() || !mPlaying || mIsPause || FloatViewPlayManager.mFloatViewShowing)
                     return
                 //切换到横屏
+                //Switch to landscape
                 jumpFullScreen(mViewModel.mPosition, true)
             }
 
@@ -228,11 +232,13 @@ class RecommendFragment : BaseFragment(R.layout.layout_list_recommend_fragment),
                 if (mIsHidden || isHostInvalid() || !mPlaying || mIsPause || FloatViewPlayManager.mFloatViewShowing)
                     return
                 //切换到竖屏
+                //Switch to vertical screen
             }
             override fun changedToLandForwardScape(fromPort: Boolean) {
                 if (mIsHidden || isHostInvalid() || !mPlaying || mIsPause || FloatViewPlayManager.mFloatViewShowing)
                     return
                 //切换到横屏
+                //Switch to landscape
                 jumpFullScreen(mViewModel.mPosition, false)
             }
 
@@ -354,6 +360,7 @@ class RecommendFragment : BaseFragment(R.layout.layout_list_recommend_fragment),
         updateVoiceIcon(true)
         var continuePlay = mViewModel.mPosition == position
         //暂停播放当前，恢复当前封面
+        //Pause playback of the current, resume the current cover
         val playState = mPlayState
         if (FloatViewPlayManager.mFloatViewShowing) {
             continuePlay =

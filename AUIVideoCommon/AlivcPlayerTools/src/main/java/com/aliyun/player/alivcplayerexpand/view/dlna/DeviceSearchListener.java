@@ -16,6 +16,11 @@ import org.fourthline.cling.registry.Registry;
  *
  * @author hanyu
  */
+/****
+ * Search device listener
+ *
+ * @author hanyu
+ */
 public class DeviceSearchListener extends DefaultRegistryListener {
 
     private DeviceListChangedListener mOnDeviceListChangedListener;

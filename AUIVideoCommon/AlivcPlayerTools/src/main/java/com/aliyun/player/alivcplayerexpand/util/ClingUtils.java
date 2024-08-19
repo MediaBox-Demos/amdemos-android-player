@@ -16,7 +16,11 @@ import org.fourthline.cling.model.types.ServiceType;
  * 作者：zhouzhan
  * 日期：17/7/4 10:27
  */
-
+/****
+ * Description: ClingUtils class
+ * Author: zhouzhan
+ * Date: 17/7/4 10:27
+ */
 public class ClingUtils {
 
 
@@ -25,6 +29,12 @@ public class ClingUtils {
      *
      * @param serviceType   服务类型
      * @return 服务
+     */
+    /****
+     * Get the service of the selected device by ServiceType
+     *
+     * @param serviceType The service type.
+     * @return service
      */
     @Nullable
     public static Service findServiceFromSelectedDevice(ServiceType serviceType) {
@@ -43,6 +53,12 @@ public class ClingUtils {
      * @param device    设备
      * @return 服务
      */
+    /****
+     * Get the avt service of the device.
+     *
+     * @param device The device.
+     * @return avt service
+     */
     @Nullable
     public static Service findAVTServiceByDevice(Device device) {
         return device.findService(ClingManager.AV_TRANSPORT_SERVICE);
@@ -52,6 +68,11 @@ public class ClingUtils {
      * 获取控制点
      *
      * @return 控制点
+     */
+    /****
+     * Get the control point.
+     *
+     * @return control point
      */
     @Nullable
     public static ControlPoint getControlPoint() {

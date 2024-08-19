@@ -60,8 +60,8 @@ public class PlayerMainActivity extends AUIPlayerBaseListActivity {
         List<ListModel> menu = new ArrayList<>();
         menu.add(new ListModel(INDEX_FEED_FLOW, R.drawable.ic_player_xinxi, getResources().getString(R.string.player_feed_flow), getResources().getString(R.string.player_feed_flow_msg)));
         menu.add(new ListModel(INDEX_VIDEO_LIST_FUNCTION, R.drawable.ic_player_chenjin, getResources().getString(R.string.player_video_list), getResources().getString(R.string.player_feed_flow_function_msg)));
-        menu.add(new ListModel(INDEX_VIDEO_LIST_STANDARD, R.drawable.ic_player_quanping, getResources().getString(R.string.player_video_list), getResources().getString(R.string.player_feed_flow_standard_msg)));
-        menu.add(new ListModel(INDEX_VIDEO_LIST_SHORT, R.drawable.ic_player_chenjin, getResources().getString(R.string.player_episode), getResources().getString(R.string.player_video_episode_msg)));
+        menu.add(new ListModel(INDEX_VIDEO_LIST_STANDARD, R.drawable.ic_player_chenjin, getResources().getString(R.string.player_video_list), getResources().getString(R.string.player_feed_flow_standard_msg)));
+        menu.add(new ListModel(INDEX_VIDEO_LIST_SHORT, R.drawable.ic_player_quanping, getResources().getString(R.string.player_episode), getResources().getString(R.string.player_video_episode_msg)));
         menu.add(new ListModel(INDEX_FULL_SCREEN, R.drawable.ic_player_zidingyi, getResources().getString(R.string.player_full_screen), getResources().getString(R.string.player_video_full_screen_msg)));
 //        menu.add(new ListModel(INDEX_CUSTOM, R.drawable.ic_player_zidingyi, getResources().getString(R.string.player_custom), null));
         return menu;
@@ -88,6 +88,7 @@ public class PlayerMainActivity extends AUIPlayerBaseListActivity {
         boolean isAllGranted = true;
 
         // 判断是否所有的权限都已经授予了
+        // Determine if all permissions have been granted.
         for (int grant : grantResults) {
             if (grant != PackageManager.PERMISSION_GRANTED) {
                 isAllGranted = false;
@@ -97,6 +98,7 @@ public class PlayerMainActivity extends AUIPlayerBaseListActivity {
 
         if (!isAllGranted) {
             // 弹出对话框告诉用户需要权限的原因, 并引导用户去应用权限管理中手动打开权限按钮
+            // Pop up a dialog telling the user why they need the permission, and directing them to manually turn on the permission button in the app's permissions manager.
             Toast.makeText(this, getString(R.string.alivc_recorder_camera_permission_tip), Toast.LENGTH_SHORT).show();
         } else {
             onModelItemClick(mListModel);

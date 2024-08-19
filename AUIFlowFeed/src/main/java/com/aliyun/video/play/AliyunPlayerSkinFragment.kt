@@ -74,6 +74,9 @@ import java.lang.ref.WeakReference
 /**
  * 全屏和半屏播放界面
  */
+/****
+ * Full-screen and half-screen playback interface
+ */
 
 const val NORMAL_HALF_SCREEN_FRAGMENT = "normal_half_screen_fragment"
 private const val FEED_LONG_PRESS_KEY = "enable_long_press_feed"
@@ -93,22 +96,30 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     //get StsToken stats
     private var inRequest = false
     //当前点击的视频列表的下标
+    // the subscript of the currently clicked video list
     private var currentVidItemPosition = 0
     //更多Dialog
+    // More Dialog
     private var showMoreDialog: AlivcShowMoreDialog? = null
     private var halfVideoSettingDialog: AlivcShowMoreDialog? = null
     //是否鉴权过期
+    // Expired authentication
     private var mIsTimeExpired = false
     //播放列表资源
+    //Playlist Resources
     private var mVideoListBean: ArrayList<VideoInfo> = ArrayList()
     //本地视频播放地址
+    //Local Video Playback Address
     private val mLocalVideoPath: String? = null
     //用于恢复原本的播放方式，如果跳转到下载界面，播放本地视频，会切换到url播放方式
+    // Used to restore the original playback mode, if jump to the download interface, play local video, will switch to url playback mode
     private var mCurrentPlayType = GlobalPlayerConfig.mCurrentPlayType
     //当前正在播放的videoId
+    // The videoId that is currently playing.
     private var mCurrentVideoId: String? = null
     private val mNeedOnlyFullScreen = false
     //当前系统屏幕亮度
+    //Current system screen brightness
     private var mIsContinuedPlay = true
     private var mFullScreenType = 0
     private var mIsFromRecommendList = false
@@ -124,6 +135,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     private var mSkeletonManager = SkeletonManager()
 
     //相关推荐
+    //Recommendations
     private val mRecommendAdapter = MultiTypeAdapter()
     private val mVideoDescriptionViewModel by lazy {
         ViewModelProvider(requireActivity())[VideoDetailViewModel::class.java]
@@ -153,6 +165,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
         mViewBinding.apply {
             //相关推荐
+            //Recommendations
             mRecommendAdapter.register(RecommendVideoItemDelegate(mRecommendVideoItemClick))
             mRecommendRcv.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -187,6 +200,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         mVideoDescriptionViewModel.apply {
             mVideoDetailInfo.observe(viewLifecycleOwner, Observer {
                 //更新详情信息
+                //Update details information
                 setUpVideoDescription(it)
                 initData(mVideoListBean)
             })
@@ -197,12 +211,14 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         mViewBinding.apply {
             if (bean.user != null) {
                 //头像
+                //Avatar
                 ImageLoader.loadCircleImg(
                     bean.user?.avatarUrl,
                     mAuthorPortrait,
                     R.drawable.default_portrait_icon
                 )
                 //昵称
+                // Username
                 mAuthorName.text = bean.user?.userName ?: "polo"
             } else {
                 mAuthorPortrait.setImageResource(R.drawable.default_portrait_icon)
@@ -269,7 +285,8 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     }
 
     private fun initAliyunPlayerView() {
-        //保持屏幕敞亮
+        //保持屏幕常量
+        //Keep screen constant
         mViewBinding.videoView.apply {
             if (mIsFromRecommendList) {
                 updateListPosition(mUUID)
@@ -316,11 +333,15 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 获取播放列表数据
      */
+    /****
+     * Get playlist data
+     */
     private fun loadPlayList() {
         mVideoListBean.clear()
         mVideoListBean.addAll(mRecommendViewModel!!.getVideoList())
         if (!mIsFromRecommendList) {
             //普通非续播，则直接添加播放源头
+            //Normal non-continued，then directly add playback source
             if (mVideoInfo != null) {
                 val vidSts = getVidSts(mVideoInfo!!.videoId)
                 mViewBinding.videoView.setVidSts(vidSts, true)
@@ -330,6 +351,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * 播放方式
+     */
+    /****
+     * Playback mode
      */
     private fun initDataSource() {
         currentVidItemPosition = 0
@@ -353,13 +377,18 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 初始化播放配置
      */
+    /****
+     * Initialize playback configuration
+     */
     private fun initPlayerConfig() {
         PlayConfigManager.init(requireContext())
         //界面设置
+        //Interface setting
         mViewBinding.videoView.setEnableHardwareDecoder(GlobalPlayerConfig.mEnableHardDecodeType)
         mViewBinding.videoView.setRenderMirrorMode(GlobalPlayerConfig.mMirrorMode)
         mViewBinding.videoView.setRenderRotate(GlobalPlayerConfig.mRotateMode)
         //播放配置设置
+        //Playback configuration setting
         val playerConfig: PlayerConfig? = mViewBinding.videoView.playerConfig
         playerConfig?.apply {
             mStartBufferDuration = GlobalPlayerConfig.PlayConfig.mStartBufferDuration
@@ -377,6 +406,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         }
 
         //缓存设置
+        //Cache setting
         initCacheConfig()
     }
 
@@ -396,6 +426,11 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
      *
      * @param vid videoId
      */
+    /****
+     * Getting VidSts
+     *
+     * @param vid videoId
+     */
     private fun getVidSts(vid: String?): VidSts {
         val vidSts = VidSts()
         vidSts.vid = vid
@@ -404,6 +439,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         vidSts.securityToken = ListPlayManager.mStsInfo?.securityToken
         vidSts.accessKeySecret = ListPlayManager.mStsInfo?.accessKeySecret
         //试看
+        //Preview
         if (GlobalPlayerConfig.mPreviewTime > 0) {
             val configGen = VidPlayerConfigGen()
             configGen.setPreviewTime(GlobalPlayerConfig.mPreviewTime)
@@ -451,6 +487,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * 隐藏所有Dialog
+     */
+    /****
+     * Hide all Dialogs
      */
     private fun hideAllDialog() {
         showMoreDialog?.closeDialog()
@@ -548,6 +587,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         when (trackInfo.type) {
             TrackInfo.Type.TYPE_VIDEO -> {
                 //码率
+                // Bitrate
                 Toast.makeText(
                     requireContext(),
                     getString(
@@ -705,6 +745,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
                 if (currentMode == AliyunScreenMode.Small && GlobalPlayerConfig.mCurrentPlayType == PLAYTYPE.URL && !TextUtils.isEmpty(
                         mLocalVideoPath)) {
                     //如果播放本地视频，切换到小屏后，直接关闭
+                    //If playing local video, switch to small screen and then turn off directly
                     finishSelf()
                 } else {
                     hideShowMoreDialog(from, currentMode)
@@ -773,6 +814,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * 鉴权过期
+     */
+    /****
+     * Authentication expired
      */
     private fun onTimExpiredError() {
         mGetAuthInformation.getVideoPlayStsDemoInfo(RetryExpiredSts(this))
@@ -981,6 +1025,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 播放器出错监听
      */
+    /****
+     * Player error listening
+     */
     private class MyOnErrorListener(activity: AliyunPlayerSkinFragment) :
         OnErrorListener {
         private val weakReference = WeakReference(activity)
@@ -991,6 +1038,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     private fun onError(errorInfo: com.aliyun.player.bean.ErrorInfo) {
         //鉴权过期
+        //Authentication expired
         if (errorInfo.code.value == ErrorCode.ERROR_SERVER_POP_UNKNOWN.value) {
             mIsTimeExpired = true
         }
@@ -999,29 +1047,36 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 字幕、清晰度、码率、音轨点击事件
      */
+    /****
+     * Subtitle, sharpness, bitrate, track click events
+     */
     private class MyOnTrackInfoClickListener(fragment: AliyunPlayerSkinFragment) :
         OnTrackInfoClickListener {
         private val weakReference = WeakReference(fragment)
 
         //字幕
+        //Subtitle
         override fun onSubtitleClick(subtitleTrackInfoList: List<TrackInfo>) {
             val aliyunPlayerSkinFragment = weakReference.get()
             aliyunPlayerSkinFragment?.onSubtitleClick(subtitleTrackInfoList)
         }
 
         //音轨
+        // Audio track
         override fun onAudioClick(audioTrackInfoList: List<TrackInfo>) {
             val aliyunPlayerSkinFragment = weakReference.get()
             aliyunPlayerSkinFragment?.onAudioClick(audioTrackInfoList)
         }
 
         //码率
+        // Bitrate
         override fun onBitrateClick(bitrateTrackInfoList: List<TrackInfo>) {
             val aliyunPlayerSkinFragment = weakReference.get()
             aliyunPlayerSkinFragment?.onBitrateClick(bitrateTrackInfoList)
         }
 
         //清晰度
+        // Sharpness
         override fun onDefinitionClick(definitionTrackInfoList: List<TrackInfo>) {
             val aliyunPlayerSkinFragment = weakReference.get()
             aliyunPlayerSkinFragment?.onDefinitionClick(definitionTrackInfoList)
@@ -1030,6 +1085,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * 字幕改变事件
+     */
+    /****
+     * Subtitle change event
      */
     private fun onSubtitleClick(subtitleTrackInfoList: List<TrackInfo>) {
         showMoreDialog = AlivcShowMoreDialog(requireContext())
@@ -1062,6 +1120,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 音轨改变事件
      */
+    /****
+     * Audio track change event
+     */
     private fun onAudioClick(audioTrackInfoList: List<TrackInfo>) {
         showMoreDialog = AlivcShowMoreDialog(requireContext())
         showFunctionShadowView(true)
@@ -1082,6 +1143,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * 码率改变事件
+     */
+    /****
+     * Bitrate change event
      */
     private fun onBitrateClick(bitrateTrackInfoList: List<TrackInfo>) {
         showMoreDialog = AlivcShowMoreDialog(requireContext())
@@ -1108,6 +1172,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * 清晰度改变事件
+     */
+    /****
+     * Sharpness change event
      */
     private fun onDefinitionClick(definitionTrackInfoList: List<TrackInfo>) {
         showMoreDialog = AlivcShowMoreDialog(requireContext())
@@ -1175,6 +1242,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * sei监听事件
      */
+    /****
+     * sei listener events
+     */
     private class MyOnSeiDataListener(aliyunPlayerSkinFragment: AliyunPlayerSkinFragment) :
         OnSeiDataListener {
         private val weakReference = WeakReference(aliyunPlayerSkinFragment)
@@ -1188,6 +1258,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
 
     /**
      * TipsView点击监听事件
+     */
+    /****
+     * TipsView click listener event
      */
     private class MyOnTipClickListener(aliyunPlayerSkinFragment: AliyunPlayerSkinFragment) :
         OnTipClickListener {
@@ -1225,12 +1298,18 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 重试
      */
+    /****
+     * Retry
+     */
     private fun refresh() {
         mViewBinding.videoView.reTry()
     }
 
     /**
      * TipsView返回按钮点击事件
+     */
+    /****
+     * TipsView returns the button click event
      */
     private class MyOnTipsViewBackClickListener(aliyunPlayerSkinFragment: AliyunPlayerSkinFragment) :
         OnTipsViewBackClickListener {
@@ -1264,6 +1343,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         val expirationInGMTFormat =
             TimeFormater.getExpirationInGMTFormat(mLiveExpiration)
         //判断鉴权信息是否过期
+        //Determine whether the authentication information has expired
         return if (TextUtils.isEmpty(mLiveExpiration) || DateUtil.getFixedSkewedTimeMillis() / 1000 > expirationInGMTFormat - 5 * 60) {
             val getAuthInformation = GetAuthInformation()
             getAuthInformation.getVideoPlayAuthInfo(object :
@@ -1294,6 +1374,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         val expirationInGMTFormat =
             TimeFormater.getExpirationInGMTFormat(mLiveExpiration)
         //判断鉴权信息是否过期
+        //Determine whether the authentication information has expired
         return if (TextUtils.isEmpty(mLiveExpiration) || DateUtil.getFixedSkewedTimeMillis() / 1000 > expirationInGMTFormat - 5 * 60) {
             val getAuthInformation = GetAuthInformation()
             getAuthInformation.getVideoPlayLiveStsInfo(object :
@@ -1323,6 +1404,9 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 设置屏幕亮度
      */
+    /****
+     * Setting the screen brightness
+     */
     private fun setWindowBrightness(brightness: Int) {
         val window = requireActivity().window
         val lp = window.attributes
@@ -1333,6 +1417,10 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     /**
      * 仅当系统的亮度模式是非自动模式的情况下，获取当前屏幕亮度值[0, 255].
      * 如果是自动模式，那么该方法获得的值不正确。
+     */
+    /****
+     * Get the current screen brightness value [0, 255] only if the system's brightness mode is non-automatic.
+     * If it is an automatic mode, then the value obtained by this method is incorrect.
      */
     private val currentBrightValue: Int
         get() {
@@ -1362,6 +1450,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
                 changeScreenMode(AliyunScreenMode.Small, false)
             }
             //post 不可以去掉
+            //post cannot be removed.
             post {
                 if (mVideoInfo?.videoId != listPlayer.getCurrentVideo().videoId) {
                     mVideoInfo = mVideoDetailViewModel.getCurrentSeriesVideoInfo()
@@ -1406,6 +1495,7 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
     }
 
     companion object {
+        // TODO: 未替换成功 Jinchuan
         private const val CREATE_TIME_MSG = "原创·138万次观看·06-01发布"
         private const val TAG = "PlayerSkinFragment"
         private const val REQUEST_EXTERNAL_STORAGE = 1
@@ -1415,12 +1505,12 @@ class AliyunPlayerSkinFragment : BaseFragment(R.layout.alivc_player_layout_skin)
         const val FROM_LIST = "from_list"
         const val VIDEO_INFO = "video_info"
         const val FROM_SOURCE = "from"
-        const val STATE_FEED_TO_HALF = 0// 从信息流到半屏页面
-        const val STATE_FEED_TO_FULL_FORWARD_SCREEN = 1 // 从信息流到翻转横屏
-        const val STATE_FEED_TO_FULL_REVERSE_SCREEN = 2 // 从信息流到翻转横屏
-        const val STATE_FLOAT_TO_HALF = 0// 从信息流到半屏页面
-        const val STATE_FLOAT_TO_FULL_FORWARD_SCREEN = 1// 从信息流到翻转横屏
-        const val STATE_FLOAT_TO_FULL_REVERSE_SCREEN = 2 // 从信息流到翻转横屏
+        const val STATE_FEED_TO_HALF = 0// 从信息流到半屏页面 From information streaming to half-screen pages
+        const val STATE_FEED_TO_FULL_FORWARD_SCREEN = 1 // 从信息流到翻转横屏 From information streaming to flip landscape
+        const val STATE_FEED_TO_FULL_REVERSE_SCREEN = 2 // 从信息流到翻转横屏 From information streaming to flip landscape
+        const val STATE_FLOAT_TO_HALF = 0// 从信息流到半屏页面 From information streaming to half-screen pages
+        const val STATE_FLOAT_TO_FULL_FORWARD_SCREEN = 1// 从信息流到翻转横屏 From information streaming to flip landscape
+        const val STATE_FLOAT_TO_FULL_REVERSE_SCREEN = 2 // 从信息流到翻转横屏 From information streaming to flip landscape
 
         const val FROM_RECOMMEND_LIST = 0
         const val FROM_ENTERTAINMENT_LIST = 1

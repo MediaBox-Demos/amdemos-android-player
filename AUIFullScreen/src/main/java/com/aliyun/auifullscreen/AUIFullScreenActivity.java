@@ -68,6 +68,7 @@ public class AUIFullScreenActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //防录屏截屏
+        //Anti-Recording and Screenshotting
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_aui_full_screen);
         mController = new AUIFullScreenController(this);
@@ -90,7 +91,8 @@ public class AUIFullScreenActivity extends BaseActivity {
         mTitleTextView = findViewById(R.id.tv_title);
         mBackImageView = findViewById(R.id.iv_back);
 
-        //保持屏幕敞亮
+        //保持屏幕常亮
+        //Maintain the screen always lit
         mAliyunVodPlayerView.setKeepScreenOn(true);
         mAliyunVodPlayerView.setTheme(Theme.Blue);
         mAliyunVodPlayerView.setAutoPlay(true);
@@ -290,6 +292,7 @@ public class AUIFullScreenActivity extends BaseActivity {
 
                 fullScreen(false);
                 //设置view的布局，宽高之类
+                // Set the layout of the view, e.g. width and height.
                 RelativeLayout.LayoutParams aliVcVideoViewLayoutParams = (RelativeLayout.LayoutParams) mAliyunVodPlayerView
                         .getLayoutParams();
                 aliVcVideoViewLayoutParams.height = (int) (ScreenUtils.getWidth(this) * 9.0f / 16);
@@ -298,7 +301,9 @@ public class AUIFullScreenActivity extends BaseActivity {
                 mTitleTextView.setVisibility(View.GONE);
                 mBackImageView.setVisibility(View.GONE);
                 //转到横屏了。
+                // Going to landscape now
                 //设置view的布局，宽高
+                // Set the layout of the view, e.g. width and height.
                 RelativeLayout.LayoutParams aliVcVideoViewLayoutParams = (RelativeLayout.LayoutParams) mAliyunVodPlayerView
                         .getLayoutParams();
                 aliVcVideoViewLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;

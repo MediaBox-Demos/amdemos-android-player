@@ -20,6 +20,9 @@ import java.util.Map;
 /**
  * tv控制回调
  */
+/****
+ * tv control callbacks
+ */
 
 public class AVTransportSubscriptionCallback extends BaseSubscriptionCallback {
 
@@ -82,6 +85,7 @@ public class AVTransportSubscriptionCallback extends BaseSubscriptionCallback {
                 Log.e(TAG, "position: " + position + ", intTime: " + intTime);
 
                 // 该设备支持进度回传
+                // The device supports progress back
                 Config.getInstance().setHasRelTimePosCallback(true);
 
                 Intent intent = new Intent(Intents.ACTION_POSITION_CALLBACK);

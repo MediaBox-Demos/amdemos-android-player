@@ -27,25 +27,38 @@ import master.flame.danmaku.ui.widget.DanmakuView;
  *
  * @author hanyu
  */
+/****
+ * bilibili Danmaku
+ *
+ * @author hanyu
+ */
 public class PlayerDanmakuView extends DanmakuView {
 
     //弹幕最大显示行数
+    //Maximum number of lines to be displayed for danmaku
     private HashMap<Integer, Integer> mMaxLinesPair;
     //是否禁止重叠
+    //Whether to prohibit overlapping
     private HashMap<Integer, Boolean> mOverLappingEnablePair;
     //弹幕移动速度
+    //Danmaku movement speed
     private float mSpeed = 1;
     //弹幕字体大小
+    //Danmaku font size
     private float mTextSize = 6;
     //弹幕字体颜色,默认是白色
+    //Danmaku font color
     private int mTextColor = Color.WHITE;
     //弹幕样式,默认从右到左
+    //Danmaku style，default from right to left
     private int mDanmaType = BaseDanmaku.TYPE_SCROLL_RL;
     //保存弹幕
+    //Save danmaku
     private Map<Integer, ArrayList<String>> mDanmakuList = new HashMap<>();
 
     private DanmakuContext mDanmakuContext;
     //当前屏幕模式
+    //Current screen mode
     private AliyunScreenMode mScreenMode = AliyunScreenMode.Small;
 //    String[] danmkuArray = new String[]{
 //            "东京奥运会，中国射击队，00后小姐姐，斩落奥运会首金",
@@ -114,8 +127,10 @@ public class PlayerDanmakuView extends DanmakuView {
         mMaxLinesPair = new HashMap<>();
         mOverLappingEnablePair = new HashMap<>();
         //设置弹幕从右到左,最多显示3行
+        //Set danmaku from right to left,maximum display 3 lines
         mMaxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 3);
         //设置可以重叠
+        //Set can overlap
         mOverLappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
 
         initDanmakuContext();
@@ -160,6 +175,9 @@ public class PlayerDanmakuView extends DanmakuView {
     /**
      * 设置弹幕速率
      */
+    /****
+     * Setting danmaku speed
+     */
     public void setDanmakuSpeed(float speed) {
         if (mDanmakuContext != null) {
             if (speed <= 0.01) {
@@ -172,11 +190,15 @@ public class PlayerDanmakuView extends DanmakuView {
     /**
      * 设置弹幕显示区域
      */
+    /****
+     * Setting danmaku display region
+     */
     public void setDanmakuRegion(int progress) {
         if (mMaxLinesPair != null) {
             switch (progress) {
                 case 0:
                     //1/4弹幕
+                    //1/4 screen
                     if (mDanmakuContext != null) {
                         mMaxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 3);
                         mDanmakuContext.setMaximumLines(mMaxLinesPair);
@@ -184,6 +206,7 @@ public class PlayerDanmakuView extends DanmakuView {
                     break;
                 case 1:
                     //一半弹幕
+                    //Half screen
                     if (mDanmakuContext != null) {
                         mMaxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 5);
                         mDanmakuContext.setMaximumLines(mMaxLinesPair);
@@ -191,6 +214,7 @@ public class PlayerDanmakuView extends DanmakuView {
                     break;
                 case 2:
                     //3/4弹幕
+                    //3/4 screen
                     if (mDanmakuContext != null) {
                         mMaxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 7);
                         mDanmakuContext.setMaximumLines(null);
@@ -198,6 +222,7 @@ public class PlayerDanmakuView extends DanmakuView {
                     break;
                 case 3:
                     //无限制
+                    //No limit
                     if (mDanmakuContext != null) {
                         mDanmakuContext.setMaximumLines(null);
                     }
@@ -223,6 +248,11 @@ public class PlayerDanmakuView extends DanmakuView {
      * 添加一条弹幕
      *
      * @param content 弹幕内容
+     */
+    /****
+     * Add a danmaku
+     *
+     * @param content Danmaku content
      */
     public void addDanmaku(String content, long time) {
         if (TextUtils.isEmpty(content)) {
@@ -272,6 +302,11 @@ public class PlayerDanmakuView extends DanmakuView {
      *
      * @param content 弹幕内容
      */
+    /****
+     * Add a danmaku
+     *
+     * @param content Danmaku content
+     */
     public void addDanmaku(String content) {
         if (TextUtils.isEmpty(content)) {
             return;
@@ -290,6 +325,9 @@ public class PlayerDanmakuView extends DanmakuView {
     /**
      * 切换弹幕显示状态
      */
+    /****
+     * Switch danmaku display status
+     */
     public void switchDanmaku(boolean show) {
         if (show) {
             resume();
@@ -303,6 +341,9 @@ public class PlayerDanmakuView extends DanmakuView {
     /**
      * 返回弹幕是否开启
      */
+    /****
+     * Return danmaku is open
+     */
     public boolean danmuIsShown() {
         return isShown();
     }
@@ -314,6 +355,9 @@ public class PlayerDanmakuView extends DanmakuView {
 
     /**
      * 播放器的 currentPosition
+     */
+    /****
+     * Player's currentPosition
      */
     public void setCurrentPosition(int mCurrentPosition) {
 //        if (mScreenMode == AliyunScreenMode.Small || !isShown()) {
@@ -335,6 +379,9 @@ public class PlayerDanmakuView extends DanmakuView {
 
         /**
          * TODO 要和IOS统一，输入过的弹幕只展示一次
+         */
+        /****
+         * TODO To be unified with IOS, only the danmaku display once
          */
 //        ArrayList<String> stringsList = mDanmakuList.get(time);
 //        if (stringsList == null || stringsList.size() == 0) {

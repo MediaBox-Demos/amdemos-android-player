@@ -194,6 +194,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
         /**
          * 下载按钮点击
          */
+        /****
+         * Download button click
+         */
         void onDownloadClick();
     }
 
@@ -205,6 +208,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
         /**
          * 投屏按钮点击
          */
+        /****
+         * Screen cast button click
+         */
         void onScreenCastClick();
     }
 
@@ -215,6 +221,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
     public interface OnBarrageButtonClickListener {
         /**
          * 弹幕按钮点击
+         */
+        /****
+         * Barrage button click
          */
         void onBarrageClick();
     }
@@ -235,6 +244,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
         /**
          * 速度切换
          */
+        /****
+         * Speed switch
+         */
         void onSpeedChanged(RadioGroup group, int checkedId);
     }
 
@@ -246,6 +258,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
         /**
          * 比例切换
          */
+        /****
+         * Scale switch
+         */
         void onScaleModeChanged(RadioGroup group,int checkedId);
     }
 
@@ -255,6 +270,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
 
     /**
      * 亮度调节
+     */
+    /****
+     * Brightness adjustment
      */
     public interface OnLightSeekChangeListener {
         void onStart(SeekBar seekBar);
@@ -269,6 +287,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
     /**
      * 音量调节
      */
+    /****
+     * Volume adjustment
+     */
     public interface OnVoiceSeekChangeListener {
         void onStart(SeekBar seekBar);
         void onProgress(SeekBar seekBar, int progress, boolean fromUser);
@@ -282,6 +303,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
     /**
      * 设置音量
      */
+    /****
+     * Set volume
+     */
     public void setVoiceVolume(float volume){
         if(seekVoice != null){
             seekVoice.setProgress((int) (volume * 100));
@@ -290,6 +314,9 @@ public class ShowMoreView extends LinearLayout implements View.OnClickListener,R
 
     /**
      * 设置亮度
+     */
+    /****
+     * Set brightness
      */
     public void setBrightness(int value){
         if(seekLight != null){

@@ -39,6 +39,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * 下载管理
  */
+/****
+ * Download management
+ */
 public class AliyunDownloadManager {
 
     public static final String TAG = "AliyunDownloadManager";
@@ -57,58 +60,94 @@ public class AliyunDownloadManager {
     /**
      * 并行下载最大数量,默认3
      */
+    /****
+     * Parallel download maximum number, default 3
+     */
     private int mMaxNum = 3;
     /**
      * 下载路径
      */
+    /****
+     * Download path
+     */
     private String downloadDir;
     /**
      * 加密文件路径
+     */
+    /****
+     * Encrypted File Path
      */
     private String encryptFilePath;
 
     /**
      * AliyunDownloadManager 单例
      */
+    /****
+     * AliyunDownloadManager singleton
+     */
     private static volatile AliyunDownloadManager mInstance = null;
 
     /**
      * AliyunDownloadMediaInfo和AliMediaDownloader 一一 对应
+     */
+    /****
+     * AliyunDownloadMediaInfo and AliMediaDownloader one-to-one correspondence
      */
     private LinkedHashMap<AliyunDownloadMediaInfo, AliMediaDownloader> downloadInfos = new LinkedHashMap<>();
 
     /**
      * 用于保存处于准备状态的数据
      */
+    /****
+     * Save data in preparation state
+     */
     private ConcurrentLinkedQueue<AliyunDownloadMediaInfo> preparedList = new ConcurrentLinkedQueue<>();
 
     /**
      * 用于保存处于下载中的状态的数据
+     */
+    /****
+     * Save data in downloading state
      */
     private ConcurrentLinkedQueue<AliyunDownloadMediaInfo> downloadingList = new ConcurrentLinkedQueue<>();
 
     /**
      * 用于保存下载完成状态的数据
      */
+    /****
+     * Save data in completed state
+     */
     private ConcurrentLinkedQueue<AliyunDownloadMediaInfo> completedList = new ConcurrentLinkedQueue<>();
 
     /**
      * 用于保存暂停状态的数据
+     */
+    /****
+     * Save data in paused state
      */
     private ConcurrentLinkedQueue<AliyunDownloadMediaInfo> waitedList = new ConcurrentLinkedQueue<>();
 
     /**
      * 用于保存停止状态的数据
      */
+    /****
+     * Save data in stopped state
+     */
     private ConcurrentLinkedQueue<AliyunDownloadMediaInfo> stopedList = new ConcurrentLinkedQueue<>();
 
     /**
      * 对外接口回调
      */
+    /****
+     * External interface callback
+     */
     private List<AliyunDownloadInfoListener> outListenerList = new ArrayList<>();
 
     /**
      * 数据库管理类
+     */
+    /****
+     * Database management class
      */
     private DatabaseManager mDatabaseManager;
 
@@ -116,9 +155,15 @@ public class AliyunDownloadManager {
     /**
      * 剩余内存
      */
+    /****
+     * Remaining memory
+     */
     private long freshStorageSizeTime = 0;
     /**
      * 保存Downloader防止循环创建时,导致内存不足被回收,无法回调的问题
+     */
+    /****
+     * Save Downloader to prevent circular creation when memory is insufficient, and the callback cannot be called
      */
     private List<AliMediaDownloader> mJniDownloadLists = new ArrayList<>();
 
@@ -127,20 +172,32 @@ public class AliyunDownloadManager {
     /**
      * vidAuth方式下载
      */
+    /****
+     * vidAuth download
+     */
     private VidAuth mVidAuth;
 
     /**
      * vidSts方式下载
+     */
+    /****
+     * vidSts download
      */
     private VidSts mVidSts;
 
     /**
      * 下载配置
      */
+    /****
+     * Download configuration
+     */
     private DownloaderConfig mDownloaderConfig = new DownloaderConfig();
 
     /**
      * 内部接口回调
+     */
+    /****
+     * Internal interface callback
      */
     private AliyunDownloadInfoListener innerDownloadInfoListener = new AliyunDownloadInfoListener() {
 
@@ -187,6 +244,7 @@ public class AliyunDownloadManager {
         public void onStart(final AliyunDownloadMediaInfo info) {
             startMediaInfo(info);
             //在子线程中更新数据库
+            // Update the database in a sub-thread
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
@@ -194,6 +252,7 @@ public class AliyunDownloadManager {
 
                     boolean hasContains = false;
                     //单集
+                    //single episode
                     if (TextUtils.isEmpty(info.getTvId())) {
                         for (AliyunDownloadMediaInfo downloadMediaInfo : downloadMediaInfos) {
                             hasContains = judgeEquals(downloadMediaInfo, info);
@@ -207,6 +266,7 @@ public class AliyunDownloadManager {
                     if (hasContains) {
                         int update = mDatabaseManager.update(info);
                         //如果更新失败的话，代表数据库里面有这个Vid，但是没有这个清晰度的视频,
+                        //If the update fails, it means that there is this Vid in the database, but there is no video with this definition.
                     } else {
                         mDatabaseManager.insert(info);
                     }
@@ -227,6 +287,7 @@ public class AliyunDownloadManager {
         @Override
         public void onProgress(final AliyunDownloadMediaInfo info, final int percent) {
             //在子线程中更新数据库
+            // Update the database in a sub-thread
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
@@ -398,6 +459,9 @@ public class AliyunDownloadManager {
     /**
      * 设置DownloaderConfig
      */
+    /****
+     * Set DownloaderConfig
+     */
     public void setDownloaderConfig(DownloaderConfig downloaderConfig){
         this.mDownloaderConfig = downloaderConfig;
     }
@@ -405,12 +469,18 @@ public class AliyunDownloadManager {
     /**
      * 获取DownloaderConfig
      */
+    /****
+     * Get DownloaderConfig
+     */
     public DownloaderConfig getDownloaderConfig(){
         return mDownloaderConfig;
     }
 
     /**
      * 设置下载对外监听
+     */
+    /****
+     * Set download external listener
      */
     public void setDownloadInfoListener(AliyunDownloadInfoListener listener) {
         this.outListenerList.clear();
@@ -421,6 +491,9 @@ public class AliyunDownloadManager {
 
     /**
      * 添加下载对外监听
+     */
+    /****
+     * Add external listener for downloads
      */
     public void addDownloadInfoListener(AliyunDownloadInfoListener listener) {
         if (this.outListenerList == null) {
@@ -433,6 +506,9 @@ public class AliyunDownloadManager {
 
     /**
      * 判断两个MediaInfo是否属于同一资源
+     */
+    /****
+     * Determine if two MediaInfo's belong to the same resource.
      */
     private boolean judgeEquals(AliyunDownloadMediaInfo mediaInfo1, AliyunDownloadMediaInfo mediaInfo2) {
         if (mediaInfo1 == null || mediaInfo2 == null) {
@@ -452,6 +528,9 @@ public class AliyunDownloadManager {
     /**
      * 设置最大并行下载行数
      */
+    /****
+     * Set the maximum number of parallel downloads.
+     */
     public int getMaxNum() {
         return mMaxNum;
     }
@@ -459,6 +538,10 @@ public class AliyunDownloadManager {
     /**
      * 设置并行下载行数
      * 最小为0,最大为5
+     */
+    /****
+     * Set the number of parallel downloads.
+     * The minimum is 0, and the maximum is 5.
      */
     public void setMaxNum(int mMaxNum) {
         if (mMaxNum <= MIN_NUM) {
@@ -493,6 +576,10 @@ public class AliyunDownloadManager {
      * 准备下载项
      * 用于从数据库查询出数据后，恢复数据展示
      */
+    /****
+     * Prepare download items.
+     * Used to prepare data after querying data from the database.
+     */
     private void prepareDownload(VidSts vidSts, final List<AliyunDownloadMediaInfo> mediaInfos) {
         if (vidSts == null || mediaInfos == null) {
             return;
@@ -501,6 +588,7 @@ public class AliyunDownloadManager {
             vidSts.setVid(aliyunDownloadMediaInfo.getVid());
             aliyunDownloadMediaInfo.setVidSts(vidSts);
             //修改成wait状态
+            //Modify to wait state
             if (aliyunDownloadMediaInfo.getStatus() == AliyunDownloadMediaInfo.Status.Start ||
                     aliyunDownloadMediaInfo.getStatus() == AliyunDownloadMediaInfo.Status.Prepare) {
                 aliyunDownloadMediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Stop);
@@ -533,6 +621,9 @@ public class AliyunDownloadManager {
     /**
      * 添加下载项
      */
+    /****
+     * Add download items.
+     */
     public void addDownload(VidSts vidSts, final AliyunDownloadMediaInfo aliyunDownloadMediaInfo) {
         if (vidSts == null || aliyunDownloadMediaInfo == null) {
             return;
@@ -561,6 +652,9 @@ public class AliyunDownloadManager {
     /**
      * 准备下载项目
      */
+    /****
+     * Prepare download items.
+     */
     public void prepareDownloadByLongVideoBean(final VidSts vidSts, final LongVideoBean longVideoBean) {
         if (vidSts == null || TextUtils.isEmpty(vidSts.getVid())) {
             return;
@@ -568,12 +662,14 @@ public class AliyunDownloadManager {
         final List<AliyunDownloadMediaInfo> downloadMediaInfos = new ArrayList<>();
         final AliMediaDownloader jniDownloader = AliDownloaderFactory.create(mContext);
         //调用prepared监听,获取该vid下所有的清晰度
+        //Call the prepared listener to get all the clarity under the vid.
         jniDownloader.setOnPreparedListener(new AliMediaDownloader.OnPreparedListener() {
             @Override
             public void onPrepared(MediaInfo mediaInfo) {
                 onPreparedCallback(vidSts, mediaInfo, downloadMediaInfos, longVideoBean);
                 if (innerDownloadInfoListener != null) {
                     //这里回调只为了展示可下载的选项
+                    //Here the callback is only to show the downloadable options
                     innerDownloadInfoListener.onPrepared(downloadMediaInfos);
                 }
                 mJniDownloadLists.remove(jniDownloader);
@@ -601,6 +697,9 @@ public class AliyunDownloadManager {
     /**
      * 准备下载项目
      */
+    /****
+     * Prepare download items.
+     */
     public void prepareDownloadLists(final VidSts vidSts, AliyunDownloadMediaInfo mediaInfo) {
         if (vidSts == null || TextUtils.isEmpty(vidSts.getVid())) {
             return;
@@ -615,6 +714,7 @@ public class AliyunDownloadManager {
         }
 
         //调用prepared监听,获取该vid下所有的清晰度
+        //Call the prepared listener to get all the clarity under the vid.
         jniDownloader.setOnPreparedListener(new AliMediaDownloader.OnPreparedListener() {
             @Override
             public void onPrepared(MediaInfo mediaInfo) {
@@ -622,6 +722,7 @@ public class AliyunDownloadManager {
 
                 if (innerDownloadInfoListener != null) {
                     //这里回调只为了展示可下载的选项
+                    //Here the callback is only to show the downloadable options
                     innerDownloadInfoListener.onPrepared(downloadMediaInfos);
                 }
             }
@@ -637,6 +738,9 @@ public class AliyunDownloadManager {
     /**
      * 准备下载项目
      */
+    /****
+     * Prepare download items.
+     */
     public void prepareDownload(final VidSts vidSts) {
         if (vidSts == null || TextUtils.isEmpty(vidSts.getVid())) {
             return;
@@ -647,6 +751,7 @@ public class AliyunDownloadManager {
         final AliMediaDownloader jniDownloader = AliDownloaderFactory.create(mContext);
 
         //调用prepared监听,获取该vid下所有的清晰度
+        //Call the prepared listener to get all the clarity under the vid.
         jniDownloader.setOnPreparedListener(new AliMediaDownloader.OnPreparedListener() {
             @Override
             public void onPrepared(MediaInfo mediaInfo) {
@@ -654,6 +759,7 @@ public class AliyunDownloadManager {
 
                 if (innerDownloadInfoListener != null) {
                     //这里回调只为了展示可下载的选项
+                    //Here the callback is only to show the downloadable options
                     innerDownloadInfoListener.onPrepared(downloadMediaInfos);
                 }
                 mJniDownloadLists.remove(jniDownloader);
@@ -671,6 +777,9 @@ public class AliyunDownloadManager {
     /**
      * 准备下载项目
      */
+    /****
+     * Prepare download items.
+     */
     public void prepareDownload(final VidAuth vidAuth) {
         if (vidAuth == null || TextUtils.isEmpty(vidAuth.getVid())) {
             return;
@@ -679,6 +788,7 @@ public class AliyunDownloadManager {
         final List<AliyunDownloadMediaInfo> downloadMediaInfos = new ArrayList<>();
         final AliMediaDownloader downloader = AliDownloaderFactory.create(mContext);
         //调用prepared监听,获取该vid下所有的清晰度
+        //Call the prepared listener to get all the clarity under the vid.
         downloader.setOnPreparedListener(new AliMediaDownloader.OnPreparedListener() {
             @Override
             public void onPrepared(MediaInfo mediaInfo) {
@@ -687,6 +797,7 @@ public class AliyunDownloadManager {
                     TrackInfo.Type type = trackInfo.getType();
                     if (type == TrackInfo.Type.TYPE_VOD) {
 //                        //一个AliMediaDownloader 对应多个 AliyunDownloaderMediaInfo(同一Vid,不同清晰度)
+                        //One AliMediaDownloader corresponds to multiple AliyunDownloaderMediaInfo (same Vid, different resolution).
                         final AliyunDownloadMediaInfo downloadMediaInfo = new AliyunDownloadMediaInfo();
                         downloadMediaInfo.setVid(vidAuth.getVid());
                         downloadMediaInfo.setQuality(trackInfo.getVodDefinition());
@@ -710,6 +821,7 @@ public class AliyunDownloadManager {
                 }
                 if (innerDownloadInfoListener != null) {
                     //这里回调只为了展示可下载的选项
+                    //Here the callback is only to show the downloadable options
                     innerDownloadInfoListener.onPrepared(downloadMediaInfos);
                 }
             }
@@ -726,6 +838,7 @@ public class AliyunDownloadManager {
             TrackInfo.Type type = trackInfo.getType();
             if (type == TrackInfo.Type.TYPE_VOD) {
 //                        //一个AliMediaDownloader 对应多个 AliyunDownloaderMediaInfo(同一Vid,不同清晰度)
+                //One AliMediaDownloader corresponds to multiple AliyunDownloaderMediaInfo (same Vid, different resolution).
                 VidSts mVidSts = new VidSts();
 
                 mVidSts.setVid(mediaInfo.getVideoId());
@@ -768,6 +881,9 @@ public class AliyunDownloadManager {
     /**
      * 准备下载项(指定清晰度)
      */
+    /****
+     * Prepare download items(specify sharpness)
+     */
     public void prepareDownloadByQuality(final AliyunDownloadMediaInfo downloadMediaInfo, final int intentState) {
         if (downloadMediaInfo == null) {
             return;
@@ -776,6 +892,7 @@ public class AliyunDownloadManager {
         final AliMediaDownloader jniDownloader = AliDownloaderFactory.create(mContext);
         jniDownloader.setSaveDir(downloadDir);
         //调用prepared监听,获取该vid下所有的清晰度
+        //Call the prepared listener to get all the clarity under the vid.
         jniDownloader.setOnPreparedListener(new AliMediaDownloader.OnPreparedListener() {
             @Override
             public void onPrepared(MediaInfo mediaInfo) {
@@ -784,6 +901,7 @@ public class AliyunDownloadManager {
                     TrackInfo.Type type = trackInfo.getType();
                     if (type == TrackInfo.Type.TYPE_VOD && trackInfo.getVodDefinition().equals(downloadMediaInfo.getQuality())) {
 //                        //一个AliMediaDownloader 对应多个 AliyunDownloaderMediaInfo(同一Vid,不同清晰度)
+                        //One AliMediaDownloader corresponds to multiple AliyunDownloaderMediaInfo (same Vid, different resolution).
                         downloadMediaInfo.setQuality(trackInfo.getVodDefinition());
                         downloadMediaInfo.setTitle(mediaInfo.getTitle());
                         downloadMediaInfo.setCoverUrl(mediaInfo.getCoverUrl());
@@ -801,6 +919,7 @@ public class AliyunDownloadManager {
                         if (intentState == INTENT_STATE_START) {
                             if (downloadingList.size() <= mMaxNum) {
                                 //开始下载
+                                //Start downloading
                                 setListener(downloadMediaInfo, jniDownloader);
                                 jniDownloader.start();
                                 if (innerDownloadInfoListener != null) {
@@ -814,9 +933,11 @@ public class AliyunDownloadManager {
 
                         } else if (intentState == INTENT_STATE_STOP) {
                             //删除下载
+                            //Delete download
                             executeDelete(downloadMediaInfo);
                         } else {
                             //添加下载项
+                            //Add download item
                             jniDownloader.setSaveDir(downloadDir);
                             jniDownloader.selectItem(downloadMediaInfo.getTrackInfo().getIndex());
                             if (innerDownloadInfoListener != null) {
@@ -854,6 +975,9 @@ public class AliyunDownloadManager {
     /**
      * 开始下载
      */
+    /****
+     * Start downloading.
+     */
     public void startDownload(final AliyunDownloadMediaInfo downloadMediaInfo) {
         if (downloadMediaInfo == null) {
             return;
@@ -873,9 +997,12 @@ public class AliyunDownloadManager {
         }
 
         //直接开始下载
+        //Start downloading
         //判断磁盘空间是否足够
+        //Check whether the disk space is enough
         if (DownloadUtils.isStorageAlarm(mContext, downloadMediaInfo)) {
             //判断要下载的mediaInfo的当前状态
+            //Check the current status of the mediaInfo to be downloaded
 
             if (downloadingList.size() < mMaxNum) {
                 AliMediaDownloader jniDownloader = downloadInfos.get(downloadMediaInfo);
@@ -910,6 +1037,7 @@ public class AliyunDownloadManager {
                 }
             } else {
 //                    防止重复添加
+                //Prevent repeated addition
                 if (!waitedList.contains(downloadMediaInfo) && innerDownloadInfoListener != null) {
                     innerDownloadInfoListener.onWait(downloadMediaInfo);
                 }
@@ -924,6 +1052,10 @@ public class AliyunDownloadManager {
     /**
      * 暂停下载
      * 和 stopDownload 类似，只是不调用release
+     */
+    /****
+     * Pause downloading.
+     * Similar to stopDownload, but does not call release
      */
     public void pauseDownload(AliyunDownloadMediaInfo downloadMediaInfo) {
         if (downloadMediaInfo == null || downloadInfos == null) {
@@ -947,6 +1079,9 @@ public class AliyunDownloadManager {
     }
     /**
      * 停止下载
+     */
+    /****
+     * Stop downloading.
      */
     public void stopDownload(AliyunDownloadMediaInfo downloadMediaInfo) {
         if (downloadMediaInfo == null || downloadInfos == null) {
@@ -973,6 +1108,9 @@ public class AliyunDownloadManager {
     /**
      * 停止多个下载
      */
+    /****
+     * Stop multiple downloads.
+     */
     public void stopDownloads(ConcurrentLinkedQueue<AliyunDownloadMediaInfo> downloadMediaInfos) {
         if (downloadMediaInfos == null || downloadMediaInfos.size() == 0 || downloadInfos == null) {
             return;
@@ -998,6 +1136,9 @@ public class AliyunDownloadManager {
     /**
      * 删除下载文件
      */
+    /****
+     * Delete download file.
+     */
     public void deleteFile(final AliyunDownloadMediaInfo downloadMediaInfo) {
         if (downloadMediaInfo == null || downloadInfos == null) {
             return;
@@ -1014,6 +1155,9 @@ public class AliyunDownloadManager {
 
     /**
      * 执行删除操作
+     */
+    /****
+     * Execute delete operation.
      */
     private void executeDelete(AliyunDownloadMediaInfo downloadMediaInfo) {
         AliMediaDownloader jniDownloader = downloadInfos.get(downloadMediaInfo);
@@ -1032,12 +1176,14 @@ public class AliyunDownloadManager {
         if (jniDownloader != null) {
             jniDownloader.stop();
             //释放 jniDownloader
+            //releaseJniDownloader;
             releaseJniDownloader(downloadMediaInfo);
         }
         int ret = AliDownloaderFactory.deleteFile(saveDir, vid, format, index);
-        if (ret == 12 || ret == 11) { //删除失败
+        if (ret == 12 || ret == 11) { //删除失败 Failed to delete
             Log.e(TAG, "deleteFile warning  ret = " + ret);
             //删除下载需要选择哪个清晰度,否则无法删除本地文件
+            //Delete download needs to select resolution, otherwise local files cannot be deleted
 //            jniDownloader.selectItem(index);
 //            jniDownloader.deleteFile();
             if (innerDownloadInfoListener != null) {
@@ -1054,6 +1200,9 @@ public class AliyunDownloadManager {
 
     /**
      * 获取sts信息
+     */
+    /****
+     * Get sts information.
      */
     private void getVidSts(final AliyunDownloadMediaInfo downloadMediaInfo, final int intentState) {
         GetAuthInformation getAuthInformation = new GetAuthInformation();
@@ -1089,6 +1238,9 @@ public class AliyunDownloadManager {
     /**
      * 删除所有文件
      */
+    /****
+     * Delete all files.
+     */
     public void deleteAllFile() {
         for (AliyunDownloadMediaInfo mediaInfo : preparedList) {
             deleteFile(mediaInfo);
@@ -1114,12 +1266,15 @@ public class AliyunDownloadManager {
     /**
      * 设置监听
      */
+    /****
+     * Set listener.
+     */
     private void setListener(final AliyunDownloadMediaInfo downloadMediaInfo, final AliMediaDownloader jniDownloader) {
         jniDownloader.setOnProgressListener(new AliMediaDownloader.OnProgressListener() {
 
             @Override
             public void onDownloadingProgress(int percent) {
-                Log.e(TAG, "onDownloadingProgress内部下载 : " + percent);
+                Log.e(TAG, "onDownloadingProgress Internal download : " + percent);
                 if (innerDownloadInfoListener != null) {
                     downloadMediaInfo.setProgress(percent);
                     innerDownloadInfoListener.onProgress(downloadMediaInfo, percent);
@@ -1151,6 +1306,9 @@ public class AliyunDownloadManager {
     /**
      * 初始化正在下载的缓存
      */
+    /****
+     * Initialize the cache of the currently downloading.
+     */
     public void initDownloading(LinkedList<AliyunDownloadMediaInfo> list) {
         if (downloadingList.size() != 0) {
             downloadingList.clear();
@@ -1160,6 +1318,9 @@ public class AliyunDownloadManager {
 
     /**
      * 初始化下载完成的缓存
+     */
+    /****
+     * Initialize the cache of the downloaded completed.
      */
     public void initCompleted(LinkedList<AliyunDownloadMediaInfo> list) {
         if (completedList.size() != 0) {
@@ -1171,8 +1332,12 @@ public class AliyunDownloadManager {
     /**
      * 自动开始等待中的下载任务
      */
+    /****
+     * Automatically start the download task in the waiting queue.
+     */
     private void autoDownload() {
         //当前下载数小于设置的最大值,并且还有在等待中的下载任务
+        //If the current number of downloads is less than the maximum value and there are download tasks in the waiting queue
         if (downloadingList.size() < mMaxNum && waitedList.size() > 0) {
             AliyunDownloadMediaInfo aliyunDownloadMediaInfo = waitedList.peek();
             if (aliyunDownloadMediaInfo.getStatus() == AliyunDownloadMediaInfo.Status.Wait) {
@@ -1278,6 +1443,7 @@ public class AliyunDownloadManager {
 
     private void errorMediaInfo(AliyunDownloadMediaInfo downloadMediaInfo, ErrorCode code, String msg) {
         //在prepare的时候,如果获取不到MediaInfo,downloadMediaInfo会作为空值传递,所以会导致空指针异常
+        //When preparing, if MediaInfo is not obtained, downloadMediaInfo will be passed as a null value, so it will lead to a null pointer exception.
         if (downloadMediaInfo == null) {
             return;
         }
@@ -1303,18 +1469,25 @@ public class AliyunDownloadManager {
     /**
      * 从数据库查询数据
      */
+    /****
+     * Find data from db.
+     */
     public void findDatasByDb(final VidSts vidSts, final LoadDbDatasListener listener) {
         if (mDatabaseManager != null) {
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
                     //查询所有准备完成状态的数据,用于展示
+                    //Query all the data in the ready status for displaying
                     List<AliyunDownloadMediaInfo> selectPreparedList = mDatabaseManager.selectPreparedList();
                     //查询所有等待状态的数据,用于展示
+                    //Query all the data in the waiting status for displaying
                     final List<AliyunDownloadMediaInfo> selectStopedList = mDatabaseManager.selectStopedList();
                     //查询所有完成状态的数据,用于展示
+                    //Query all the data in the completed status for displaying
                     final List<AliyunDownloadMediaInfo> selectCompletedList = mDatabaseManager.selectCompletedList();
                     //查询所有下载状态中的数据
+                    //Query all the data in the download status
                     final List<AliyunDownloadMediaInfo> selectDownloadingList = mDatabaseManager.selectDownloadingList();
                     final List<AliyunDownloadMediaInfo> dataList = new ArrayList<>();
                     dataList.addAll(selectCompletedList);
@@ -1339,6 +1512,11 @@ public class AliyunDownloadManager {
                      * 这里不需要将从数据库查询的下载中状态的数据进行内存缓存,在prepareDownload这些数据的时候,
                      * 会全部置为等待状态,需要手动点击开始下载
                      */
+                    /*
+                     * There is no need to be cached in memory for data from the database query that is in the download state.
+                     * when prepareDownload these data, they all will be set to the waiting status,
+                     * you need to manually click to start download
+                     */
                     ThreadUtils.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -1356,20 +1534,28 @@ public class AliyunDownloadManager {
     /**
      * 从数据库查询数据
      */
+    /****
+     * Find data from db.
+     */
     public void findDatasByDb(final LoadDbDatasListener listener) {
         if (mDatabaseManager != null) {
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
                     //查询所有准备完成状态的数据,用于展示
+                    //Query all the data in the ready status for displaying
                     List<AliyunDownloadMediaInfo> selectPreparedList = mDatabaseManager.selectPreparedList();
                     //查询所有等待状态的数据,用于展示
+                    //Query all the data in the waiting status for displaying
                     final List<AliyunDownloadMediaInfo> selectStopedList = mDatabaseManager.selectStopedList();
                     //查询所有完成状态的数据,用于展示
+                    //Query all the data in the completed status for displaying
                     final List<AliyunDownloadMediaInfo> selectCompletedList = mDatabaseManager.selectCompletedList();
                     //查询所有下载状态中的数据
+                    //Query all the data in the download status
                     final List<AliyunDownloadMediaInfo> selectDownloadingList = mDatabaseManager.selectDownloadingList();
                     //查询所有等待状态
+                    //Query all the data in the waiting status
                     final List<AliyunDownloadMediaInfo> selectWaitList = mDatabaseManager.selectWaitList();
 
                     final List<AliyunDownloadMediaInfo> dataList = new ArrayList<>();
@@ -1416,6 +1602,11 @@ public class AliyunDownloadManager {
                      * 这里不需要将从数据库查询的下载中状态的数据进行内存缓存,在prepareDownload这些数据的时候,
                      * 会全部置为等待状态,需要手动点击开始下载
                      */
+                    /*
+                     * There is no need to be cached in memory for data from the database query that is in the download state.
+                     * when prepareDownload these data, they all will be set to the waiting status,
+                     * you need to manually click to start download
+                     */
                     ThreadUtils.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -1432,22 +1623,31 @@ public class AliyunDownloadManager {
     /**
      * 从数据库查询数据
      */
+    /****
+     * Find data from db.
+     */
     public void findDatasByDbTv(final LoadDbDatasListener listener) {
         if (mDatabaseManager != null) {
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
                     //查询所有准备完成状态的数据,用于展示
+                    //Query all the data in the ready status for displaying
                     List<AliyunDownloadMediaInfo> selectPreparedList = mDatabaseManager.selectPreparedList();
                     //查询所有等待状态的数据,用于展示
+                    //Query all the data in the waiting status for displaying
                     final List<AliyunDownloadMediaInfo> selectStopedList = mDatabaseManager.selectStopedList();
                     //查询所有完成状态的数据,用于展示
+                    //Query all the data in the completed status for displaying
                     final List<AliyunDownloadMediaInfo> selectCompletedList = mDatabaseManager.selectCompletedList();
                     //查询所有下载状态中的数据
+                    //Query all the data in the download status
                     final List<AliyunDownloadMediaInfo> selectDownloadingList = mDatabaseManager.selectDownloadingList();
                     //查询所有等待状态
+                    //Query all the data in the waiting status
                     final List<AliyunDownloadMediaInfo> selectWaitList = mDatabaseManager.selectWaitList();
                     //观看历史
+                    //watch history
                     List<AliyunDownloadMediaInfo> selectWatchedList = mDatabaseManager.selectWatchedList();
 
                     final List<AliyunDownloadMediaInfo> dataList = new ArrayList<>();
@@ -1481,6 +1681,11 @@ public class AliyunDownloadManager {
                      * 这里不需要将从数据库查询的下载中状态的数据进行内存缓存,在prepareDownload这些数据的时候,
                      * 会全部置为等待状态,需要手动点击开始下载
                      */
+                    /*
+                     * There is no need to be cached in memory for data from the database query that is in the download state.
+                     * when prepareDownload these data, they all will be set to the waiting status,
+                     * you need to manually click to start download
+                     */
                     final List<AliyunDownloadMediaInfo> aliyunDownloadMediaInfos = removeDuplicate(selectWatchedList, dataList);
 
                     ThreadUtils.runOnUiThread(new Runnable() {
@@ -1500,8 +1705,13 @@ public class AliyunDownloadManager {
      * 从数据库查询出来处理
      * 只保留一个tvTd，计算列表包含的元素个数
      */
+    /****
+     * Query out of the database for processing
+     * Keep only one tvTd and count the number of elements the list contains
+     */
     private List<AliyunDownloadMediaInfo> removeDuplicate(List<AliyunDownloadMediaInfo> selectWatchedList, List<AliyunDownloadMediaInfo> dataList) {
         //设置观看数量
+        //Set the number of views
         for (AliyunDownloadMediaInfo mediaInfo : dataList) {
             for (AliyunDownloadMediaInfo watchedMediaInfo : selectWatchedList) {
                 if (watchedMediaInfo.getVid().equals(mediaInfo.getVid())) {
@@ -1510,10 +1720,13 @@ public class AliyunDownloadManager {
             }
         }
         //设置大小
+        //Set the size
         long size = 0;
         //设置观看数量
+        //Set the number of views
         int watchNum = 0;
         //设置视频个数
+        //Set the number of videos
         int num = 0;
         for (int i = 0; i < dataList.size(); i++) {
             size = dataList.get(i).getSize();
@@ -1531,9 +1744,11 @@ public class AliyunDownloadManager {
                 }
             }
             //设置封面size大小
+            //Set the cover size
             dataList.get(i).setSize(size);
             dataList.get(i).setWatchNumber(watchNum);
             //更新数量
+            //Update the number
             dataList.get(i).setNumber(num);
         }
 
@@ -1545,6 +1760,10 @@ public class AliyunDownloadManager {
      * 根据tvId获取对应的所有电视剧
      * 还要判断是否观看过
      */
+    /****
+     * Get the corresponding all tv by tvId
+     * Need to judge whether watched
+     */
     public void getDownloadMediaInfoWithTvId(final String tvId, final LoadDbTvListDatasListenerr loadDbDatasListener) {
 
         if (mDatabaseManager != null) {
@@ -1554,12 +1773,15 @@ public class AliyunDownloadManager {
                 public void run() {
 
                     //观看历史
+                    //watch history
                     final List<LongVideoBean> longVideoBeans = mLongVideoDatabaseManager.selectAllWatchHistory();
                     //查询所有是此tvid的视频
+                    //Query all the videos with this tvid
                     final List<AliyunDownloadMediaInfo> aliyunDownloadMediaInfos = mDatabaseManager.selectAllByTvId(tvId);
 
                     if (aliyunDownloadMediaInfos != null) {
                         //判断视频是否观看
+                        //Judge whether the video is watched
                         for (AliyunDownloadMediaInfo mediaInfo : aliyunDownloadMediaInfos) {
                             for (LongVideoBean longVideoBean : longVideoBeans) {
                                 if (longVideoBean.getVideoId().equals(mediaInfo.getVid())) {
@@ -1584,12 +1806,18 @@ public class AliyunDownloadManager {
     /**
      * 获取准备完成的数据
      */
+    /****
+     * Get the ready data.
+     */
     public ConcurrentLinkedQueue<AliyunDownloadMediaInfo> getPreparedList() {
         return preparedList;
     }
 
     /**
      * 获取下载完成的数据
+     */
+    /****
+     * Get the downloaded data.
      */
     public ConcurrentLinkedQueue<AliyunDownloadMediaInfo> getCompletedList() {
         return completedList;
@@ -1598,6 +1826,9 @@ public class AliyunDownloadManager {
     /**
      * 获取下载中的数据
      */
+    /****
+     * Get the downloading data.
+     */
     public ConcurrentLinkedQueue<AliyunDownloadMediaInfo> getDownloadingList() {
         return downloadingList;
     }
@@ -1605,12 +1836,18 @@ public class AliyunDownloadManager {
     /**
      * 获取等待中的数据
      */
+    /****
+     * Get the waiting data.
+     */
     public ConcurrentLinkedQueue<AliyunDownloadMediaInfo> getWaitedList() {
         return waitedList;
     }
 
     /**
      * 获取暂停中的数据
+     */
+    /****
+     * Get the stopped data.
      */
     public ConcurrentLinkedQueue<AliyunDownloadMediaInfo> getStopedList() {
         return stopedList;
@@ -1673,12 +1910,18 @@ public class AliyunDownloadManager {
     /**
      * sts 刷新回调
      */
+    /****
+     * Sts refresh callback.
+     */
     public void setRefreshStsCallback(final RefreshStsCallback refreshStsCallback) {
 
     }
 
     /**
      * 插入数据库
+     */
+    /****
+     * Insert into the database.
      */
     public void insertDb(AliyunDownloadMediaInfo mediaInfo) {
         if (mediaInfo == null || mDatabaseManager == null) {
@@ -1693,6 +1936,9 @@ public class AliyunDownloadManager {
 
     /**
      * 更新数据库
+     */
+    /****
+     * Update the database.
      */
     public void updateDb(AliyunDownloadMediaInfo mediaInfo) {
         if (mediaInfo == null || mDatabaseManager == null) {
@@ -1722,6 +1968,11 @@ public class AliyunDownloadManager {
      * @param jniDownloader             下载类
      * @param aliyunDownloadMediaInfo   javaBean
      */
+    /****
+     * Set the error listener
+     * @param jniDownloader             Download class
+     * @param aliyunDownloadMediaInfo   JavaBean
+     */
     private void setErrorListener(final AliMediaDownloader jniDownloader, final AliyunDownloadMediaInfo aliyunDownloadMediaInfo) {
         if(jniDownloader == null){
             return ;
@@ -1743,6 +1994,9 @@ public class AliyunDownloadManager {
 
     /**
      * 释放 jniDownloader
+     */
+    /****
+     * Release jniDownloader.
      */
     private void releaseJniDownloader(AliyunDownloadMediaInfo downloadMediaInfo){
         if(downloadInfos != null && downloadInfos.containsKey(downloadMediaInfo)){

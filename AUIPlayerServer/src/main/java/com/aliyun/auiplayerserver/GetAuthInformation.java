@@ -15,11 +15,18 @@ import okhttp3.Request;
 /**
  * 获取鉴权信息
  */
+/****
+ * Obtain authentication information
+ */
 public class GetAuthInformation {
 
     /**
      * 临时获取sts信息的接口，后期删除
      * @param listener  获取STS信息监听
+     */
+    /****
+     * Temporary interface to get sts information, removed later
+     * @param listener listener for sts information
      */
     public void getVideoPlayLiveStsInfo(final OnGetStsInfoListener listener){
         AlivcOkHttpClient.getInstance().get(ServiceCommon.GET_LIVE_PLAY_STS, new AlivcOkHttpClient.HttpCallBack() {
@@ -71,6 +78,10 @@ public class GetAuthInformation {
      * 获取sts信息
      * @param listener  获取STS信息监听
      */
+    /****
+     * Get sts information
+     * @param listener listener for sts information
+     */
     public void getVideoPlayStsInfo(final OnGetStsInfoListener listener){
         AlivcOkHttpClient.getInstance().get(ServiceCommon.GET_VIDEO_PLAY_STS, new AlivcOkHttpClient.HttpCallBack() {
             @Override
@@ -98,6 +109,11 @@ public class GetAuthInformation {
      * 获取sts信息
      * @param videoId       vid
      * @param listener      获取STS信息监听
+     */
+    /****
+     * Get sts information
+     * @param videoId       vid
+     * @param listener listener for sts information
      */
     public void getVideoPlayStsInfoWithVideoId(String videoId, final OnGetStsInfoListener listener){
         HashMap<String,String> mHashMap = new HashMap<>();
@@ -127,6 +143,9 @@ public class GetAuthInformation {
     /**
      * 获取sts监听
      */
+    /****
+     * Get sts listener
+     */
     public interface OnGetStsInfoListener{
 
         void onGetStsError(String errorMsg);
@@ -137,6 +156,10 @@ public class GetAuthInformation {
     /**
      * 获取url信息
      * @param listener  获取URL信息监听
+     */
+    /****
+     * Get url information
+     * @param listener listener for url information
      */
     public void getVideoPlayUrlInfo(final OnGetUrlInfoListener listener){
         AlivcOkHttpClient.getInstance().get(ServiceCommon.GET_VIDEO_PLAY_INFO, new AlivcOkHttpClient.HttpCallBack() {
@@ -164,6 +187,9 @@ public class GetAuthInformation {
     /**
      * 获取URL监听
      */
+    /****
+     * Get url listener
+     */
     public interface OnGetUrlInfoListener{
 
         void onGetUrlError(String msg);
@@ -174,6 +200,10 @@ public class GetAuthInformation {
     /**
      * 获取MPS信息
      * @param listener  获取MPS信息监听
+     */
+    /****
+     * Get MPS information
+     * @param listener listener for MPS information
      */
     public void getVideoPlayMpsInfo(final OnGetMpsInfoListener listener){
         AlivcOkHttpClient.getInstance().get(ServiceCommon.GET_VIDEO_PLAY_MPS, new AlivcOkHttpClient.HttpCallBack() {
@@ -203,6 +233,11 @@ public class GetAuthInformation {
      * @param videoId       vid
      * @param listener      获取mps监听
      */
+    /****
+     * Get MPS information
+     * @param videoId       vid
+     * @param listener listener for MPS information
+     */
     public void getVideoPlayMpsInfoWithVideoId(String videoId, final OnGetMpsInfoListener listener){
         HashMap<String,String> mHashMap = new HashMap<>();
         mHashMap.put("videoId",videoId);
@@ -231,6 +266,9 @@ public class GetAuthInformation {
     /**
      * 获取MPS监听
      */
+    /****
+     * Get MPS listener
+     */
     public interface OnGetMpsInfoListener{
 
         void onGetMpsError(String msg);
@@ -241,6 +279,10 @@ public class GetAuthInformation {
     /**
      * 获取PlayAuth信息
      * @param listener  获取PlayAuth监听
+     */
+    /****
+     * Get PlayAuth information
+     * @param listener listener for PlayAuth information
      */
     public void getVideoPlayAuthInfo(final OnGetPlayAuthInfoListener listener){
         AlivcOkHttpClient.getInstance().get(ServiceCommon.GET_VIDEO_PLAY_AUTH, new AlivcOkHttpClient.HttpCallBack() {
@@ -270,6 +312,11 @@ public class GetAuthInformation {
      * @param videoId       vid
      * @param listener      获取PlayAuth监听
      */
+    /****
+     * Get PlayAuth information
+     * @param videoId       vid
+     * @param listener listener for PlayAuth information
+     */
     public void getVideoPlayAuthInfoWithVideoId(String videoId, final OnGetPlayAuthInfoListener listener){
         HashMap<String,String> mHashMap = new HashMap<>();
         mHashMap.put("videoId",videoId);
@@ -297,6 +344,9 @@ public class GetAuthInformation {
 
     /**
      * 获取PlayAuth监听
+     */
+    /****
+     * Get PlayAuth listener
      */
     public interface OnGetPlayAuthInfoListener{
 

@@ -19,15 +19,24 @@ public class LongVideoDatabaseManager {
     /**
      * 查询所有观看历史的视频
      */
+    /****
+     * Query all videos with viewing history
+     */
     private static final String SELECT_ALL_WATCH_HISTORY = "select * from " + DatabaseManager.WATCH_HISTORY_TABLE_NAME;
 
     /**
      * 限制查看数量
      */
+    /****
+     * Limit the number of videos to be viewed
+     */
     private static final String SELECT_ALL_WATCH_HISTORY_LIMIT = "select * from " + DatabaseManager.WATCH_HISTORY_TABLE_NAME + " order by updatetime desc limit 20";
 
     /**
      * 根据vid查询观看历史
+     */
+    /****
+     * Query the viewing history according to vid
      */
     private static final String SELECT_WATCH_HISTORY_WITH_VID = "select * from " + DatabaseManager.WATCH_HISTORY_TABLE_NAME + " where vid = ? ";
 
@@ -55,6 +64,9 @@ public class LongVideoDatabaseManager {
 
     /**
      * 创建数据库
+     */
+    /****
+     * Create the database
      */
     public void createDataBase(Context context) {
         databaseHelper = DatabaseHistoryHelper.getInstance(context);
@@ -104,6 +116,9 @@ public class LongVideoDatabaseManager {
     /**
      * 更新观看历史数据
      */
+    /****
+     * Update the viewing history data
+     */
     public void updateWatchHistory(LongVideoBean longVideoBean) {
         List<LongVideoBean> longVideoBeans = selectWatchHistoryByVid(longVideoBean);
         ContentValues contentValues = longVideoBeanToContentValues(longVideoBean);
@@ -119,6 +134,11 @@ public class LongVideoDatabaseManager {
      *
      * @param longVideoBean
      */
+    /****
+     * Insert the viewing history data
+     *
+     * @param longVideoBean
+     */
     private void insertWatchHistory(LongVideoBean longVideoBean) {
         if (mSqliteDatabase == null || !mSqliteDatabase.isOpen()) {
             mSqliteDatabase = databaseHelper.getWritableDatabase();
@@ -129,6 +149,9 @@ public class LongVideoDatabaseManager {
 
     /**
      * 查询所有观看历史视频
+     */
+    /****
+     * Query all videos in viewing history
      */
     public List<LongVideoBean> selectAllWatchHistory() {
         List<LongVideoBean> queryLists = new ArrayList<>();
@@ -146,6 +169,9 @@ public class LongVideoDatabaseManager {
 
     /**
      * 根据vid查询观看历史
+     */
+    /****
+     * Query the viewing history according to vid
      */
     public List<LongVideoBean> selectWatchHistoryByVid(LongVideoBean longVideoBean) {
         List<LongVideoBean> longVideoBeans = new ArrayList<>();
@@ -194,6 +220,10 @@ public class LongVideoDatabaseManager {
             /*
                 这里存储到数据库的值为0,1或者null
                 但是Boolean不遵循0为false,非0为true的规则
+             */
+            /*
+                The value stored in the database is 0, 1 or null.
+                But Boolean does not follow the rule that 0 is false and non-0 is true.
              */
             if(TextUtils.isEmpty(isVip)){
                 videoIsVip = false;

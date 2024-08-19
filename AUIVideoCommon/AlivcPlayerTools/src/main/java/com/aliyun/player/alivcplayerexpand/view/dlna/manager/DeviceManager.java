@@ -16,11 +16,17 @@ import java.util.Collection;
 /**
  * DeviceManager实现类
  */
+/****
+ * DeviceManager implementation class
+ */
 
 public class DeviceManager implements IDeviceManager {
     private static final String TAG = DeviceManager.class.getSimpleName();
     /**
      * 已选中的设备, 它也是 ClingDeviceList 中的一员
+     */
+    /****
+     * Selected device, it is also a member of ClingDeviceList
      */
     private ClingDevice mSelectedDevice;
     private SubscriptionControl mSubscriptionControl;
@@ -45,6 +51,7 @@ public class DeviceManager implements IDeviceManager {
         mSelectedDevice = (ClingDevice) selectedDevice;
 
         // 重置选中状态
+        // Reset selected status
         Collection<ClingDevice> clingDeviceList = ClingDeviceList.getInstance().getClingDeviceList();
         if (clingDeviceList != null){
             for (ClingDevice device : clingDeviceList){
@@ -52,8 +59,10 @@ public class DeviceManager implements IDeviceManager {
             }
         }
         // 设置正在连接状态
+        // Set connecting status
         mSelectedDevice.setConnectingState();
         // 清空状态
+        // Clear status
         Config.getInstance().setHasRelTimePosCallback(false);
     }
 

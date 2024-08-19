@@ -18,19 +18,26 @@ import com.aliyun.player.alivcplayerexpand.view.tips.OnTipsViewBackClickListener
 /**
  * 错误提示对话框。出错的时候会显示。
  */
+/**
+ * Error Tip dialog box. It is displayed when an error occurs.
+ */
 public class ErrorView extends RelativeLayout {
     private static final String TAG = ErrorView.class.getSimpleName();
     //错误信息
+    //error message
     private TextView mMsgView;
     //错误码
+    //error code
     private TextView mCodeView;
     //重试的图片
+    //retry image
     private View mRetryView;
     //重试的按钮
+    //retry button
     private TextView mRetryBtn;
 
     private OnTipsViewBackClickListener mOnTipsViewBackClickListener = null;
-    private OnRetryClickListener mOnRetryClickListener = null;//重试点击事件
+    private OnRetryClickListener mOnRetryClickListener = null;//重试点击事件 Retry Click Event
     private ImageView mBackImageView;
 
     public ErrorView(Context context) {
@@ -62,6 +69,7 @@ public class ErrorView extends RelativeLayout {
         mRetryView = view.findViewById(R.id.retry);
         mBackImageView = view.findViewById(R.id.iv_back);
         //重试的点击监听
+        //Retry click listener
         mRetryView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +96,12 @@ public class ErrorView extends RelativeLayout {
      * @param errorEvent 错误事件
      * @param errMsg 错误码
      */
+    /****
+     * Update the prompt text
+     * @param errorCode Error code
+     * @param errorEvent Error event
+     * @param errMsg Error code
+     */
     public void updateTips(int errorCode, String errorEvent, String errMsg) {
         mMsgView.setText(errMsg);
         mCodeView.setText(getContext().getString(R.string.alivc_error_code) + errorCode + " - " + errorEvent);
@@ -95,6 +109,9 @@ public class ErrorView extends RelativeLayout {
 
     /**
      * 更新提示文字,不包含错误码
+     */
+    /****
+     * Update the prompt text, without error code
      */
     public void updateTipsWithoutCode(String errMsg) {
         mMsgView.setText(errMsg);
@@ -130,9 +147,15 @@ public class ErrorView extends RelativeLayout {
     /**
      * 重试的点击事件
      */
+    /****
+     * Retry click event
+     */
     public interface OnRetryClickListener {
         /**
          * 重试按钮点击
+         */
+        /****
+         * Retry button click
          */
         void onRetryClick();
     }
@@ -141,12 +164,19 @@ public class ErrorView extends RelativeLayout {
      * 设置重试点击事件
      * @param l 重试的点击事件
      */
+    /****
+     * Set the retry click event
+     * @param l Retry click event
+     */
     public void setOnRetryClickListener(OnRetryClickListener l) {
         mOnRetryClickListener = l;
     }
 
     /**
      * 设置返回按钮监听
+     */
+    /****
+     * Set the back button listener
      */
     public void setOnBackClickListener(OnTipsViewBackClickListener listener){
         this.mOnTipsViewBackClickListener = listener;

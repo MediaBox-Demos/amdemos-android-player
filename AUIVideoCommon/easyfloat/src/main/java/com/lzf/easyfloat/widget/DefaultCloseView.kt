@@ -68,23 +68,23 @@ class DefaultCloseView @JvmOverloads constructor(
         if (inRange) {
             paint.color = inRangeColor
             when (shapeType) {
-                // 半椭圆
+                // 半椭圆  semi-ellipse
                 0 -> {
                     rectF.set(paddingLeft.toFloat(), 0f, width - paddingRight, height * 2)
                     path.addOval(rectF, Path.Direction.CW)
                 }
-                // 矩形
+                // 矩形  rectangle
                 1 -> {
                     rectF.set(paddingLeft.toFloat(), 0f, width - paddingRight, height)
                     path.addRect(rectF, Path.Direction.CW)
                 }
-                // 半圆
+                // 半圆  semi-circle
                 2 -> path.addCircle(width / 2, height, height, Path.Direction.CW)
             }
         } else {
             paint.color = normalColor
             when (shapeType) {
-                // 半椭圆
+                // 半椭圆  semi-ellipse
                 0 -> {
                     rectF.set(
                         paddingLeft + zoomSize,
@@ -100,7 +100,7 @@ class DefaultCloseView @JvmOverloads constructor(
                         height.toInt()
                     )
                 }
-                // 矩形
+                // 矩形  rectangle
                 1 -> {
                     rectF.set(
                         paddingLeft.toFloat(),
@@ -116,7 +116,7 @@ class DefaultCloseView @JvmOverloads constructor(
                         height.toInt()
                     )
                 }
-                // 半圆
+                // 半圆  semi-circle
                 2 -> {
                     path.addCircle(width / 2, height, height - zoomSize, Path.Direction.CW)
                     totalRegion.set(0, zoomSize.toInt(), width.toInt(), height.toInt())
@@ -135,7 +135,7 @@ class DefaultCloseView @JvmOverloads constructor(
 
     private fun initTouchRange(event: MotionEvent): Boolean {
         val location = IntArray(2)
-        // 获取在整个屏幕内的绝对坐标
+        // 获取在整个屏幕内的绝对坐标  Get the absolute coordinates of the entire screen
         getLocationOnScreen(location)
         val currentInRange = region.contains(
             event.rawX.toInt() - location[0], event.rawY.toInt() - location[1]

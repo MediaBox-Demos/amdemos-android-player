@@ -7,6 +7,11 @@ import com.aliyun.player.alivcplayerexpand.view.dlna.domain.IResponse;
  * 作者：zhouzhan
  * 日期：17/7/4 10:56
  */
+/****
+ * Description: device control operation callback
+ * Author: zhouzhan
+ * Date:17/7/4 10:56
+ */
 
 public interface ControlCallback<T> {
 

@@ -18,10 +18,15 @@ import com.aliyun.player.alivcplayerexpand.view.tips.OnTipsViewBackClickListener
 /**
  * 网络变化提示对话框。当网络由wifi变为4g的时候会显示。
  */
+/**
+ * Network change alert dialog. Displayed when the network changes from wifi to 4g.
+ */
 public class NetChangeView extends RelativeLayout {
     //结束播放的按钮
+    //Button to end playback
     private TextView mStopPlayBtn;
     //界面上的操作按钮事件监听
+    //Interface for listening to events on the interface
     private OnNetChangeClickListener mOnNetChangeClickListener = null;
     private OnTipsViewBackClickListener mOnTipsViewBackClickListener = null;
     private ImageView mBackImageView;
@@ -48,6 +53,7 @@ public class NetChangeView extends RelativeLayout {
         View view = inflater.inflate(R.layout.alivc_dialog_netchange, this);
 
         //继续播放的点击事件
+        //Continue playback click event
         view.findViewById(R.id.continue_play).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +64,7 @@ public class NetChangeView extends RelativeLayout {
         });
 
         //停止播放的点击事件
+        //Stop playback click event
         mStopPlayBtn = (TextView) view.findViewById(R.id.stop_play);
         mBackImageView = view.findViewById(R.id.iv_back);
         mStopPlayBtn.setOnClickListener(new OnClickListener() {
@@ -100,14 +107,23 @@ public class NetChangeView extends RelativeLayout {
     /**
      * 界面中的点击事件
      */
+    /****
+     * Interface for listening to events on the interface
+     */
     public interface OnNetChangeClickListener {
         /**
          * 继续播放
+         */
+        /****
+         * Continue playback
          */
         void onContinuePlay();
 
         /**
          * 停止播放
+         */
+        /****
+         * Stop playback
          */
         void onStopPlay();
     }
@@ -117,12 +133,20 @@ public class NetChangeView extends RelativeLayout {
      *
      * @param l 点击监听
      */
+    /****
+     * Set the click listener of the interface
+     *
+     * @param l Click listener
+     */
     public void setOnNetChangeClickListener(OnNetChangeClickListener l) {
         mOnNetChangeClickListener = l;
     }
 
     /**
      * 设置返回按钮监听
+     */
+    /****
+     * Set the back button listener
      */
     public void setOnBackClickListener(OnTipsViewBackClickListener listener){
         this.mOnTipsViewBackClickListener = listener;

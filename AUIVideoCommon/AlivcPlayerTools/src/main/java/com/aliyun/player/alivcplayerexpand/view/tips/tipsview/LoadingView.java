@@ -16,9 +16,13 @@ import com.aliyun.player.alivcplayerexpand.R;
 /**
  * 加载提示对话框。加载过程中，缓冲过程中会显示。
  */
+/**
+ * Loading Tip dialog box. It is displayed during loading and buffering.
+ */
 public class LoadingView extends RelativeLayout {
     private static final String TAG = LoadingView.class.getSimpleName();
     //加载提示文本框
+    //loading tip text box
     private TextView mLoadPercentView;
 
     public LoadingView(Context context) {
@@ -52,12 +56,20 @@ public class LoadingView extends RelativeLayout {
      *
      * @param percent 百分比
      */
+    /****
+     * Update the loading progress
+     *
+     * @param percent Percentage
+     */
     public void updateLoadingPercent(int percent) {
         mLoadPercentView.setText(getContext().getString(R.string.alivc_loading) + percent + "%");
     }
 
     /**
      * 只显示loading，不显示进度提示
+     */
+    /****
+     * Only display loading, without progress prompt
      */
     public void setOnlyLoading() {
         findViewById(R.id.loading_layout).setVisibility(GONE);

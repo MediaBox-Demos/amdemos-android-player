@@ -23,31 +23,45 @@ import com.aliyun.player.bean.ErrorCode;
  * 提示对话框的管理器。
  * 用于管理{@link ErrorView} ，{@link LoadingView} ，{@link NetChangeView} , {@link ReplayView}等view的显示/隐藏等。
  */
+/**
+ * The manager of the prompt dialog box.
+ * Used to manage the show/hide of {@link ErrorView} ，{@link LoadingView} ，{@link NetChangeView} , {@link ReplayView} and other views.
+ */
 
 public class TipsView extends RelativeLayout {
 
     private static final String TAG = TipsView.class.getSimpleName();
     //错误码
+    //error code
     private int mErrorCode;
     //错误提示
+    //error prompt
     private ErrorView mErrorView = null;
     //重试提示
+    //retry prompt
     private ReplayView mReplayView = null;
     //缓冲加载提示
+    //buffer loading prompt
     private LoadingView mNetLoadingView = null;
     //网络变化提示
+    //network change prompt
     private NetChangeView mNetChangeView = null;
     //网络请求加载提示
+    //network request loading prompt
     private LoadingView mBufferLoadingView = null;
     private CustomTipsView mCustomTipsView = null;
     //提示点击事件
+    //tip click event
     private OnTipClickListener mOnTipClickListener = null;
     //返回点击事件
+    //return click event
     private OnTipsViewBackClickListener mOnTipsViewBackClickListener = null;
     //当前的主题
+    //current theme
 //    private Theme mCurrentTheme;
 
     //网络变化监听事件。
+    //network change listener
     private NetChangeView.OnNetChangeClickListener onNetChangeClickListener = new NetChangeView.OnNetChangeClickListener() {
         @Override
         public void onContinuePlay() {
@@ -64,11 +78,13 @@ public class TipsView extends RelativeLayout {
         }
     };
     //错误提示的重试点击事件
+    //error prompt retry click event
     private ErrorView.OnRetryClickListener onRetryClickListener = new ErrorView.OnRetryClickListener() {
         @Override
         public void onRetryClick() {
             if (mOnTipClickListener != null) {
                 //鉴权过期
+                //expired authentication
                 if (mErrorCode == ErrorCode.ERROR_SERVER_POP_UNKNOWN.getValue()) {
                     mOnTipClickListener.onRefreshSts();
                 } else {
@@ -80,6 +96,7 @@ public class TipsView extends RelativeLayout {
     };
 
     //重播点击事件
+    //replay click event
     private ReplayView.OnReplayClickListener onReplayClickListener = new ReplayView.OnReplayClickListener() {
         @Override
         public void onReplay() {
@@ -134,6 +151,13 @@ public class TipsView extends RelativeLayout {
      * @param confirmText 确定按钮提示内容
      * @param cancelText  取消按钮提示内容
      */
+    /****
+     * Show the prompt view according to the parameters
+     *
+     * @param tipsText    prompt content
+     * @param confirmText confirm button prompt content
+     * @param cancelText  cancel button prompt content
+     */
     public void showCustomTipView(String tipsText, String confirmText, String cancelText) {
         if (mCustomTipsView == null) {
             mCustomTipsView = new CustomTipsView(getContext());
@@ -154,6 +178,9 @@ public class TipsView extends RelativeLayout {
     /**
      * 显示网络变化提示
      */
+    /****
+     * Show the network change prompt
+     */
     public void showNetChangeTipView() {
         if (mNetChangeView == null) {
             mNetChangeView = new NetChangeView(getContext());
@@ -164,7 +191,9 @@ public class TipsView extends RelativeLayout {
 
         if (mErrorView != null && mErrorView.getVisibility() == VISIBLE) {
             //显示错误对话框了，那么网络切换的对话框就不显示了。
+            //The error dialog box is displayed, then the dialog box for network switching is not displayed.
             //都出错了，还显示网络切换，没有意义
+            //Both are wrong, but still show the network change, which has no meaning
         } else {
             mNetChangeView.setVisibility(VISIBLE);
         }
@@ -178,6 +207,13 @@ public class TipsView extends RelativeLayout {
      * @param errorEvent 错误事件
      * @param errorMsg   错误消息
      */
+    /****
+     * Show the error prompt
+     *
+     * @param errorCode  error code
+     * @param errorEvent error event
+     * @param errorMsg   error message
+     */
     public void showErrorTipView(int errorCode, String errorEvent, String errorMsg) {
         if (mErrorView == null) {
             mErrorView = new ErrorView(getContext());
@@ -187,7 +223,9 @@ public class TipsView extends RelativeLayout {
         }
 
         //出现错误了，先把网络的对话框关闭掉。防止同时显示多个对话框。
+        //If there is an error, first close the network dialog box.
         //都出错了，还显示网络切换，没有意义
+        //Both are wrong, but still show the network change, which has no meaning
         hideNetChangeTipView();
 
         mErrorCode = errorCode;
@@ -202,6 +240,11 @@ public class TipsView extends RelativeLayout {
      * 显示错误提示,不显示错误码
      *
      * @param msg 错误信息
+     */
+    /****
+     * Show the error prompt, without showing the error code
+     *
+     * @param msg error message
      */
     public void showErrorTipViewWithoutCode(String msg) {
         if (mErrorView == null) {
@@ -219,6 +262,9 @@ public class TipsView extends RelativeLayout {
 
     /**
      * 显示重播view
+     */
+    /****
+     * Show the replay view
      */
     public void showReplayTipView(String coverUrl) {
         if (mReplayView == null) {
@@ -238,6 +284,9 @@ public class TipsView extends RelativeLayout {
     /**
      * 显示缓冲加载view
      */
+    /****
+     * Show the buffer loading view
+     */
     public void showBufferLoadingTipView() {
         if (mBufferLoadingView == null) {
             mBufferLoadingView = new LoadingView(getContext());
@@ -253,6 +302,11 @@ public class TipsView extends RelativeLayout {
      *
      * @param percent 进度百分比
      */
+    /****
+     * Update the progress of the buffer loading
+     *
+     * @param percent progress percentage
+     */
     public void updateLoadingPercent(int percent) {
         showBufferLoadingTipView();
         mBufferLoadingView.updateLoadingPercent(percent);
@@ -260,6 +314,9 @@ public class TipsView extends RelativeLayout {
 
     /**
      * 显示网络加载view
+     */
+    /****
+     * Show the network loading view
      */
     public void showNetLoadingTipView() {
         if (mNetLoadingView == null) {
@@ -279,6 +336,11 @@ public class TipsView extends RelativeLayout {
      *
      * @param subView 子view
      */
+    /****
+     * Add the new view to the list, centered
+     *
+     * @param subView subview
+     */
     public void addSubView(View subView) {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         addView(subView, params);
@@ -293,6 +355,9 @@ public class TipsView extends RelativeLayout {
     /**
      * 隐藏所有的tip
      */
+    /****
+     * Hide all tips
+     */
     public void hideAll() {
         hideCustomTipView();
         hideNetChangeTipView();
@@ -305,10 +370,16 @@ public class TipsView extends RelativeLayout {
     /**
      * 隐藏缓冲加载的tip
      */
+    /****
+     * Hide the buffer loading tip
+     */
     public void hideBufferLoadingTipView() {
         if (mBufferLoadingView != null && mBufferLoadingView.getVisibility() == VISIBLE) {
             /*
                 隐藏loading时,重置百分比,避免loading再次展示时,loading进度不是从0开始
+             */
+            /*
+                Hide loading when resetting the percentage, so that the progress of the loading is not restarted again
              */
             mBufferLoadingView.updateLoadingPercent(0);
 
@@ -318,6 +389,9 @@ public class TipsView extends RelativeLayout {
 
     /**
      * 隐藏网络加载的tip
+     */
+    /****
+     * Hide the network loading tip
      */
     public void hideNetLoadingTipView() {
         if (mNetLoadingView != null && mNetLoadingView.getVisibility() == VISIBLE) {
@@ -329,6 +403,9 @@ public class TipsView extends RelativeLayout {
     /**
      * 隐藏重播的tip
      */
+    /****
+     * Hide the replay tip
+     */
     public void hideReplayTipView() {
         if (mReplayView != null && mReplayView.getVisibility() == VISIBLE) {
             mReplayView.setVisibility(INVISIBLE);
@@ -337,6 +414,9 @@ public class TipsView extends RelativeLayout {
 
     /**
      * 隐藏网络变化的tip
+     */
+    /****
+     * Hide the network change tip
      */
     public void hideNetChangeTipView() {
         if (mNetChangeView != null && mNetChangeView.getVisibility() == VISIBLE) {
@@ -353,6 +433,9 @@ public class TipsView extends RelativeLayout {
     /**
      * 隐藏错误的tip
      */
+    /****
+     * Hide the error tip
+     */
     public void hideErrorTipView() {
         if (mErrorView != null && mErrorView.getVisibility() == VISIBLE) {
             mErrorView.setVisibility(INVISIBLE);
@@ -364,6 +447,11 @@ public class TipsView extends RelativeLayout {
      *
      * @return true：是
      */
+    /****
+     * Is the error tip displayed? If it is displayed, other tips will not be prompted.
+     *
+     * @return true: yes
+     */
     public boolean isErrorShow() {
         if (mErrorView != null) {
             return mErrorView.getVisibility() == VISIBLE;
@@ -374,6 +462,9 @@ public class TipsView extends RelativeLayout {
 
     /**
      * 隐藏网络错误tip
+     */
+    /****
+     * Hide the network error tip
      */
     public void hideNetErrorTipView() {
         //TODO
@@ -401,39 +492,63 @@ public class TipsView extends RelativeLayout {
     /**
      * 提示view中的点击操作
      */
+    /****
+     * Click operations in the tip view
+     */
     public interface OnTipClickListener {
         /**
          * 继续播放
+         */
+        /****
+         * Continue playing
          */
         void onContinuePlay();
 
         /**
          * 停止播放
          */
+        /****
+         * Stop playing
+         */
         void onStopPlay();
 
         /**
          * 重试播放
+         */
+        /****
+         * Retry playing
          */
         void onRetryPlay(int errorCode);
 
         /**
          * 重播
          */
+        /****
+         * Replay
+         */
         void onReplay();
 
         /**
          * 刷新sts
+         */
+        /****
+         * Refresh sts
          */
         void onRefreshSts();
 
         /**
          * 等待
          */
+        /****
+         * Wait
+         */
         void onWait();
 
         /**
          * 退出
+         */
+        /****
+         * Exit
          */
         void onExit();
     }
@@ -442,6 +557,11 @@ public class TipsView extends RelativeLayout {
      * 设置提示view中的点击操作 监听
      *
      * @param l 监听事件
+     */
+    /****
+     * Set the click operation of the tip view to listen
+     *
+     * @param l listener event
      */
     public void setOnTipClickListener(OnTipClickListener l) {
         mOnTipClickListener = l;

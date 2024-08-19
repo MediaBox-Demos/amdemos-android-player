@@ -19,6 +19,11 @@ import com.alivc.auiplayer.videoepisode.listener.OnDetailEventListener;
  * @date 2023/8/29
  * @brief Feed流页面详情组件（用户名、视频详情）
  */
+/****
+ * @author keria
+ * @date 2023/8/29
+ * @brief Feed stream page details component (username, video details)
+ */
 public class AUIVideoDetailComponent extends FrameLayout {
 
     private TextView mUserNickTextview;

@@ -30,6 +30,10 @@ import com.aliyun.player.alivcplayerexpand.util.AliyunScreenMode;
  * 倍速播放界面。用于控制倍速。
  * 在{@link com.aliyun.player.alivcplayerexpand.widget.AliyunVodPlayerView}中使用。
  */
+/**
+ * Multiplier playback interface. Used to control the multiplier speed.
+ * Used in {@link com.aliyun.player.alivcplayerexpand.widget.AliyunVodPlayerView}
+ */
 
 public class SpeedView extends RelativeLayout implements ITheme {
 
@@ -39,32 +43,45 @@ public class SpeedView extends RelativeLayout implements ITheme {
 
     private View mMainSpeedView;
     //显示动画
+    //show animation
     private Animation showAnim;
     //隐藏动画
+    //hide animation
     private Animation hideAnim;
     //动画是否结束
+    //animation end or not
     private boolean animEnd = true;
 
     // 正常倍速
+    //normal speed
     private RadioButton mNormalBtn;
     //1.25倍速
+    //1.25x
     private RadioButton mOneQrtTimeBtn;
     //1.5倍速
+    //1.5x
     private RadioButton mOneHalfTimeBtn;
     //2倍速
+    //2x
     private RadioButton mTwoTimeBtn;
 
     //切换结果的提示
+    //switch result tips
     private TextView mSpeedTip;
     //屏幕模式
+    //screen mode
     private AliyunScreenMode mScreenMode;
     //倍速选择事件
+    //Multiple Speed Selection Event
     private OnSpeedClickListener mOnSpeedClickListener = null;
     //倍速是否变化
+    //Multiple Speed Change or not
     private boolean mSpeedChanged = false;
     //选中的倍速的指示点的方块
+    //Selected Speed Indicator Block
     private int mSpeedDrawable = R.drawable.alivc_speed_dot_blue;
     //选中的倍速的指示点的文字
+    //Selected Speed Indicator Text
     private int mSpeedTextColor = R.color.alivc_blue;
 
     public SpeedView(Context context) {
@@ -85,11 +102,13 @@ public class SpeedView extends RelativeLayout implements ITheme {
 
     private void init() {
         //初始化布局
+        //Initialize Layout
         LayoutInflater.from(getContext()).inflate(R.layout.alivc_view_speed, this, true);
         mMainSpeedView = findViewById(R.id.speed_view);
         mMainSpeedView.setVisibility(INVISIBLE);
 
         //找出控件
+        //Find out the control
         mOneQrtTimeBtn = (RadioButton) findViewById(R.id.one_quartern);
         mNormalBtn = (RadioButton) findViewById(R.id.normal);
         mOneHalfTimeBtn = (RadioButton) findViewById(R.id.one_half);
@@ -99,18 +118,21 @@ public class SpeedView extends RelativeLayout implements ITheme {
         mSpeedTip.setVisibility(INVISIBLE);
 
         //对每个倍速项做点击监听
+        //Listen for each speed item click
         mOneQrtTimeBtn.setOnClickListener(mClickListener);
         mNormalBtn.setOnClickListener(mClickListener);
         mOneHalfTimeBtn.setOnClickListener(mClickListener);
         mTwoTimeBtn.setOnClickListener(mClickListener);
 
         //倍速view使用到的动画
+        //Animation used by the speed view
         showAnim = AnimationUtils.loadAnimation(getContext(), R.anim.view_speed_show);
         hideAnim = AnimationUtils.loadAnimation(getContext(), R.anim.view_speed_hide);
         showAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 //显示动画开始的时候，将倍速view显示出来
+                //When the show animation starts, show the speed view
                 animEnd = false;
                 mMainSpeedView.setVisibility(VISIBLE);
             }
@@ -135,12 +157,14 @@ public class SpeedView extends RelativeLayout implements ITheme {
             public void onAnimationEnd(Animation animation) {
 
                 //隐藏动画结束的时候，将倍速view隐藏掉
+                //When the hide animation ends, hide the speed view
                 mMainSpeedView.setVisibility(INVISIBLE);
                 if (mOnSpeedClickListener != null) {
                     mOnSpeedClickListener.onHide();
                 }
 
                 //如果倍速有变化，会提示倍速变化的消息
+                //If the speed has changed, will prompt the message of the speed change
                 if (mSpeedChanged) {
                     String times = "";
                     if (mSpeedValue == SpeedValue.OneQuartern) {
@@ -173,6 +197,7 @@ public class SpeedView extends RelativeLayout implements ITheme {
 
         setSpeed(SpeedValue.Normal);
 //监听view的Layout事件
+        //Listen for the layout event of the view
         getViewTreeObserver().addOnGlobalLayoutListener(new MyLayoutListener());
     }
 
@@ -182,12 +207,18 @@ public class SpeedView extends RelativeLayout implements ITheme {
      *
      * @param theme 支持的主题
      */
+    /****
+     * Set the theme
+     *
+     * @param theme Supported themes
+     */
     @Override
     public void setTheme(Theme theme) {
 
         mSpeedDrawable = R.drawable.alivc_speed_dot_blue;
         mSpeedTextColor = R.color.alivc_blue;
         //根据主题变化对应的颜色
+        //Change the corresponding color according to the theme
         if (theme == Theme.Blue) {
             mSpeedDrawable = R.drawable.alivc_speed_dot_blue;
             mSpeedTextColor = R.color.alivc_blue;
@@ -208,6 +239,9 @@ public class SpeedView extends RelativeLayout implements ITheme {
     /**
      * 更新按钮的颜色之类的
      */
+    /****
+     * Update the color of the button and other things
+     */
     private void setRadioButtonTheme(RadioButton button) {
         if (button.isChecked()) {
             button.setCompoundDrawablesWithIntrinsicBounds(0, mSpeedDrawable, 0, 0);
@@ -226,6 +260,7 @@ public class SpeedView extends RelativeLayout implements ITheme {
             if (mMainSpeedView.getVisibility() == VISIBLE) {
 
                 //防止重复设置
+                //Prevent repeated setting
                 if (lastLayoutMode == mScreenMode) {
                     return;
                 }
@@ -261,6 +296,11 @@ public class SpeedView extends RelativeLayout implements ITheme {
      *
      * @param l
      */
+    /****
+     * Set the speed click event
+     *
+     * @param l
+     */
     public void setOnSpeedClickListener(OnSpeedClickListener l) {
         mOnSpeedClickListener = l;
     }
@@ -270,20 +310,28 @@ public class SpeedView extends RelativeLayout implements ITheme {
      *
      * @param screenMode
      */
+    /****
+     * Set the current screen mode. The size of the speed view varies according to the mode
+     *
+     * @param screenMode
+     */
     public void setScreenMode(AliyunScreenMode screenMode) {
         ViewGroup.LayoutParams speedViewParam = mMainSpeedView.getLayoutParams();
 
 
         if (screenMode == AliyunScreenMode.Small) {
             //小屏的时候，是铺满整个播放器的
+            //When it is small, it is filled up to the entire player
             speedViewParam.width = getWidth();
             speedViewParam.height = getHeight();
         } else if (screenMode == AliyunScreenMode.Full) {
             //如果是全屏的，就显示一半
+            //If it is full screen, it shows half
             AliyunVodPlayerView parentView = (AliyunVodPlayerView) getParent();
             LockPortraitListener lockPortraitListener = parentView.getLockPortraitMode();
             if (lockPortraitListener == null) {
                 //没有设置这个监听，说明不是固定模式，按正常的界面显示就OK
+                //If there is no listener set, it means that it is not a fixed mode, so it is OK
                 speedViewParam.width = getWidth() / 2;
             } else {
                 speedViewParam.width = getWidth();
@@ -298,16 +346,27 @@ public class SpeedView extends RelativeLayout implements ITheme {
     /**
      * 倍速监听
      */
+    /****
+     * speed listener
+     */
     public interface OnSpeedClickListener {
         /**
          * 选中某个倍速
          *
          * @param value 倍速值
          */
+        /****
+         * Select a certain speed
+         *
+         * @param value Speed value
+         */
         void onSpeedClick(SpeedValue value);
 
         /**
          * 倍速界面隐藏
+         */
+        /****
+         * Speed interface hide
          */
         void onHide();
     }
@@ -315,21 +374,36 @@ public class SpeedView extends RelativeLayout implements ITheme {
     /**
      * 倍速值
      */
+    /****
+     * Speed value
+     */
     public static enum SpeedValue {
         /**
          * 正常倍速
+         */
+        /****
+         * Normal speed
          */
         Normal,
         /**
          * 1.25倍速
          */
+        /****
+         * 1.25x
+         */
         OneQuartern,
         /**
          * 1.5倍速
          */
+        /****
+         * 1.5x
+         */
         OneHalf,
         /**
          * 2倍速
+         */
+        /****
+         * 2x
          */
         Twice
     }
@@ -339,6 +413,11 @@ public class SpeedView extends RelativeLayout implements ITheme {
      * 设置显示的倍速
      *
      * @param speedValue 倍速值
+     */
+    /****
+     * Set the displayed speed
+     *
+     * @param speedValue Speed value
      */
     public void setSpeed(SpeedValue speedValue) {
         if (speedValue == null) {
@@ -360,6 +439,9 @@ public class SpeedView extends RelativeLayout implements ITheme {
     /**
      * 更新倍速选项的状态
      */
+    /****
+     * Update the status of the speed option
+     */
     private void updateSpeedCheck() {
         mOneQrtTimeBtn.setChecked(mSpeedValue == SpeedValue.OneQuartern);
         mNormalBtn.setChecked(mSpeedValue == SpeedValue.Normal);
@@ -371,6 +453,9 @@ public class SpeedView extends RelativeLayout implements ITheme {
 
     /**
      * 更新选项的Theme
+     */
+    /****
+     * Update the theme of the option
      */
     private void updateBtnTheme() {
         setRadioButtonTheme(mNormalBtn);
@@ -384,6 +469,11 @@ public class SpeedView extends RelativeLayout implements ITheme {
      *
      * @param screenMode 屏幕模式
      */
+    /****
+     * Show the speed view
+     *
+     * @param screenMode Screen mode
+     */
     public void show(AliyunScreenMode screenMode) {
 
         setScreenMode(screenMode);
@@ -395,6 +485,9 @@ public class SpeedView extends RelativeLayout implements ITheme {
     /**
      * 隐藏
      */
+    /****
+     * Hide
+     */
     private void hide() {
         if (mMainSpeedView.getVisibility() == VISIBLE) {
             mMainSpeedView.startAnimation(hideAnim);
@@ -404,6 +497,7 @@ public class SpeedView extends RelativeLayout implements ITheme {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //动画没有结束的时候，触摸是没有效果的
+        //When the animation is not over, touching has no effect
         if (mMainSpeedView.getVisibility() == VISIBLE && animEnd) {
             hide();
             return true;

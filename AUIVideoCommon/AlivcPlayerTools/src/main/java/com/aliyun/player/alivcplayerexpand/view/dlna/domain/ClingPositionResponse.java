@@ -7,6 +7,9 @@ import org.fourthline.cling.support.model.PositionInfo;
 /**
  * 获取播放进度回调结果
  */
+/****
+ * Get the result of the playback progress callback
+ */
 
 public class ClingPositionResponse extends BaseClingResponse<PositionInfo> implements IResponse<PositionInfo> {
 

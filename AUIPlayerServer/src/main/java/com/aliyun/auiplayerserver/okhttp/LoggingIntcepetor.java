@@ -11,6 +11,9 @@ import okhttp3.Response;
 /**
  * OkHttp网络请求日志拦截器，通过日志记录OkHttp所有请求以及响应的细节。
  */
+/****
+ * OkHttp network request log interceptor, log the details of all OkHttp requests and responses。
+ */
 public class LoggingIntcepetor implements Interceptor {
     private final String TAG = getClass().getSimpleName();
 

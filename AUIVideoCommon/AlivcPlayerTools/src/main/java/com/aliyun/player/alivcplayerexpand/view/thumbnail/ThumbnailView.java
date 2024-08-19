@@ -18,18 +18,30 @@ import com.aliyun.player.alivcplayerexpand.R;
 /**
  * 缩略图View
  */
+/****
+ * Thumbnail View
+ */
 public class ThumbnailView extends LinearLayout {
 
     /**
      * 缩略图 time
      */
+    /****
+     * Thumbnail time
+     */
     private TextView mPositionTextView;
     /**
      * 视频总时长
      */
+    /****
+     * Video total duration
+     */
     private TextView mVideoDurationTextView;
     /**
      * 缩略图 picture
+     */
+    /****
+     * Thumbnail picture
      */
     private ImageView mThumbnailImageView;
 
@@ -50,6 +62,7 @@ public class ThumbnailView extends LinearLayout {
 
     private void init() {
         //Inflate布局
+        //Inflate layout
         LayoutInflater.from(getContext()).inflate(R.layout.alivc_view_thumbnail, this, true);
         findAllViews();
 
