@@ -15,4 +15,5 @@ dependencies {
     implementation project(':AUIVideoList:AUIVideoFunctionList')
     implementation project(':AUIVideoList:AUIVideoStandradList')
     implementation project(':AUIVideoList:AUIVideoEpisode')
+    implementation project(':AUIVideoPlayer:AUIVideoDemo')
 }

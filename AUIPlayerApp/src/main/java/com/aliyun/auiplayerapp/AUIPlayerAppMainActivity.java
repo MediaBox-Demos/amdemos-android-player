@@ -18,6 +18,7 @@ import com.aliyun.auifullscreen.AUIFullScreenActivity;
 import com.aliyun.auiplayerapp.utils.PermissionUtils;
 import com.aliyun.auiplayerapp.view.AUIPlayerBaseListActivity;
 import com.aliyun.video.MainActivity;
+import com.aliyun.vodplayerview.activity.AliyunPlayerSettingActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +36,7 @@ public class AUIPlayerAppMainActivity extends AUIPlayerBaseListActivity {
     private static final int INDEX_CUSTOM = 4;
 
     private static final int INDEX_VIDEO_LIST_EPISODE = 5;
+    private static final int INDEX_PARAM = 6;
 
     private ListModel mListModel;
 
@@ -57,6 +59,7 @@ public class AUIPlayerAppMainActivity extends AUIPlayerBaseListActivity {
         menu.add(new ListModel(INDEX_VIDEO_LIST_EPISODE, R.drawable.ic_player_quanping, getResources().getString(R.string.player_episode), getResources().getString(R.string.player_video_episode_msg)));
         menu.add(new ListModel(INDEX_FULL_SCREEN, R.drawable.ic_player_zidingyi, getResources().getString(R.string.player_full_screen), getResources().getString(R.string.player_video_full_screen_msg)));
 //        menu.add(new ListModel(INDEX_CUSTOM, R.drawable.ic_player_zidingyi, getResources().getString(R.string.player_custom), null));
+        menu.add(new ListModel(INDEX_PARAM, R.drawable.ic_player_zidingyi, getResources().getString(R.string.player_video), getResources().getString(R.string.player_video_params_msg)));
         return menu;
     }
 
@@ -123,6 +126,9 @@ public class AUIPlayerAppMainActivity extends AUIPlayerBaseListActivity {
             case INDEX_CUSTOM:
 //                    Intent videoDetailIntent = new Intent(this, AUIVideoConfigActivity.class);
 //                    startActivity(videoDetailIntent);
+                break;
+            case INDEX_PARAM:
+                AliyunPlayerSettingActivity.jump(AUIPlayerAppMainActivity.this);
                 break;
         }
     }

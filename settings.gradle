@@ -23,3 +23,7 @@ include ':AUIVideoList:AUIVideoListCommon'
 include ':AUIVideoList:AUIVideoFunctionList'
 include ':AUIVideoList:AUIVideoStandradList'
 include ':AUIVideoList:AUIVideoEpisode'
+
+
+include ':AUIVideoPlayer:AUIVideoDemo'
+include ':AUIVideoPlayer:AUIVideoTools'

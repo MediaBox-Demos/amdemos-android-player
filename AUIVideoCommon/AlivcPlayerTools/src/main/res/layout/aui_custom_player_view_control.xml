@@ -32,7 +32,7 @@
         android:id="@+id/audio_mode_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#42464B" />
+        android:background="@color/transparent" />
 
     <include layout="@layout/layout_speed_up_tip"></include>
 

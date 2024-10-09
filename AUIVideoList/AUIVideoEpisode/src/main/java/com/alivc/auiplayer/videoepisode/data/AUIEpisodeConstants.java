@@ -7,6 +7,7 @@ import java.util.Locale;
  * @date 2023/9/26
  * @brief 短剧常量管理
  */
+
 /****
  * @author keria
  * @date 2023/9/26
@@ -39,6 +40,15 @@ public class AUIEpisodeConstants {
     private static final String CUSTOM_EPISODE_URL = "https://alivc-demo-cms.alicdn.com/versionProduct/resources/player/aui_episode.json";
     private static final String CUSTOM_EPISODE_URL_EN = "https://alivc-demo-cms.alicdn.com/versionProduct/resources/player/aui_episode_en.json";
 
+    /****
+     * Short drama json text link
+     *
+     * @attention This variable is used to control the episode address of the episode page!!!
+     * @note Currently using `Private encrypted video source`, due to the MP4 private encryption characteristic, integrated into your project will play invalid
+     * @note If you want to experience the integrated effect, please note to replace the video source address with `Normal video source`
+     */
+    public static final String EPISODE_JSON_URL = ENCRYPTED_EPISODE_URL;
+
     /**
      * 短剧剧集json文本链接
      *
@@ -59,12 +69,4 @@ public class AUIEpisodeConstants {
         // use zh as default locale
         return encrypted ? ENCRYPTED_EPISODE_URL : CUSTOM_EPISODE_URL;
     }
-    /****
-     * Short drama json text link
-     *
-     * @attention This variable is used to control the episode address of the episode page!!!
-     * @note Currently using `Private encrypted video source`, due to the MP4 private encryption characteristic, integrated into your project will play invalid
-     * @note If you want to experience the integrated effect, please note to replace the video source address with `Normal video source`
-     */
-    public static final String EPISODE_JSON_URL = ENCRYPTED_EPISODE_URL;
 }

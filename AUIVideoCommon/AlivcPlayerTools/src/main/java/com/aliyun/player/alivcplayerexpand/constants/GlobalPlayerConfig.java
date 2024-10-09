@@ -423,6 +423,10 @@ public class GlobalPlayerConfig {
      * The play type, the default is URL
      */
     public static PLAYTYPE mCurrentPlayType = PLAYTYPE.DEFAULT;
+    /**
+     * 起播码率,默认 3000 档位
+     */
+    public static MUTIRATE mCurrentMutiRate = MUTIRATE.RATE_3000;
 
     /**
      * 非vip用户观看非vip视频，如果视频支持视频广告就放视频广告，否则默认用图片广告
@@ -532,5 +536,24 @@ public class GlobalPlayerConfig {
          * The play type is LiveSts
          */
         LIVE_STS
+    }
+
+    public enum MUTIRATE {
+        RATE_400(400),
+        RATE_900(900),
+        RATE_1500(1500),
+        RATE_3000(3000),
+        RATE_3500(3500),
+        RATE_6000(6000);
+
+        private final int value;
+
+        MUTIRATE(int i) {
+            this.value = i;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 }
