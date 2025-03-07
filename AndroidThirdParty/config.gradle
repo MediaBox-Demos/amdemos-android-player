@@ -96,8 +96,8 @@ ext {
     externalWupPlugin = 'digital.wup:android-maven-publish:3.6.2'
     externalAliyunVodUpload = 'com.aliyun.video.android:upload:1.6.6'
     externalAliyunOSS = 'com.aliyun.dpa:oss-android-sdk:2.9.11'
-    externalAliyunQueen = 'com.aliyun.maliang.android:queen:6.7.0-official-pro'
-    externalAliyunQueenUI = 'com.aliyun.maliang.android:queen_menu:6.7.0-official-pro-tiny'
+    externalAliyunQueen = 'com.aliyun.maliang.android:queen:6.8.1-official-pro'
+    externalAliyunQueenUI = 'com.aliyun.maliang.android:queen_menu:6.8.1-official-pro-tiny'
     externalAliyunQueenFramwork = 'com.aliyun.maliang.android:queen_aio_framework:6.7.0-official'
     externalAnimoji = 'com.aliyun.animoji:animoji:1.2@aar'
     externalRtsSDK = 'com.aliyun.rts.android:RtsSDK:2.6.0'
@@ -111,14 +111,14 @@ ext {
     externalSvideopro = 'com.aliyun.video.android:svideopro:6.7.0'
     externalSvideostandard = 'com.aliyun.video.android:svideostandard:6.7.0'
     externalSvideosnap = 'com.aliyun.video.android:svideosnap:6.7.0'
-    externalPlayerFull = 'com.aliyun.sdk.android:AliyunPlayer:6.15.0-full'
-    externalPlayerPart = 'com.aliyun.sdk.android:AliyunPlayer:6.15.0-part'
-    externalARTC = 'com.aliyun.sdk.android:AlivcArtc:6.15.0'
+    externalPlayerFull = 'com.aliyun.sdk.android:AliyunPlayer:7.0.0-full'
+    externalPlayerPart = 'com.aliyun.sdk.android:AliyunPlayer:7.0.0-part'
+    externalARTC = 'com.aliyun.sdk.android:AlivcArtc:7.0.0'
     externalAlivcConan = 'com.alivc.conan:AlivcConan:1.0.5'
     externalAlivcCore = 'com.aliyun.video.android:core:1.2.2'
-    externalLivePusherInteractive = "com.alivc.pusher:AlivcLivePusher_Interactive:6.15.0"
-    externalLivePusher = "com.alivc.pusher:AlivcLivePusher:6.15.0"
-    externalAllInOne = 'com.aliyun.aio:AliVCSDK_Standard:6.15.0'
+    externalLivePusherInteractive = "com.alivc.pusher:AlivcLivePusher_Interactive:6.17.0"
+    externalLivePusher = "com.alivc.pusher:AlivcLivePusher:6.17.0"
+    externalAllInOne = 'com.aliyun.aio:AliVCSDK_Standard:6.20.0'
 
     externalAUIRoomEngine = 'com.aliyun.auikits.android:roomengine:1.3.0'
 

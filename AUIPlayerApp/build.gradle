@@ -24,7 +24,7 @@ android {
     buildToolsVersion androidBuildToolsVersion
     defaultConfig {
         applicationId "com.aliyun.auiplayerapp"
-
+        namespace "com.aliyun.auiplayerapp"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
 
